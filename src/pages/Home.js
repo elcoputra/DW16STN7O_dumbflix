@@ -8,7 +8,6 @@ class Home extends Component {
         <HeaderImage />
         <h2 style={{ color: "white" }}>HOME TV LIST COMPONENT</h2>
         <h2 style={{ color: "white" }}>HOME MOVIE LIST COMPONENT</h2>
-        
       </div>
     );
   }
