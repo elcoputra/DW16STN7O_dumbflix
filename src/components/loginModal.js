@@ -84,14 +84,14 @@ class loginModal extends Component {
     this.state = {
       open: false,
     };
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleOpenLogin = this.handleOpenLogin.bind(this);
+    this.handleCloseLogin = this.handleCloseLogin.bind(this);
   }
-  handleOpen() {
+  handleOpenLogin() {
     this.setState({ open: true });
   }
 
-  handleClose() {
+  handleCloseLogin() {
     this.setState({ open: false });
   }
   render() {
@@ -102,7 +102,7 @@ class loginModal extends Component {
         <Modal
           className={classes.modal}
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.handleCloseLogin}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{

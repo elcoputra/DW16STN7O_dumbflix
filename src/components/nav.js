@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { AppBar, Box, Toolbar, Link, Button, Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
-import LoginModal from './loginModal'
+import LoginModal from "./loginModal";
+import RegisterModal from "./registerModal";
 
 const styles = (theme) => ({
   marginAutoItem: {},
@@ -30,20 +31,28 @@ const styles = (theme) => ({
 });
 
 class nav extends Component {
-  loginModalRef = ({handleOpen}) => {
-    this.showModal = handleOpen;
- }
- 
- onLoginClick = () => {
-   this.showModal();
- }
+  loginModalRef = ({ handleOpenLogin }) => {
+    this.showModalLogin = handleOpenLogin;
+  };
+  RegisterModalRef = ({ handleOpenRegister }) => {
+    this.showModalRegister = handleOpenRegister;
+  };
+
+  onLoginClick = () => {
+    this.showModalLogin();
+  };
+  onRegisterClick = () => {
+    this.showModalRegister();
+  };
+  
 
   render() {
     const { classes } = this.props;
     // className={classes.AppBar}
     return (
       <>
-      <LoginModal ref={this.loginModalRef} ></LoginModal>
+        <LoginModal ref={this.loginModalRef}></LoginModal>
+        <RegisterModal ref={this.RegisterModalRef}></RegisterModal>
         <AppBar className={classes.AppBar}>
           <Toolbar className={classes.Toolbar}>
             <Grid
@@ -70,7 +79,11 @@ class nav extends Component {
               justify="flex-end"
               alignItems="center"
             >
-              <Button variant="contained" className={classes.ButtonRegister}>
+              <Button
+                onClick={this.onRegisterClick}
+                variant="contained"
+                className={classes.ButtonRegister}
+              >
                 Register
               </Button>
 
