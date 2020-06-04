@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AppBar, Box, Toolbar, Link, Button, Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
+import LoginModal from './loginModal'
 
 const styles = (theme) => ({
   marginAutoItem: {},
@@ -29,11 +30,20 @@ const styles = (theme) => ({
 });
 
 class nav extends Component {
+  loginModalRef = ({handleOpen}) => {
+    this.showModal = handleOpen;
+ }
+ 
+ onLoginClick = () => {
+   this.showModal();
+ }
+
   render() {
     const { classes } = this.props;
     // className={classes.AppBar}
     return (
       <>
+      <LoginModal ref={this.loginModalRef} ></LoginModal>
         <AppBar className={classes.AppBar}>
           <Toolbar className={classes.Toolbar}>
             <Grid
@@ -65,6 +75,7 @@ class nav extends Component {
               </Button>
 
               <Button
+                onClick={this.onLoginClick}
                 variant="contained"
                 color="secondary"
                 className={classes.ButtonLogin}
