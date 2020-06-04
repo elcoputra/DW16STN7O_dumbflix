@@ -95,14 +95,6 @@ class tv extends Component {
               justify="flex-start"
               alignItems="flex-start"
             >
-
-
-
-
-
-
-
-
 {DataTv.map((detailData) => {
 
 return <div className={classes.Div}><Grid item xs>
@@ -119,22 +111,13 @@ return <div className={classes.Div}><Grid item xs>
                     {detailData.title}
                     </Typography>
                     <Typography className={classes.TypographyYear}>
-                      {detailData.title}
+                      {detailData.year}
                     </Typography>
                   </CardActionArea>
                 </Card>
               </Grid>
               </div>
 })}
-
-
-
-
-
-
-
-
-
               {/* <Grid item xs>
                 <Card className={classes.Card}>
                   <CardActionArea className={classes.CardActionArea}>

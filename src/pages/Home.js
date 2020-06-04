@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ImgOnlyHeader from "../components/imgOnlyHeader";
 import TvComponent from "../components/tv";
-
+import MovieComponent from "../components/movie";
 
 class Home extends Component {
   render() {
@@ -9,7 +9,7 @@ class Home extends Component {
       <div>
         <ImgOnlyHeader />
         <TvComponent />
-        <h2 style={{ color: "white" }}>HOME MOVIE LIST COMPONENT</h2>
+        <MovieComponent />
       </div>
     );
   }
