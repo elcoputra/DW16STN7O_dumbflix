@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import HeaderImage from "../components/imgOnlyHeader";
+import ImgOnlyHeader from "../components/imgOnlyHeader";
+import TvComponent from "../components/tv";
+
 
 class Home extends Component {
   render() {
     return (
       <div>
-        <HeaderImage />
-        <h2 style={{ color: "white" }}>HOME TV LIST COMPONENT</h2>
+        <ImgOnlyHeader />
+        <TvComponent />
         <h2 style={{ color: "white" }}>HOME MOVIE LIST COMPONENT</h2>
       </div>
     );

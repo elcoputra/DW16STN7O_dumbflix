@@ -3,7 +3,7 @@ import { Button, Box, Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import HeaderImage from "../img/header/rsz_yourname.jpg";
 import logoHeaderImage from "../img/header/YourName-logo-width-bw-invert.png";
-import gradientImage from '../img/header/Rectangle.png'
+import gradientImage from "../img/header/Rectangle.png";
 
 const styles = (theme) => ({
   BoxBase: {
@@ -110,7 +110,7 @@ class imgOnlyHeader extends Component {
               </Grid>
             </Grid>
           </Box>
-          <img src={gradientImage} alt="" className={classes.imgGradient}/>
+          <img src={gradientImage} alt="" className={classes.imgGradient} />
         </Box>
       </div>
     );
