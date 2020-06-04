@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Link,
-  Button,
-  Grid,
-  Typography,
-  Container,
-} from "@material-ui/core";
+import { AppBar, Box, Toolbar, Link, Button, Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
 
@@ -21,19 +12,16 @@ const styles = (theme) => ({
   Toolbar: {
     height: "70px",
   },
-  stylingGird: {
-    alignItems: "center",
-  },
-  img: {
-    Align: "center",
-  },
-  Typography: {
-    align: "right",
-  },
-  Button: {
+  ButtonLogin: {
     height: "30px",
     width: "100px",
-    margin:"10px"
+    margin: "10px",
+  },
+  ButtonRegister: {
+    color: "#E50914",
+    height: "30px",
+    width: "100px",
+    margin: "10px",
   },
   Box: {
     margin: "10px",
@@ -72,14 +60,14 @@ class nav extends Component {
               justify="flex-end"
               alignItems="center"
             >
-              <Button variant="contained" className={classes.Button}>
+              <Button variant="contained" className={classes.ButtonRegister}>
                 Register
               </Button>
 
               <Button
                 variant="contained"
                 color="secondary"
-                className={classes.Button}
+                className={classes.ButtonLogin}
               >
                 Login
               </Button>
