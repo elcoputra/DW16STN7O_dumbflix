@@ -111,6 +111,7 @@ class tv extends Component {
                                   type: detailData.type,
                                   description: detailData.description,
                                   linkFilm: detailData.linkFilm,
+                                  thumbnailTrailer:detailData.thumbnailTrailer,
                                 },
                               }}
                             >

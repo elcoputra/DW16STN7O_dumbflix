@@ -67,6 +67,7 @@ class detailPlayer extends Component {
       type: "null",
       description: "null",
       linkFilm: "null",
+      thumbnailTrailer: "null",
     };
   }
 
@@ -79,6 +80,7 @@ class detailPlayer extends Component {
       type,
       description,
       linkFilm,
+      thumbnailTrailer,
     } = this.props.location.state;
     this.setState((state, props) => {
       return {
@@ -89,6 +91,7 @@ class detailPlayer extends Component {
         type: type,
         description: description,
         linkFilm: linkFilm,
+        thumbnailTrailer: thumbnailTrailer,
       };
     });
   }
@@ -108,6 +111,8 @@ class detailPlayer extends Component {
               height={"536px"}
               width={"954.44px"}
               url={this.state.linkTrailer}
+              controls={true}
+              light={this.state.thumbnailTrailer}
               playing
             />
           </Grid>
