@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, Box, Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import HeaderImage from "../img/header/rsz_yourname.jpg";
-import logoHeaderImage from "../img/header/YourName-logo-width-bw-invert.png";
+import HeaderImage from "../img/header/movie-header-La-Casa.png";
+import logoHeaderImage from "../img/header/la-casa-log.png";
 import gradientImage from "../img/header/Rectangle.png";
 
 const styles = (theme) => ({
@@ -57,7 +57,7 @@ const styles = (theme) => ({
   },
 });
 
-class imgOnlyHeader extends Component {
+class headerTvList extends Component {
   render() {
     const { classes } = this.props;
     return (
@@ -77,9 +77,12 @@ class imgOnlyHeader extends Component {
                 <img src={logoHeaderImage} alt="" className={classes.img} />
               </Grid>
               <Grid item xs>
-                Two strangers find themselves linked in a bizarre way. When a
-                connection forms, will distance be the only thing to keep them
-                apart?
+                Money Heist is a crime drama on Netflix - originally called La
+                Casa de Papel. Money Heist season 3 has just been released by
+                the streaming service. The plot reads: "Eight thieves take
+                hostages and lock themselves in the Royal Mint of Spain as a
+                criminal mastermind manipulates the police to carry out his
+                plan."
               </Grid>
               <Grid item xs>
                 <Grid
@@ -89,8 +92,8 @@ class imgOnlyHeader extends Component {
                   justify="flex-start"
                   alignItems="center"
                 >
-                  <Grid item xs>
-                    2019
+                  <Grid item xs={4}>
+                    2017
                   </Grid>
                   <Grid item xs>
                     <Box
@@ -98,7 +101,7 @@ class imgOnlyHeader extends Component {
                       borderRadius={4}
                       className={classes.BorderedBox}
                     >
-                      Movies
+                      TV Series
                     </Box>
                   </Grid>
                 </Grid>
@@ -117,4 +120,4 @@ class imgOnlyHeader extends Component {
   }
 }
 
-export default withStyles(styles)(imgOnlyHeader);
+export default withStyles(styles)(headerTvList);

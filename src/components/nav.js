@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { AppBar, Box, Toolbar, Link, Button, Grid } from "@material-ui/core";
+import { AppBar, Box, Toolbar, Button, Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
 import LoginModal from "./loginModal";
 import RegisterModal from "./registerModal";
+import {Link} from 'react-router-dom'
+
 
 const styles = (theme) => ({
   marginAutoItem: {},
@@ -28,6 +30,14 @@ const styles = (theme) => ({
   Box: {
     margin: "10px",
   },
+  Link:{
+    textDecoration: "none",
+    color: "white",
+    fontWeight:"bold",
+    fontSize: "14px"
+
+
+  }
 });
 
 class nav extends Component {
@@ -61,9 +71,9 @@ class nav extends Component {
               justify="flex-start"
               alignItems="center"
             >
-              <Box className={classes.Box}>Home</Box>
-              <Box className={classes.Box}>TV Shows</Box>
-              <Box className={classes.Box}>Movies</Box>
+              <Box className={classes.Box}><Link className={classes.Link} to="/">Home</Link></Box>
+              <Box className={classes.Box}><Link className={classes.Link} to="/TVShows">TV Shows</Link></Box>
+              <Box className={classes.Box}><Link className={classes.Link} to="/Movies">Movies</Link></Box>
             </Grid>
             <Grid
               container

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ImgOnlyHeader from "../components/imgOnlyHeader";
+import ImgOnlyHeader from "../components/headerHome";
 import TvComponent from "../components/tv";
 import MovieComponent from "../components/movie";
 

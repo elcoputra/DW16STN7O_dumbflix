@@ -191,7 +191,7 @@ class loginModal extends Component {
                     href="#"
                     onClick={this.openRegister}
                   >
-                    <b>Here</b>
+                    <b> Here</b>
                   </Link>
                 </Grid>
               </Grid>

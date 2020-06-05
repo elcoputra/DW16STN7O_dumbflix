@@ -96,7 +96,6 @@ class registerModal extends Component {
   }
   render() {
     const { classes } = this.props;
-
     return (
       <div>
         <Modal
@@ -166,9 +165,6 @@ class registerModal extends Component {
                     }}
                   />
                 </Grid>
-
-
-
                 <Grid item xs={12}>
                   <TextField
                     id="standard-name"
@@ -192,8 +188,6 @@ class registerModal extends Component {
                     }}
                   />
                 </Grid>
-
-
                 <Grid item xs={12}>
                   <TextField
                     id="standard-name"
@@ -217,7 +211,6 @@ class registerModal extends Component {
                     }}
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <TextField
                     id="standard-name"
@@ -241,12 +234,6 @@ class registerModal extends Component {
                     }}
                   />
                 </Grid>
-
-
-
-
-
-
                 <Grid item xs={12}>
                   <TextField
                     id="standard-name"
@@ -270,75 +257,6 @@ class registerModal extends Component {
                     }}
                   />
                 </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <Grid item xs={12}>
                   <Button
                     variant="contained"
@@ -348,7 +266,7 @@ class registerModal extends Component {
                   </Button>
                 </Grid>
                 <Grid item xs className={classes.GridClickHere}>
-                Already have an account ? Klik <b>Here</b>
+                  Already have an account ? Klik <b>Here</b>
                 </Grid>
               </Grid>
             </Box>
