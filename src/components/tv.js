@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  Card,
-  CardActionArea,
-  Typography,
-} from "@material-ui/core";
+import { Grid, Card, CardActionArea, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import DataTv from "../data/dataTv.json";
+import { Link } from "react-router-dom";
+
 
 const styles = (theme) => ({
   title: {
@@ -14,14 +11,12 @@ const styles = (theme) => ({
     fontSize: "24px",
   },
   gridBase: {
-      
     paddingTop: "30px",
     paddingRight: "50px",
     paddingBottom: "30px",
     paddingLeft: "50px",
   },
   gridCard: {
-      
     paddingTop: "30px",
     paddingRight: "30px",
     paddingLeft: "30px",
@@ -31,22 +26,21 @@ const styles = (theme) => ({
     backgroundColor: "black",
     color: "black",
   },
-//   CardMedia: {
-//     width: "100%",
-//     maxWidth: "200px",
-//     minWidth: "200px",
-//     height: "100%",
-//     maxHeight: "300px",
-//     minHeight: "300px",
-//   },
+  //   CardMedia: {
+  //     width: "100%",
+  //     maxWidth: "200px",
+  //     minWidth: "200px",
+  //     height: "100%",
+  //     maxHeight: "300px",
+  //     minHeight: "300px",
+  //   },
   Img: {
     maxWidth: "200px",
     minWidth: "200px",
     maxHeight: "300px",
     minHeight: "300px",
     objectFit: "cover",
-  objectPosition: "center",
-  
+    objectPosition: "center",
   },
   CardActionArea: {
     maxWidth: "200px",
@@ -67,9 +61,13 @@ const styles = (theme) => ({
     fontSize: "14px",
     marginTop: "4px",
   },
-  Div:{
-      padding:"16px"
-  }
+  Div: {
+    padding: "16px",
+  },
+  Link: {
+    textDecoration: "none",
+    color:"white"
+  },
 });
 class tv extends Component {
   render() {
@@ -95,49 +93,32 @@ class tv extends Component {
               justify="flex-start"
               alignItems="flex-start"
             >
-{DataTv.map((detailData) => {
+              {DataTv.slice(this.props.init, this.props.end).map((detailData) => {
+                return (
+                  <div className={classes.Div}>
+                    <Grid item xs>
+                      <Card className={classes.Card}>
+                        <CardActionArea className={classes.CardActionArea}>
+                        <Link className={classes.Link} to={'/Detail'}>
+                          <img
+                            src={detailData.thumbnail}
+                            alt="asdawda"
+                            className={classes.Img}
+                          />
+                          <Typography className={classes.TypographyTitle}>
+                            {detailData.title}
+                          </Typography>
+                          <Typography className={classes.TypographyYear}>
+                            {detailData.year}
+                          </Typography>
 
-return <div className={classes.Div}><Grid item xs>
-                <Card className={classes.Card}>
-                  <CardActionArea className={classes.CardActionArea}>
-                    {/* <CardMedia
-                      className={classes.CardMedia}
-                      component="img"
-                      alt="Your Name"
-                      image={require("../img/header/YourName.jpg")}
-                    /> */}
-                    <img src={detailData.thumbnail} alt="asdawda" className={classes.Img}/>
-                    <Typography className={classes.TypographyTitle}>
-                    {detailData.title}
-                    </Typography>
-                    <Typography className={classes.TypographyYear}>
-                      {detailData.year}
-                    </Typography>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-              </div>
-})}
-              {/* <Grid item xs>
-                <Card className={classes.Card}>
-                  <CardActionArea className={classes.CardActionArea}>
-                    <CardMedia
-                      className={classes.CardMedia}
-                      component="img"
-                      alt="Contemplative Reptile"
-                      height="140"
-                      image={require("../img/header/YourName.jpg")}
-                      title="Your Name"
-                    />
-                    <Typography className={classes.TypographyTitle}>
-                      Your Name
-                    </Typography>
-                    <Typography className={classes.TypographyYear}>
-                      2016
-                    </Typography>
-                  </CardActionArea>
-                </Card>
-              </Grid> */}
+                          </Link>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                  </div>
+                );
+              })}
             </Grid>
           </Grid>
         </Grid>

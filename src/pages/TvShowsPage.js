@@ -7,7 +7,7 @@ export default class TvShowsPage extends Component {
     return (
       <div>
         <HeaderTvList />
-        <TVList />
+        <TVList init={0} end={12}/>
       </div>
     );
   }

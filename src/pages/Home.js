@@ -8,8 +8,8 @@ class Home extends Component {
     return (
       <div>
         <ImgOnlyHeader />
-        <TvComponent />
-        <MovieComponent />
+        <TvComponent init={0} end={6}/>
+        <MovieComponent init={0} end={6}/>
       </div>
     );
   }

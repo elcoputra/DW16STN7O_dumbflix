@@ -7,7 +7,7 @@ export default class MoviesPage extends Component {
     return (
       <div>
         <HeaderMoviesList />
-        <MovieList />
+        <MovieList init={0} end={12}/>
       </div>
     );     
   }

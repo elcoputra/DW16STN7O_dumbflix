@@ -84,7 +84,7 @@ class movie extends Component {
               justify="flex-start"
               alignItems="flex-start"
             >
-              {DataMovie.map((detailData) => {
+              {DataMovie.slice(this.props.init, this.props.end).map((detailData) => {
                 return (
                   <div className={classes.Div}>
                     <Grid item xs>

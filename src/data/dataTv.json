@@ -1,63 +1,122 @@
 [
-{
-    "id":1,
+  {
+    "id": 1,
     "category": "null",
-    "thumbnail":"https://i.imgur.com/y3WDY0h.png",
+    "thumbnail": "https://i.imgur.com/y3WDY0h.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7p374c",
     "type": "Tv Series",
     "title": "The Witcher",
     "year": 2019,
-    "description" : "It is based on the book series of the same name by Polish writer Andrzej Sapkowski. The Witcher follows the story of Geralt of Rivia, a solitary monster hunter, who struggles to find his place in a world where people often prove more wicked than monsters and beasts."
-    
-},
-{
-    "id":2,
+    "description": "It is based on the book series of the same name by Polish writer Andrzej Sapkowski. The Witcher follows the story of Geralt of Rivia, a solitary monster hunter, who struggles to find his place in a world where people often prove more wicked than monsters and beasts."
+  },
+  {
+    "id": 2,
     "category": "null",
-    "thumbnail":"https://i.imgur.com/Fi9yNLu.png",
+    "thumbnail": "https://i.imgur.com/Fi9yNLu.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
     "type": "Tv Series",
     "title": "Persona 3 The Movie",
     "year": 2016,
-    "description" : ""
-    
-},
-{
-    "id":3,
+    "description": ""
+  },
+  {
+    "id": 3,
     "category": "null",
-    "thumbnail":"https://i.imgur.com/MsCpR19.png",
+    "thumbnail": "https://i.imgur.com/MsCpR19.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
     "type": "Tv Series",
     "title": "Game Of Thrones",
     "year": 2011,
-    "description" : ""
-    
-},
-{
-    "id":4,
+    "description": ""
+  },
+  {
+    "id": 4,
     "category": "null",
-    "thumbnail":"https://i.imgur.com/Hy0kOeF.png",
+    "thumbnail": "https://i.imgur.com/Hy0kOeF.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
     "type": "Tv Series",
     "title": "Money Heist",
     "year": 2017,
-    "description" : ""
-    
-},
-{
-    "id":5,
+    "description": ""
+  },
+  {
+    "id": 5,
     "category": "null",
-    "thumbnail":"https://i.imgur.com/xwb4md2.png",
+    "thumbnail": "https://i.imgur.com/xwb4md2.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
     "type": "Tv Series",
     "title": "Touch",
     "year": 2020,
-    "description" : ""
-    
-},
-{
-    "id":6,
+    "description": ""
+  },
+  {
+    "id": 6,
     "category": "null",
-    "thumbnail":"https://i.imgur.com/IlUBhLG.png",
+    "thumbnail": "https://i.imgur.com/IlUBhLG.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
     "type": "Tv Series",
     "title": "Arrow",
     "year": 2020,
-    "description" : ""
-    
-}
-
+    "description": ""
+  },
+  {
+    "id": 7,
+    "category": "null",
+    "thumbnail": "https://imgur.com/Q8PZWEp.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
+    "type": "Tv Series",
+    "title": "You",
+    "year": 2018,
+    "description": ""
+  },
+  {
+    "id": 8,
+    "category": "null",
+    "thumbnail": "https://imgur.com/wJER8FP.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
+    "type": "Tv Series",
+    "title": "Castlevania",
+    "year": 2017,
+    "description": ""
+  },
+  {
+    "id": 9,
+    "category": "null",
+    "thumbnail": "https://imgur.com/ihFDUKT.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
+    "type": "Tv Series",
+    "title": "The OA",
+    "year": 2016,
+    "description": ""
+  },
+  {
+    "id": 10,
+    "category": "null",
+    "thumbnail": "https://imgur.com/J7QAQ6Z.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
+    "type": "Tv Series",
+    "title": "Locke & Key",
+    "year": 2020,
+    "description": ""
+  },
+  {
+    "id": 11,
+    "category": "null",
+    "thumbnail": "https://imgur.com/QM6oBTG.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
+    "type": "Tv Series",
+    "title": "Replay 1988",
+    "year": 2015,
+    "description": ""
+  },
+  {
+    "id": 12,
+    "category": "null",
+    "thumbnail": "https://imgur.com/undefined.png",
+    "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
+    "type": "Tv Series",
+    "title": "Panji Manusia Melenium",
+    "year": 1999,
+    "description": ""
+  }
 ]
