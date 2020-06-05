@@ -17,7 +17,7 @@
     "type": "Tv Series",
     "title": "Persona 3 The Movie",
     "year": 2016,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "type": "Tv Series",
     "title": "Game Of Thrones",
     "year": 2011,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "type": "Tv Series",
     "title": "Money Heist",
     "year": 2017,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "type": "Tv Series",
     "title": "Touch",
     "year": 2020,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 6,
@@ -57,7 +57,7 @@
     "type": "Tv Series",
     "title": "Arrow",
     "year": 2020,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 7,
@@ -67,7 +67,7 @@
     "type": "Tv Series",
     "title": "You",
     "year": 2018,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 8,
@@ -77,7 +77,7 @@
     "type": "Tv Series",
     "title": "Castlevania",
     "year": 2017,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 9,
@@ -87,7 +87,7 @@
     "type": "Tv Series",
     "title": "The OA",
     "year": 2016,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 10,
@@ -97,7 +97,7 @@
     "type": "Tv Series",
     "title": "Locke & Key",
     "year": 2020,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 11,
@@ -107,16 +107,16 @@
     "type": "Tv Series",
     "title": "Replay 1988",
     "year": 2015,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   },
   {
     "id": 12,
     "category": "null",
-    "thumbnail": "https://imgur.com/undefined.png",
+    "thumbnail": "https://i.imgur.com/YhbdPmy.png",
     "linkTrailer": "https://www.dailymotion.com/video/x7tanr5",
     "type": "Tv Series",
     "title": "Panji Manusia Melenium",
     "year": 1999,
-    "description": ""
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in ultricies urna, at placerat nisl. Ut ultrices ipsum ut nisi rutrum sodales et non augue. Proin tincidunt neque et fringilla ornare. Curabitur nec neque eu mauris imperdiet interdum eget dictum dui. Maecenas odio sem, vestibulum at auctor ut, gravida et tortor. Fusce tempor sagittis imperdiet."
   }
 ]

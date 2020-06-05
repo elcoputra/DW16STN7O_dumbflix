@@ -43,11 +43,12 @@ const styles = (theme) => ({
     color: "white",
     textAlign: "justify",
   },
-  yearAndType:{
-      color:"#929292",
-      fontSize:"18px"
+  yearAndType: {
+    color: "#929292",
+    fontSize: "18px",
   },
   BorderedBox: {
+    maxWidth: "100px",
     paddingTop: "1px",
     paddingBottom: "1px",
     paddingLeft: "10px",
@@ -56,7 +57,43 @@ const styles = (theme) => ({
 });
 
 class detailPlayer extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      linkTrailer: "null",
+      thumbnail: "null",
+      title: "null",
+      year: "null",
+      type: "null",
+      description: "null",
+      linkFilm: "null",
+    };
+  }
+
+  componentDidMount(props) {
+    const {
+      linkTrailer,
+      thumbnail,
+      title,
+      year,
+      type,
+      description,
+      linkFilm,
+    } = this.props.location.state;
+    this.setState((state, props) => {
+      return {
+        linkTrailer: linkTrailer,
+        thumbnail: thumbnail,
+        title: title,
+        year: year,
+        type: type,
+        description: description,
+        linkFilm: linkFilm,
+      };
+    });
+  }
+
+  render(props) {
     const { classes } = this.props;
     return (
       <div>
@@ -70,7 +107,7 @@ class detailPlayer extends Component {
             <ReactPlayer
               height={"536px"}
               width={"954.44px"}
-              url="https://www.dailymotion.com/video/x53vcu5"
+              url={this.state.linkTrailer}
               playing
             />
           </Grid>
@@ -86,8 +123,8 @@ class detailPlayer extends Component {
           <Grid item xs>
             <img
               className={classes.imgCoverFilm}
-              src="https://i.imgur.com/pGTKlTo.jpg"
-              alt="Your Name"
+              src={this.state.thumbnail}
+              alt={this.state.title}
             />
           </Grid>
           <Grid item xs={5}>
@@ -98,11 +135,11 @@ class detailPlayer extends Component {
               alignItems="flex-start"
             >
               <Grid item xs>
-                <b className={classes.Title}>Your Name</b>
+                <b className={classes.Title}>{this.state.title}</b>
               </Grid>
               <Grid item xs>
                 <Grid
-                className={classes.yearAndType}
+                  className={classes.yearAndType}
                   container
                   spacing="3"
                   direction="row"
@@ -110,29 +147,21 @@ class detailPlayer extends Component {
                   alignItems="center"
                 >
                   <Grid item xs>
-                    2019
+                    {this.state.year}
                   </Grid>
-                  <Grid item xs>
+                  <Grid item xs={14}>
                     <Box
                       border={1}
                       borderRadius={4}
                       className={classes.BorderedBox}
                     >
-                      Movies
+                      {this.state.type}
                     </Box>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item xs className={classes.Description}>
-                <p>
-                  “Once in a while when I wake up, I find myself crying. The
-                  dream I must have had I can never recall. But the sensation
-                  that I’ve lost something lingers for a long time after I wake
-                  up. I’m always searching for something, for someone. This
-                  feeling has possessed me I think from that day when the stars
-                  came falling. It was almost as if a scene from a dream.
-                  Nothing more, nothing less than a beautiful view.”
-                </p>
+                <p>{this.state.description}</p>
               </Grid>
             </Grid>
           </Grid>
@@ -147,14 +176,16 @@ class detailPlayer extends Component {
                 <ReactPlayer
                   height={"272px"}
                   width={"494px"}
-                  url="https://www.dailymotion.com/video/x2fv6nr"
+                  url={this.state.linkFilm}
                   playing
                   controls={true}
                   light={true}
                 />
               </Grid>
               <Grid item xs>
-                <p className={classes.TextInfo}>Your Name : Movie</p>
+                <p className={classes.TextInfo}>
+                  {this.state.title} : {this.state.type}
+                </p>
               </Grid>
             </Grid>
           </Grid>

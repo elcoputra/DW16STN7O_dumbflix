@@ -57,7 +57,7 @@ const styles = (theme) => ({
   },
   Link: {
     textDecoration: "none",
-    color:"white"
+    color: "transparent",
   },
 });
 class movie extends Component {
@@ -84,31 +84,51 @@ class movie extends Component {
               justify="flex-start"
               alignItems="flex-start"
             >
-              {DataMovie.slice(this.props.init, this.props.end).map((detailData) => {
-                return (
-                  <div className={classes.Div}>
-                    <Grid item xs>
-                      <Card className={classes.Card}>
-                        <CardActionArea className={classes.CardActionArea}>
-                          <Link className={classes.Link} to={'/Detail'}>
-                          <img
-                            src={detailData.thumbnail}
-                            alt={detailData.title}
-                            className={classes.Img}
-                          />
-                          <Typography className={classes.TypographyTitle}>
-                            {detailData.title}
-                          </Typography>
-                          <Typography className={classes.TypographyYear}>
-                            {detailData.year}
-                          </Typography>
-                          </Link>
-                        </CardActionArea>
-                      </Card>
-                    </Grid>
-                  </div>
-                );
-              })}
+              {DataMovie.slice(this.props.init, this.props.end).map(
+                (detailData) => {
+                  return (
+                    <div className={classes.Div}>
+                      <Grid item xs>
+                        <Card className={classes.Card}>
+                          <CardActionArea className={classes.CardActionArea}>
+                            {/* <Link className={classes.Link} to={'/Detail'}> */}
+                            <Link
+                            className={classes.Link}
+                              to={{
+                                pathname: `/Detail/${detailData.title}`,
+                                state:{
+                                  linkTrailer: detailData.linkTrailer,
+                                  thumbnail : detailData.thumbnail,
+                                  title: detailData.title,
+                                  year : detailData.year,
+                                  type : detailData.type,
+                                  description : detailData.description,
+                                  linkFilm : detailData.linkFilm,
+                                  
+                                  
+
+                                }
+                              }}
+                            >
+                              <img
+                                src={detailData.thumbnail}
+                                alt={detailData.title}
+                                className={classes.Img}
+                              />
+                              <Typography className={classes.TypographyTitle}>
+                                {detailData.title}
+                              </Typography>
+                              <Typography className={classes.TypographyYear}>
+                                {detailData.year}
+                              </Typography>
+                            </Link>
+                          </CardActionArea>
+                        </Card>
+                      </Grid>
+                    </div>
+                  );
+                }
+              )}
             </Grid>
           </Grid>
         </Grid>

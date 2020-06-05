@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import DataTv from "../data/dataTv.json";
 import { Link } from "react-router-dom";
 
-
 const styles = (theme) => ({
   title: {
     color: "white",
@@ -66,7 +65,7 @@ const styles = (theme) => ({
   },
   Link: {
     textDecoration: "none",
-    color:"white"
+    color: "transparent",
   },
 });
 class tv extends Component {
@@ -93,32 +92,47 @@ class tv extends Component {
               justify="flex-start"
               alignItems="flex-start"
             >
-              {DataTv.slice(this.props.init, this.props.end).map((detailData) => {
-                return (
-                  <div className={classes.Div}>
-                    <Grid item xs>
-                      <Card className={classes.Card}>
-                        <CardActionArea className={classes.CardActionArea}>
-                        <Link className={classes.Link} to={'/Detail'}>
-                          <img
-                            src={detailData.thumbnail}
-                            alt="asdawda"
-                            className={classes.Img}
-                          />
-                          <Typography className={classes.TypographyTitle}>
-                            {detailData.title}
-                          </Typography>
-                          <Typography className={classes.TypographyYear}>
-                            {detailData.year}
-                          </Typography>
-
-                          </Link>
-                        </CardActionArea>
-                      </Card>
-                    </Grid>
-                  </div>
-                );
-              })}
+              {DataTv.slice(this.props.init, this.props.end).map(
+                (detailData) => {
+                  return (
+                    <div className={classes.Div}>
+                      <Grid item xs>
+                        <Card className={classes.Card}>
+                          <CardActionArea className={classes.CardActionArea}>
+                            <Link
+                              className={classes.Link}
+                              to={{
+                                pathname: `/Detail/${detailData.title}`,
+                                state: {
+                                  linkTrailer: detailData.linkTrailer,
+                                  thumbnail: detailData.thumbnail,
+                                  title: detailData.title,
+                                  year: detailData.year,
+                                  type: detailData.type,
+                                  description: detailData.description,
+                                  linkFilm: detailData.linkFilm,
+                                },
+                              }}
+                            >
+                              <img
+                                src={detailData.thumbnail}
+                                alt="asdawda"
+                                className={classes.Img}
+                              />
+                              <Typography className={classes.TypographyTitle}>
+                                {detailData.title}
+                              </Typography>
+                              <Typography className={classes.TypographyYear}>
+                                {detailData.year}
+                              </Typography>
+                            </Link>
+                          </CardActionArea>
+                        </Card>
+                      </Grid>
+                    </div>
+                  );
+                }
+              )}
             </Grid>
           </Grid>
         </Grid>
