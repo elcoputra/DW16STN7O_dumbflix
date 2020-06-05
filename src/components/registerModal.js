@@ -65,9 +65,9 @@ const styles = (theme) => ({
     height: "50px",
     width: "350px",
     fontSize: "18pxx",
-    background: "#E50914",
+    background: "white",
     marginTop: "10px",
-    color: "white",
+    color: "red",
     "&:hover": {
       //you want this to be the same as the backgroundColor above
       backgroundColor: "#870303",

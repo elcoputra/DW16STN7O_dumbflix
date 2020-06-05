@@ -4,8 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
 import LoginModal from "./loginModal";
 import RegisterModal from "./registerModal";
-import {Link} from 'react-router-dom'
-
+import { Link } from "react-router-dom";
 
 const styles = (theme) => ({
   marginAutoItem: {},
@@ -20,6 +19,8 @@ const styles = (theme) => ({
     height: "30px",
     width: "100px",
     margin: "10px",
+    background: "#E50914",
+    color: "white",
   },
   ButtonRegister: {
     color: "#E50914",
@@ -30,14 +31,12 @@ const styles = (theme) => ({
   Box: {
     margin: "10px",
   },
-  Link:{
+  Link: {
     textDecoration: "none",
     color: "white",
-    fontWeight:"bold",
-    fontSize: "14px"
-
-
-  }
+    fontWeight: "bold",
+    fontSize: "14px",
+  },
 });
 
 class nav extends Component {
@@ -54,7 +53,6 @@ class nav extends Component {
   onRegisterClick = () => {
     this.showModalRegister();
   };
-  
 
   render() {
     const { classes } = this.props;
@@ -71,9 +69,21 @@ class nav extends Component {
               justify="flex-start"
               alignItems="center"
             >
-              <Box className={classes.Box}><Link className={classes.Link} to="/">Home</Link></Box>
-              <Box className={classes.Box}><Link className={classes.Link} to="/TVShows">TV Shows</Link></Box>
-              <Box className={classes.Box}><Link className={classes.Link} to="/Movies">Movies</Link></Box>
+              <Box className={classes.Box}>
+                <Link className={classes.Link} to="/">
+                  Home
+                </Link>
+              </Box>
+              <Box className={classes.Box}>
+                <Link className={classes.Link} to="/TVShows">
+                  TV Shows
+                </Link>
+              </Box>
+              <Box className={classes.Box}>
+                <Link className={classes.Link} to="/Movies">
+                  Movies
+                </Link>
+              </Box>
             </Grid>
             <Grid
               container

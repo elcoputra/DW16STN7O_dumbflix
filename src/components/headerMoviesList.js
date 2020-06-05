@@ -55,7 +55,6 @@ const styles = (theme) => ({
     paddingLeft: "10px",
     paddingRight: "10px",
   },
-  
 });
 
 class headerMoviesList extends Component {
@@ -78,7 +77,10 @@ class headerMoviesList extends Component {
                 <img src={logoHeaderImage} alt="" className={classes.img} />
               </Grid>
               <Grid item xs>
-              In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker. 
+                In Gotham City, mentally troubled comedian Arthur Fleck is
+                disregarded and mistreated by society. He then embarks on a
+                downward spiral of revolution and bloody crime. This path brings
+                him face-to-face with his alter-ego: the Joker.
               </Grid>
               <Grid item xs>
                 <Grid

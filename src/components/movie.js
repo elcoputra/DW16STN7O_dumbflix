@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid, Card, CardActionArea, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import DataMovie from "../data/dataMovies.json";
+import { Link } from "react-router-dom";
 
 const styles = (theme) => ({
   title: {
@@ -54,6 +55,10 @@ const styles = (theme) => ({
   Div: {
     padding: "16px",
   },
+  Link: {
+    textDecoration: "none",
+    color:"white"
+  },
 });
 class movie extends Component {
   render() {
@@ -85,9 +90,10 @@ class movie extends Component {
                     <Grid item xs>
                       <Card className={classes.Card}>
                         <CardActionArea className={classes.CardActionArea}>
+                          <Link className={classes.Link} to={'/Detail'}>
                           <img
                             src={detailData.thumbnail}
-                            alt="asdawda"
+                            alt={detailData.title}
                             className={classes.Img}
                           />
                           <Typography className={classes.TypographyTitle}>
@@ -96,6 +102,7 @@ class movie extends Component {
                           <Typography className={classes.TypographyYear}>
                             {detailData.year}
                           </Typography>
+                          </Link>
                         </CardActionArea>
                       </Card>
                     </Grid>
