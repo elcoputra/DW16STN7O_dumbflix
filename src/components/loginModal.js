@@ -8,7 +8,9 @@ import {
   Grid,
   TextField,
   Button,
+  Link,
 } from "@material-ui/core";
+import RegisterModal from "./registerModal";
 
 const styles = (theme) => ({
   modal: {
@@ -76,6 +78,9 @@ const styles = (theme) => ({
   GridClickHere: {
     marginTop: "50px",
   },
+  LinkCliclHere: {
+    color: "red",
+  },
 });
 
 class loginModal extends Component {
@@ -86,7 +91,11 @@ class loginModal extends Component {
     };
     this.handleOpenLogin = this.handleOpenLogin.bind(this);
     this.handleCloseLogin = this.handleCloseLogin.bind(this);
+    this.openRegister = this.openRegister.bind(this);
   }
+  RegisterModalRef = ({ handleOpenRegister }) => {
+    this.showModalRegister = handleOpenRegister;
+  };
   handleOpenLogin() {
     this.setState({ open: true });
   }
@@ -94,11 +103,16 @@ class loginModal extends Component {
   handleCloseLogin() {
     this.setState({ open: false });
   }
+  openRegister() {
+    this.handleCloseLogin();
+    this.showModalRegister();
+  }
   render() {
     const { classes } = this.props;
 
     return (
       <div>
+        <RegisterModal ref={this.RegisterModalRef}></RegisterModal>
         <Modal
           className={classes.modal}
           open={this.state.open}
@@ -171,7 +185,14 @@ class loginModal extends Component {
                   </Button>
                 </Grid>
                 <Grid item xs className={classes.GridClickHere}>
-                  Don't have an account ? Klik <b>Here</b>
+                  Don't have an account ? Klik
+                  <Link
+                    className={classes.LinkCliclHere}
+                    href="#"
+                    onClick={this.openRegister}
+                  >
+                    <b>Here</b>
+                  </Link>
                 </Grid>
               </Grid>
             </Box>
