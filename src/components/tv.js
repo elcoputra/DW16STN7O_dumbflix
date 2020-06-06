@@ -104,6 +104,7 @@ class tv extends Component {
                               to={{
                                 pathname: `/Detail/${detailData.title}`,
                                 state: {
+                                  id:detailData.id,
                                   linkTrailer: detailData.linkTrailer,
                                   thumbnail: detailData.thumbnail,
                                   title: detailData.title,

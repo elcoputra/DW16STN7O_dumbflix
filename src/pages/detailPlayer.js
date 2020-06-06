@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Box, Grid } from "@material-ui/core";
 import ReactPlayer from "react-player";
+import DataSeries from '../data/dataTv.json'
 
 const styles = (theme) => ({
   Box1: {
@@ -60,6 +61,8 @@ class detailPlayer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id : "null",
+      isMovie: false,
       linkTrailer: "null",
       thumbnail: "null",
       title: "null",
@@ -73,6 +76,8 @@ class detailPlayer extends Component {
 
   componentDidMount(props) {
     const {
+      id,
+      isMovie,
       linkTrailer,
       thumbnail,
       title,
@@ -84,6 +89,8 @@ class detailPlayer extends Component {
     } = this.props.location.state;
     this.setState((state, props) => {
       return {
+        id:id,
+        isMovie:isMovie,
         linkTrailer: linkTrailer,
         thumbnail: thumbnail,
         title: title,
@@ -92,6 +99,7 @@ class detailPlayer extends Component {
         description: description,
         linkFilm: linkFilm,
         thumbnailTrailer: thumbnailTrailer,
+        
       };
     });
   }

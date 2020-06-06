@@ -105,6 +105,7 @@ class movie extends Component {
                                   description : detailData.description,
                                   linkFilm : detailData.linkFilm,
                                   thumbnailTrailer:detailData.thumbnailTrailer,
+                                  isMovie: true
                                 }
                               }}
                             >
