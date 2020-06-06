@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import TVShows from "./pages/TvShowsPage";
 import Movies from "./pages/MoviesPage";
 import DetailPlayer from "./pages/detailPlayer"
+import Profile from './pages/profilePage'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
           <CssBaseline />
           <Navbar />
           <Switch>
+          <Route path="/Profile" component={Profile} />
             <Route path="/Detail" component={DetailPlayer} />
             <Route path="/TVShows" component={TVShows} />
             <Route path="/Movies" component={Movies} />
