@@ -81,6 +81,7 @@ class detailPlayer extends Component {
       linkFilm: "null",
       thumbnailTrailer: "null",
       reCycleEpisode: "null",
+      thumbnailFilm: "null",
     };
   }
 
@@ -98,6 +99,7 @@ class detailPlayer extends Component {
       thumbnailTrailer,
       episode,
       linkEpisode,
+      thumbnailFilm,
     } = this.props.location.state;
     this.setState((state, props) => {
       return {
@@ -113,6 +115,7 @@ class detailPlayer extends Component {
         thumbnailTrailer: thumbnailTrailer,
         episode: episode,
         linkEpisode: linkEpisode,
+        thumbnailFilm: thumbnailFilm,
       };
     });
   }
@@ -248,7 +251,7 @@ class detailPlayer extends Component {
                     url={this.state.linkFilm}
                     playing
                     controls={true}
-                    light={true}
+                    light={this.state.thumbnailFilm}
                   />
                 ) : (
                   <ReactPlayer
@@ -257,7 +260,7 @@ class detailPlayer extends Component {
                     url={this.state.linkEpisode}
                     playing
                     controls={true}
-                    light={true}
+                    light
                   />
                 )}
               </Grid>

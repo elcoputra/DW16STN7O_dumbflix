@@ -114,7 +114,7 @@ class tv extends Component {
                                   linkFilm: detailData.linkFilm,
                                   thumbnailTrailer:detailData.thumbnailTrailer,
                                   episode: detailData.episode,
-                                  linkEpisode : detailData.episode[1]
+                                  linkEpisode : detailData.episode[1],
                                 },
                               }}
                             >
