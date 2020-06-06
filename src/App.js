@@ -5,8 +5,9 @@ import Navbar from "./components/nav";
 import Home from "./pages/Home";
 import TVShows from "./pages/TvShowsPage";
 import Movies from "./pages/MoviesPage";
-import DetailPlayer from "./pages/detailPlayer"
-import Profile from './pages/profilePage'
+import DetailPlayer from "./pages/detailPlayer";
+import Profile from "./pages/profilePage";
+import Upgrade from './pages/upgradePage'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -17,7 +18,8 @@ class App extends Component {
           <CssBaseline />
           <Navbar />
           <Switch>
-          <Route path="/Profile" component={Profile} />
+          <Route path="/Upgrade" component={Upgrade} />
+            <Route path="/Profile" component={Profile} />
             <Route path="/Detail" component={DetailPlayer} />
             <Route path="/TVShows" component={TVShows} />
             <Route path="/Movies" component={Movies} />
