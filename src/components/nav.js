@@ -40,6 +40,15 @@ const styles = (theme) => ({
 });
 
 class nav extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogin: false,
+    };
+
+    this.getDataFromModalComponent = this.getDataFromModalComponent.bind(this);
+  }
+
   loginModalRef = ({ handleOpenLogin }) => {
     this.showModalLogin = handleOpenLogin;
   };
@@ -53,13 +62,18 @@ class nav extends Component {
   onRegisterClick = () => {
     this.showModalRegister();
   };
+  getDataFromModalComponent = (isLoginFromLoginModal) => {
+    this.setState({
+      isLogin : isLoginFromLoginModal,
+    })
+  }
 
-  render() {
+  render(props) {
     const { classes } = this.props;
     // className={classes.AppBar}
     return (
       <>
-        <LoginModal ref={this.loginModalRef}></LoginModal>
+        <LoginModal sendDataIsLogin={this.getDataFromModalComponent} ref={this.loginModalRef}></LoginModal>
         <RegisterModal ref={this.RegisterModalRef}></RegisterModal>
         <AppBar className={classes.AppBar}>
           <Toolbar className={classes.Toolbar}>
@@ -99,22 +113,28 @@ class nav extends Component {
               justify="flex-end"
               alignItems="center"
             >
-              <Button
-                onClick={this.onRegisterClick}
-                variant="contained"
-                className={classes.ButtonRegister}
-              >
-                Register
-              </Button>
+              {this.state.isLogin ? (
+                <p>HALO !</p>
+              ) : (
+                <>
+                  <Button
+                    onClick={this.onRegisterClick}
+                    variant="contained"
+                    className={classes.ButtonRegister}
+                  >
+                    Register
+                  </Button>
 
-              <Button
-                onClick={this.onLoginClick}
-                variant="contained"
-                color="secondary"
-                className={classes.ButtonLogin}
-              >
-                Login
-              </Button>
+                  <Button
+                    onClick={this.onLoginClick}
+                    variant="contained"
+                    color="secondary"
+                    className={classes.ButtonLogin}
+                  >
+                    Login
+                  </Button>
+                </>
+              )}
             </Grid>
           </Toolbar>
         </AppBar>

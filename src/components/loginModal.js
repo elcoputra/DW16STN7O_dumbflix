@@ -87,6 +87,7 @@ class loginModal extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      isLogin : false,
       open: false,
     };
     this.handleOpenLogin = this.handleOpenLogin.bind(this);
@@ -106,6 +107,15 @@ class loginModal extends Component {
   openRegister() {
     this.handleCloseLogin();
     this.showModalRegister();
+  }
+  stateLogin = () => {
+    this.setState({
+      isLogin:true,
+    })
+
+    this.props.sendDataIsLogin(true);
+    this.handleCloseLogin();
+
   }
   render() {
     const { classes } = this.props;
@@ -180,7 +190,7 @@ class loginModal extends Component {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button variant="contained" className={classes.ButtonLogin}>
+                  <Button onClick={this.stateLogin} variant="contained" className={classes.ButtonLogin}>
                     Login
                   </Button>
                 </Grid>
