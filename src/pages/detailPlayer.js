@@ -1,7 +1,6 @@
 // BUG Nex Play,
 // Button Belum di rapihin
 
-
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Box, Grid, Button } from "@material-ui/core";
@@ -242,30 +241,51 @@ class detailPlayer extends Component {
               alignItems="flex-start"
             >
               <Grid item xs>
-                <ReactPlayer
-                  height={"272px"}
-                  width={"494px"}
-                  url={this.state.linkEpisode}
-                  playing
-                  controls={true}
-                  light={true}
-                />
+                {this.state.isMovie ? (
+                  <ReactPlayer
+                    height={"272px"}
+                    width={"494px"}
+                    url={this.state.linkFilm}
+                    playing
+                    controls={true}
+                    light={true}
+                  />
+                ) : (
+                  <ReactPlayer
+                    height={"272px"}
+                    width={"494px"}
+                    url={this.state.linkEpisode}
+                    playing
+                    controls={true}
+                    light={true}
+                  />
+                )}
               </Grid>
               <Grid item xs>
-                <p className={classes.TextInfo}>
-                  {this.state.title} : {this.state.type} - Episode{" "}
-                  {this.state.currentEpisode} <Button className={classes.test} onClick={this.episodeIncrease}>
-            <img src={NextIcon} alt="" />
-          </Button>
-                  {/* <Button className={classes.test} onClick={this.episodeIncrease}>NEXT</Button><Button className={classes.test} onClick={this.episodeDecrease}>PREV</Button> */}
-                  {/* <Button
+                {this.state.isMovie ? (
+                  <p className={classes.TextInfo}>
+                    {this.state.title} : {this.state.type}
+                  </p>
+                ) : (
+                  <p className={classes.TextInfo}>
+                    {this.state.title} : {this.state.type} - Episode{" "}
+                    {this.state.currentEpisode}{" "}
+                    <Button
+                      className={classes.test}
+                      onClick={this.episodeIncrease}
+                    >
+                      <img src={NextIcon} alt="" />
+                    </Button>
+                    {/* <Button className={classes.test} onClick={this.episodeIncrease}>NEXT</Button><Button className={classes.test} onClick={this.episodeDecrease}>PREV</Button> */}
+                    {/* <Button
                     className={classes.test}
                     onClick={this.episodeIncrease}
                   >
                     <img src={NextIcon} alt="" />
                   </Button> */}
-                  {/* {this.state.linkEpisode} */}
-                </p>
+                    {/* {this.state.linkEpisode} */}
+                  </p>
+                )}
               </Grid>
             </Grid>
           </Grid>
