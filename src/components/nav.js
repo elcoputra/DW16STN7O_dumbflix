@@ -1,19 +1,52 @@
 import React, { Component } from "react";
-import { AppBar, Box, Toolbar, Button, Grid } from "@material-ui/core";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Button,
+  Grid,
+  Avatar,
+  Container,
+  Link as RLink,
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
 import LoginModal from "./loginModal";
 import RegisterModal from "./registerModal";
 import { Link } from "react-router-dom";
+import Segitiga from "../img/decor/segitiga.png";
+import { PersonOutline, Payment, ExitToApp } from "@material-ui/icons";
 
 const styles = (theme) => ({
   marginAutoItem: {},
+  divBase: {
+    position: "relative",
+    width: "auto",
+  },
+  divBaseFloatingDecor: {
+    position: "absolute",
+    top: "1px",
+    left: "7px",
+    width: "auto",
+    height: "auto",
+  },
+  divBaseFloatingMenu: {
+    backgroundColor: "#1F1F1F",
+    position: "absolute",
+    top: "36px",
+    left: "-117%",
+    width: "220px",
+    height: "187px",
+    borderRadius: "10px",
+  },
   AppBar: {
     background: "#1F1F1F",
     height: "70px",
+    width: "100%",
   },
   Toolbar: {
     height: "70px",
+    position: "relative",
   },
   ButtonLogin: {
     height: "30px",
@@ -37,6 +70,43 @@ const styles = (theme) => ({
     fontWeight: "bold",
     fontSize: "14px",
   },
+  Avatar: {
+    width: "50px",
+    height: "50px",
+  },
+  ButtonAvatar: {
+    marginRight: "50px",
+  },
+  PositionSegitiga: {
+    left: "10%",
+    top: "10&",
+  },
+
+  IconMenu: {
+    fontSize: 40,
+    color: "#E50914",
+  },
+  LabelMenu: {
+    fontSize: 18,
+    color: "white",
+  },
+  buttonMenuProfile: {
+    width: 220,
+    paddingRight: 50,
+  },
+  buttonMenuPay: {
+    width: 220,
+    paddingRight: 90,
+  },
+  borderMenuDropdown: {
+    width: 220,
+    height: 2,
+    backgroundColor: "gray",
+  },
+  buttonMenuLogout: {
+    width: 220,
+    paddingRight: 53,
+  },
 });
 
 class nav extends Component {
@@ -44,6 +114,7 @@ class nav extends Component {
     super(props);
     this.state = {
       isLogin: false,
+      isMenu: false,
     };
 
     this.getDataFromModalComponent = this.getDataFromModalComponent.bind(this);
@@ -64,7 +135,26 @@ class nav extends Component {
   };
   getDataFromModalComponent = (isLoginFromLoginModal) => {
     this.setState({
-      isLogin : isLoginFromLoginModal,
+      isLogin: isLoginFromLoginModal,
+    });
+  };
+
+  dropdownMenu = () => {
+    if (this.state.isMenu === false) {
+      this.setState({
+        isMenu: true,
+      });
+    }else{
+      this.setState({
+        isMenu: false,
+      });
+    }
+    
+  };
+  logutAccount = () =>{
+    this.setState({
+      isLogin: false,
+      isMenu: false,
     })
   }
 
@@ -72,8 +162,11 @@ class nav extends Component {
     const { classes } = this.props;
     // className={classes.AppBar}
     return (
-      <>
-        <LoginModal sendDataIsLogin={this.getDataFromModalComponent} ref={this.loginModalRef}></LoginModal>
+      <div>
+        <LoginModal
+          sendDataIsLogin={this.getDataFromModalComponent}
+          ref={this.loginModalRef}
+        ></LoginModal>
         <RegisterModal ref={this.RegisterModalRef}></RegisterModal>
         <AppBar className={classes.AppBar}>
           <Toolbar className={classes.Toolbar}>
@@ -114,7 +207,41 @@ class nav extends Component {
               alignItems="center"
             >
               {this.state.isLogin ? (
-                <p>HALO !</p>
+                <div>
+                  <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
+                    <Avatar
+                      alt="Elco Lebih Ganteng"
+                      src="https://i.imgur.com/WcVXGbM.jpg"
+                      className={classes.Avatar}
+                    />
+                  </Button>
+
+                  {this.state.isMenu ? (
+                    <div className={classes.divBase}>
+                      <div className={classes.divBaseFloatingDecor}>
+                        <img src={Segitiga} alt="segitiga" />
+                      </div>
+                      <div className={classes.divBaseFloatingMenu}>
+                        <Button className={classes.buttonMenuProfile}>
+                          <PersonOutline className={classes.IconMenu} />
+                          <b className={classes.LabelMenu}>Profile</b>
+                        </Button>
+                        <Button className={classes.buttonMenuPay}>
+                          <Payment className={classes.IconMenu} />
+                          <b className={classes.LabelMenu}>Pay</b>
+                        </Button>
+                        <Button className={classes.buttonMenuPay}></Button>
+                        <div className={classes.borderMenuDropdown}></div>
+                        <Button onClick={this.logutAccount} className={classes.buttonMenuLogout}>
+                          <ExitToApp className={classes.IconMenu} />
+                          <b className={classes.LabelMenu}>Logout</b>
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                </div>
               ) : (
                 <>
                   <Button
@@ -138,7 +265,7 @@ class nav extends Component {
             </Grid>
           </Toolbar>
         </AppBar>
-      </>
+      </div>
     );
   }
 }
