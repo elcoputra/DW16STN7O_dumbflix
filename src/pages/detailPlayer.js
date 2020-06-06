@@ -1,8 +1,12 @@
+// BUG Nex Play,
+// Button Belum di rapihin
+
+
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Box, Grid } from "@material-ui/core";
+import { Box, Grid, Button } from "@material-ui/core";
 import ReactPlayer from "react-player";
-import DataSeries from '../data/dataTv.json'
+import NextIcon from "../img/icon/Vector.png";
 
 const styles = (theme) => ({
   Box1: {
@@ -55,13 +59,19 @@ const styles = (theme) => ({
     paddingLeft: "10px",
     paddingRight: "10px",
   },
+  test: {
+    background: "transparent",
+  },
 });
 
 class detailPlayer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id : "null",
+      currentEpisode: 1,
+      linkEpisode: "",
+      episode: {},
+      id: "null",
       isMovie: false,
       linkTrailer: "null",
       thumbnail: "null",
@@ -71,6 +81,7 @@ class detailPlayer extends Component {
       description: "null",
       linkFilm: "null",
       thumbnailTrailer: "null",
+      reCycleEpisode: "null",
     };
   }
 
@@ -86,11 +97,13 @@ class detailPlayer extends Component {
       description,
       linkFilm,
       thumbnailTrailer,
+      episode,
+      linkEpisode,
     } = this.props.location.state;
     this.setState((state, props) => {
       return {
-        id:id,
-        isMovie:isMovie,
+        id: id,
+        isMovie: isMovie,
         linkTrailer: linkTrailer,
         thumbnail: thumbnail,
         title: title,
@@ -99,15 +112,58 @@ class detailPlayer extends Component {
         description: description,
         linkFilm: linkFilm,
         thumbnailTrailer: thumbnailTrailer,
-        
+        episode: episode,
+        linkEpisode: linkEpisode,
       };
     });
   }
 
-  render(props) {
+  episodeIncrease = () => {
+    if (this.state.currentEpisode <= Object.keys(this.state.episode).length) {
+      this.setState({
+        currentEpisode: this.state.currentEpisode + 1,
+      });
+      this.setState({
+        linkEpisode: this.state.episode[this.state.currentEpisode],
+      });
+    } else {
+      this.setState({
+        currentEpisode: 1,
+      });
+      this.setState({
+        linkEpisode: this.state.episode[1],
+      });
+    }
+  };
+  episodeDecrease = () => {
+    if (
+      this.state.currentEpisode > 1 &&
+      Object.keys(this.state.episode).length
+    ) {
+      this.setState({
+        currentEpisode: this.state.currentEpisode - 1,
+      });
+      this.setState({
+        linkEpisode: this.state.episode[this.state.currentEpisode],
+      });
+    }
+  };
+
+  // findID(DataSeries, target){
+  //   var dataSeries = DataSeries.DataSeries;
+  //   for (var i = 0; i< dataSeries.length; i++){
+  //     if(dataSeries[i].id === target){
+  //       return(dataSeries[i].product);
+  //     }
+  //   }
+  // }
+
+  render(props, data) {
     const { classes } = this.props;
+    // var series = this.findID(DataSeries, this.state.id);
     return (
       <div>
+        {/* {series} */}
         <Box className={classes.Box1}>
           <Grid
             container
@@ -189,7 +245,7 @@ class detailPlayer extends Component {
                 <ReactPlayer
                   height={"272px"}
                   width={"494px"}
-                  url={this.state.linkFilm}
+                  url={this.state.linkEpisode}
                   playing
                   controls={true}
                   light={true}
@@ -197,7 +253,18 @@ class detailPlayer extends Component {
               </Grid>
               <Grid item xs>
                 <p className={classes.TextInfo}>
-                  {this.state.title} : {this.state.type}
+                  {this.state.title} : {this.state.type} - Episode{" "}
+                  {this.state.currentEpisode} <Button className={classes.test} onClick={this.episodeIncrease}>
+            <img src={NextIcon} alt="" />
+          </Button>
+                  {/* <Button className={classes.test} onClick={this.episodeIncrease}>NEXT</Button><Button className={classes.test} onClick={this.episodeDecrease}>PREV</Button> */}
+                  {/* <Button
+                    className={classes.test}
+                    onClick={this.episodeIncrease}
+                  >
+                    <img src={NextIcon} alt="" />
+                  </Button> */}
+                  {/* {this.state.linkEpisode} */}
                 </p>
               </Grid>
             </Grid>
