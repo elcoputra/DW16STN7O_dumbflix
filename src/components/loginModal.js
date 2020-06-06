@@ -1,15 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  Modal,
-  Backdrop,
-  Fade,
-  Box,
-  Grid,
-  TextField,
-  Button,
-  Link,
-} from "@material-ui/core";
+import { Modal, Backdrop, Fade, Box, Grid, TextField, Button, Link } from "@material-ui/core";
 import RegisterModal from "./registerModal";
 
 const styles = (theme) => ({
@@ -87,7 +78,7 @@ class loginModal extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      isLogin : false,
+      isLogin: false,
       open: false,
     };
     this.handleOpenLogin = this.handleOpenLogin.bind(this);
@@ -110,13 +101,12 @@ class loginModal extends Component {
   }
   stateLogin = () => {
     this.setState({
-      isLogin:true,
-    })
+      isLogin: true,
+    });
 
     this.props.sendDataIsLogin(true);
     this.handleCloseLogin();
-
-  }
+  };
   render() {
     const { classes } = this.props;
 
@@ -131,18 +121,11 @@ class loginModal extends Component {
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
-          }}
-        >
+          }}>
           <Fade in={this.state.open}>
             <Box className={classes.Box}>
               <b className={classes.Title}>Login</b>
-              <Grid
-                className={classes.GridInput}
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-              >
+              <Grid className={classes.GridInput} container direction="column" justify="center" alignItems="center">
                 <Grid item xs={12}>
                   <TextField
                     id="standard-name"
@@ -196,11 +179,7 @@ class loginModal extends Component {
                 </Grid>
                 <Grid item xs className={classes.GridClickHere}>
                   Don't have an account ? Klik
-                  <Link
-                    className={classes.LinkCliclHere}
-                    href="#"
-                    onClick={this.openRegister}
-                  >
+                  <Link className={classes.LinkCliclHere} href="#" onClick={this.openRegister}>
                     <b> Here</b>
                   </Link>
                 </Grid>

@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Button,
-  Grid,
-  Avatar,
-} from "@material-ui/core";
+import { AppBar, Box, Toolbar, Button, Grid, Avatar } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
 import LoginModal from "./loginModal";
@@ -142,38 +135,29 @@ class nav extends Component {
       this.setState({
         isMenu: true,
       });
-    }else{
+    } else {
       this.setState({
         isMenu: false,
       });
     }
-    
   };
-  logutAccount = () =>{
+  logutAccount = () => {
     this.setState({
       isLogin: false,
       isMenu: false,
-    })
-  }
+    });
+  };
 
   render(props) {
     const { classes } = this.props;
     // className={classes.AppBar}
     return (
       <div>
-        <LoginModal
-          sendDataIsLogin={this.getDataFromModalComponent}
-          ref={this.loginModalRef}
-        ></LoginModal>
+        <LoginModal sendDataIsLogin={this.getDataFromModalComponent} ref={this.loginModalRef}></LoginModal>
         <RegisterModal ref={this.RegisterModalRef}></RegisterModal>
         <AppBar className={classes.AppBar}>
           <Toolbar className={classes.Toolbar}>
-            <Grid
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="center"
-            >
+            <Grid container direction="row" justify="flex-start" alignItems="center">
               <Box className={classes.Box}>
                 <Link className={classes.Link} to="/">
                   Home
@@ -190,28 +174,14 @@ class nav extends Component {
                 </Link>
               </Box>
             </Grid>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-            >
+            <Grid container direction="row" justify="center" alignItems="center">
               <img src={LOGO} alt="Brand" />
             </Grid>
-            <Grid
-              container
-              direction="row"
-              justify="flex-end"
-              alignItems="center"
-            >
+            <Grid container direction="row" justify="flex-end" alignItems="center">
               {this.state.isLogin ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
-                    <Avatar
-                      alt="Elco Lebih Ganteng"
-                      src="https://i.imgur.com/WcVXGbM.jpg"
-                      className={classes.Avatar}
-                    />
+                    <Avatar alt="Elco Lebih Ganteng" src="https://i.imgur.com/WcVXGbM.jpg" className={classes.Avatar} />
                   </Button>
 
                   {this.state.isMenu ? (
@@ -220,16 +190,18 @@ class nav extends Component {
                         <img src={Segitiga} alt="segitiga" />
                       </div>
                       <div className={classes.divBaseFloatingMenu}>
-                      <Link className={classes.Link} to="/Profile">
-                        <Button onClick={this.dropdownMenu} className={classes.buttonMenuProfile}>
-                          <PersonOutline className={classes.IconMenu} />
-                          <b className={classes.LabelMenu}>Profile</b>
-                        </Button>
+                        <Link className={classes.Link} to="/Profile">
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuProfile}>
+                            <PersonOutline className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Profile</b>
+                          </Button>
                         </Link>
-                        <Button className={classes.buttonMenuPay}>
+                        <Link className={classes.Link} to="/Upgrade">
+                        <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
                           <Payment className={classes.IconMenu} />
                           <b className={classes.LabelMenu}>Pay</b>
                         </Button>
+                        </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>
                         <Button onClick={this.logutAccount} className={classes.buttonMenuLogout}>
@@ -244,20 +216,11 @@ class nav extends Component {
                 </div>
               ) : (
                 <>
-                  <Button
-                    onClick={this.onRegisterClick}
-                    variant="contained"
-                    className={classes.ButtonRegister}
-                  >
+                  <Button onClick={this.onRegisterClick} variant="contained" className={classes.ButtonRegister}>
                     Register
                   </Button>
 
-                  <Button
-                    onClick={this.onLoginClick}
-                    variant="contained"
-                    color="secondary"
-                    className={classes.ButtonLogin}
-                  >
+                  <Button onClick={this.onLoginClick} variant="contained" color="secondary" className={classes.ButtonLogin}>
                     Login
                   </Button>
                 </>
