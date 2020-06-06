@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid ,Button} from "@material-ui/core";
 import {
   AccountCircle,
   Email,
@@ -53,12 +53,33 @@ const styles = (theme) => ({
   },
   info: {
     fontSize: 12,
-    textColor: "#8A8C90",
+    color: "#8A8C90",
   },
 
   iconStyle: {
     fontSize: 40,
     color: "red",
+  },
+  imgProfile: {
+    borderRadius: "5px",
+    maxWidth: "288px",
+    minWidth: "288px",
+    maxHeight: "345",
+    minHeight: "345",
+    objectFit: "cover",
+    objectPosition: "center",
+  },
+  ButtonWatchNow: {
+    height: "42px",
+    width: "288px",
+    fontSize: "18px",
+    background: "#E50914",
+    color: "white",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "white",
+      color:"#E50914",
+    },
   },
 });
 
@@ -83,7 +104,7 @@ class profilePage extends Component {
               {/* Grid List */}
               <Grid
                 container
-                spacing={3}
+                spacing={2}
                 justify="flex-start"
                 direction="column"
               >
@@ -148,11 +169,11 @@ class profilePage extends Component {
                         <Grid container justify="flex-start" direction="column">
                           <Grid item xs>
                             <div className={classes.data}>
-                              elcoiriansyahputra@gmail.com
+                              testtttest@gmail.com
                             </div>
                           </Grid>
                           <Grid item xs className={classes.info}>
-                            Full Name
+                            Email
                           </Grid>
                         </Grid>
                       </Grid>
@@ -292,13 +313,27 @@ class profilePage extends Component {
               </Grid>
             </Grid>
 
-
-
-
-            
             {/* Grid foto profile dan button */}
-            <Grid item xs={4}>
-                TES
+            <Grid item xs>
+              <Grid
+                container
+                direction="column"
+                justify="flex-start"
+                alignItems="flex-end"
+              >
+                <Grid item xs>
+                  <img
+                    className={classes.imgProfile}
+                    src="https://i.imgur.com/1vHpdTM.png"
+                    alt=""
+                  />
+                </Grid>
+                <Grid item xs>
+                <Button variant="contained" className={classes.ButtonWatchNow}>
+                  Change Photo Profile
+                </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </div>

@@ -6,8 +6,6 @@ import {
   Button,
   Grid,
   Avatar,
-  Container,
-  Link as RLink,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import LOGO from "../img/LOGO.png";
@@ -222,10 +220,12 @@ class nav extends Component {
                         <img src={Segitiga} alt="segitiga" />
                       </div>
                       <div className={classes.divBaseFloatingMenu}>
-                        <Button className={classes.buttonMenuProfile}>
+                      <Link className={classes.Link} to="/Profile">
+                        <Button onClick={this.dropdownMenu} className={classes.buttonMenuProfile}>
                           <PersonOutline className={classes.IconMenu} />
                           <b className={classes.LabelMenu}>Profile</b>
                         </Button>
+                        </Link>
                         <Button className={classes.buttonMenuPay}>
                           <Payment className={classes.IconMenu} />
                           <b className={classes.LabelMenu}>Pay</b>
