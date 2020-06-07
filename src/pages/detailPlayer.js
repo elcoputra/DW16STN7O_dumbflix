@@ -15,7 +15,7 @@ const styles = (theme) => ({
     color: "white",
   },
   GridSecond: {
-    marginTop:20,
+    marginTop: 20,
     paddingLeft: "100px",
     paddingRight: "100px",
   },
@@ -117,8 +117,8 @@ class detailPlayer extends Component {
       episode,
       linkEpisode,
       thumbnailFilm,
-      isAdmin,
       isTvShow,
+      isAdmin,
     } = this.props.location.state;
     this.setState((state, props) => {
       return {
@@ -135,8 +135,8 @@ class detailPlayer extends Component {
         episode: episode,
         linkEpisode: linkEpisode,
         thumbnailFilm: thumbnailFilm,
-        isAdmin: isAdmin,
         isTvShow: isTvShow,
+        isAdmin: isAdmin,
       };
     });
   }
@@ -181,8 +181,8 @@ class detailPlayer extends Component {
   render(props, data) {
     const { classes } = this.props;
     // var series = this.findID(DataSeries, this.state.id);
-    console.log(this.state.isAdmin);
-    console.log(this.state.isTvShow);
+
+    console.log(this.state.isTvShow, this.state.isAdmin);
     return (
       <div>
         {/* {series} */}
@@ -262,14 +262,6 @@ class detailPlayer extends Component {
                     <Button className={classes.test} onClick={this.episodeIncrease}>
                       <img src={NextIcon} alt="" />
                     </Button>
-                    {/* <Button className={classes.test} onClick={this.episodeIncrease}>NEXT</Button><Button className={classes.test} onClick={this.episodeDecrease}>PREV</Button> */}
-                    {/* <Button
-                    className={classes.test}
-                    onClick={this.episodeIncrease}
-                  >
-                    <img src={NextIcon} alt="" />
-                  </Button> */}
-                    {/* {this.state.linkEpisode} */}
                   </p>
                 )}
               </Grid>

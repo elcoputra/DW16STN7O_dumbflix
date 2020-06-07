@@ -6,7 +6,7 @@ import LoginModal from "./loginModal";
 import RegisterModal from "./registerModal";
 import { Link } from "react-router-dom";
 import Segitiga from "../img/decor/segitiga.png";
-import { PersonOutline, Payment, ExitToApp } from "@material-ui/icons";
+import { PersonOutline, Payment, ExitToApp,Movie } from "@material-ui/icons";
 
 const styles = (theme) => ({
   marginAutoItem: {},
@@ -28,6 +28,15 @@ const styles = (theme) => ({
     left: "-117%",
     width: "220px",
     height: "187px",
+    borderRadius: "10px",
+  },
+  divBaseFloatingMenuAdmin: {
+    backgroundColor: "#1F1F1F",
+    position: "absolute",
+    top: "36px",
+    left: "-117%",
+    width: "220px",
+    height: "150px",
     borderRadius: "10px",
   },
   AppBar: {
@@ -97,6 +106,10 @@ const styles = (theme) => ({
   buttonMenuLogout: {
     width: 220,
     paddingRight: 53,
+  },
+  buttonMenuFilm: {
+    width: 220,
+    paddingRight: 84,
   },
 });
 
@@ -176,6 +189,15 @@ class nav extends Component {
       isMenu: false,
     });
   };
+  logutAdminAccount = () =>{
+    if (this.state.isAdmin === true) {
+      localStorage.setItem("isAdmin", false);
+      this.getDataLocalStorage();
+    }
+    this.setState({
+      isMenu: false,
+    });
+  }
 
   loginAdmin = () => {
     if (this.state.isAdmin === false) {
@@ -249,6 +271,7 @@ class nav extends Component {
               </Button>
             </Grid>
             <Grid container direction="row" justify="flex-end" alignItems="center">
+              {/* AVA dan dropdown menu client, serta logic button login register untuk client dan admin */}
               {this.state.isLogin ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
@@ -301,33 +324,27 @@ class nav extends Component {
                   )}
                 </div>
               )}
-
+              {/* Aavatar dan dropdown menu untu admin */}
               {this.state.isAdmin ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
-                    <Avatar alt="Elco Lebih Ganteng" src="https://i.imgur.com/WcVXGbM.jpg" className={classes.Avatar} />
+                    <Avatar alt="Lisa Pacar Elco" src="https://i.imgur.com/woAAzCF.jpg" className={classes.Avatar} />
                   </Button>
                   {this.state.isMenu ? (
                     <div className={classes.divBase}>
                       <div className={classes.divBaseFloatingDecor}>
                         <img src={Segitiga} alt="segitiga" />
                       </div>
-                      <div className={classes.divBaseFloatingMenu}>
-                        <Link className={classes.Link} to="/Profile">
-                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuProfile}>
-                            <PersonOutline className={classes.IconMenu} />
-                            <b className={classes.LabelMenu}>Profile</b>
-                          </Button>
-                        </Link>
-                        <Link className={classes.Link} to="/Upgrade">
-                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
-                            <Payment className={classes.IconMenu} />
-                            <b className={classes.LabelMenu}>Pay</b>
+                      <div className={classes.divBaseFloatingMenuAdmin}>
+                        <Link className={classes.Link} to="/ListFilm">
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuFilm}>
+                            <Movie className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Film</b>
                           </Button>
                         </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>
-                        <Button onClick={this.logutAccount} className={classes.buttonMenuLogout}>
+                        <Button onClick={this.logutAdminAccount} className={classes.buttonMenuLogout}>
                           <ExitToApp className={classes.IconMenu} />
                           <b className={classes.LabelMenu}>Logout</b>
                         </Button>
