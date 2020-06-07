@@ -105,11 +105,35 @@ class nav extends Component {
     super(props);
     this.state = {
       isLogin: false,
-      isAdmin:false,
+      isAdmin: false,
       isMenu: false,
     };
 
     this.getDataFromModalComponent = this.getDataFromModalComponent.bind(this);
+  }
+  componentDidMount() {
+    const isLogin = localStorage.getItem("isLogin");
+    const isAdmin = localStorage.getItem("idAdmin");
+    if (isLogin === "false") {
+      this.setState({
+        isLogin: false,
+      });
+    }
+    if (isAdmin === "false") {
+      this.setState({
+        isAdmin: false,
+      });
+    }
+    if (isLogin === "true") {
+      this.setState({
+        isLogin: true,
+      });
+    }
+    if (isAdmin === "true") {
+      this.setState({
+        isAdmin: true,
+      });
+    }
   }
 
   loginModalRef = ({ handleOpenLogin }) => {
@@ -142,11 +166,55 @@ class nav extends Component {
       });
     }
   };
+
   logutAccount = () => {
+    if (this.state.isLogin === true) {
+      localStorage.setItem("isLogin", false);
+      this.getDataLocalStorage();
+    }
     this.setState({
-      isLogin: false,
-      isMenu: false,
-    });
+      isMenu:false,
+    })
+  };
+
+  loginAdmin = () => {
+    if (this.state.isAdmin === false) {
+      localStorage.setItem("isAdmin", true);
+      localStorage.setItem("isLogin", false);
+      this.getDataLocalStorage();
+    } else {
+      localStorage.setItem("isAdmin", false);
+      localStorage.setItem("isLogin", false);
+      this.getDataLocalStorage();
+    }
+  };
+
+  // ngambil data localstorage
+  getDataLocalStorage = () => {
+    const isLogin = localStorage.getItem("isLogin");
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isLogin === "false") {
+      this.setState({
+        isLogin: false,
+      });
+    }
+    if (isAdmin === "false") {
+      this.setState({
+        isAdmin: false,
+      });
+    }
+    if (isLogin === "true") {
+      this.setState({
+        isLogin: true,
+      });
+    }
+    if (isAdmin === "true") {
+      this.setState({
+        isAdmin: true,
+      });
+    }
+
+    console.log(isLogin, isAdmin);
   };
 
   render(props) {
@@ -176,7 +244,9 @@ class nav extends Component {
               </Box>
             </Grid>
             <Grid container direction="row" justify="center" alignItems="center">
-              <img src={LOGO} alt="Brand" />
+              <Button onClick={this.loginAdmin} className={classes.ButtonAvatar}>
+                <img src={LOGO} alt="Brand" />
+              </Button>
             </Grid>
             <Grid container direction="row" justify="flex-end" alignItems="center">
               {this.state.isLogin ? (
@@ -184,7 +254,6 @@ class nav extends Component {
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
                     <Avatar alt="Elco Lebih Ganteng" src="https://i.imgur.com/WcVXGbM.jpg" className={classes.Avatar} />
                   </Button>
-
                   {this.state.isMenu ? (
                     <div className={classes.divBase}>
                       <div className={classes.divBaseFloatingDecor}>
@@ -198,10 +267,10 @@ class nav extends Component {
                           </Button>
                         </Link>
                         <Link className={classes.Link} to="/Upgrade">
-                        <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
-                          <Payment className={classes.IconMenu} />
-                          <b className={classes.LabelMenu}>Pay</b>
-                        </Button>
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
+                            <Payment className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Pay</b>
+                          </Button>
                         </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>

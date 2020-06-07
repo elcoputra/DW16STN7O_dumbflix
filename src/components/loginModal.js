@@ -85,6 +85,19 @@ class loginModal extends Component {
     this.handleCloseLogin = this.handleCloseLogin.bind(this);
     this.openRegister = this.openRegister.bind(this);
   }
+  componentDidMount() {
+    const isLogin = localStorage.getItem("isLogin");
+    if (isLogin === "false") {
+      this.setState({
+        isLogin: false,
+      });
+    }
+    if (isLogin === "true") {
+      this.setState({
+        isLogin: true,
+      });
+    }
+  }
   RegisterModalRef = ({ handleOpenRegister }) => {
     this.showModalRegister = handleOpenRegister;
   };
@@ -100,13 +113,25 @@ class loginModal extends Component {
     this.showModalRegister();
   }
   stateLogin = () => {
-    this.setState({
-      isLogin: true,
-    });
-
-    this.props.sendDataIsLogin(true);
-    this.handleCloseLogin();
+    localStorage.setItem("isLogin", true);
+    this.getDataLocalStorage();
+    this.handleCloseLogin()
   };
+  getDataLocalStorage = () => {
+    const isLogin = localStorage.getItem("isLogin");
+    if (isLogin === "true") {
+      this.setState({
+        isLogin: true,
+      });
+    }
+    if (isLogin === "false") {
+      this.setState({
+        isLogin: false,
+      });
+    }
+    this.props.sendDataIsLogin(true);
+  };
+
   render() {
     const { classes } = this.props;
 
