@@ -98,6 +98,7 @@ class listFilm extends Component {
     const { classes } = this.props;
     return (
       <div>
+        
         <div className={classes.divider} />
         <div className={classes.warperTitle}>
           <Grid container direction="row" justify="space-between" alignItems="center">

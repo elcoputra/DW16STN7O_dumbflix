@@ -116,7 +116,7 @@ class loginModal extends Component {
     localStorage.setItem("isLogin", true);
     localStorage.setItem("isAdmin", false);
     this.getDataLocalStorage();
-    this.handleCloseLogin()
+    this.handleCloseLogin();
   };
   getDataLocalStorage = () => {
     const isLogin = localStorage.getItem("isLogin");

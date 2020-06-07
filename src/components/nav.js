@@ -126,7 +126,7 @@ class nav extends Component {
   }
   componentDidMount() {
     const isLogin = localStorage.getItem("isLogin");
-    const isAdmin = localStorage.getItem("idAdmin");
+    const isAdmin = localStorage.getItem("isAdmin");
     if (isLogin === "false") {
       this.setState({
         isLogin: false,
