@@ -65,7 +65,6 @@ const styles = (theme) => ({
     },
   },
   Kirim: {
-    marginTop: 20,
     textTransform: "none",
     marginTop: 65,
     height: 40,
