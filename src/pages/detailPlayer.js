@@ -3,9 +3,10 @@
 
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Box, Grid, Button } from "@material-ui/core";
+import { Box, Grid, Button} from "@material-ui/core";
 import ReactPlayer from "react-player";
 import NextIcon from "../img/icon/Vector.png";
+import ModalAddEpisode from "../components/modalAddEpisode";
 
 const styles = (theme) => ({
   Box1: {
@@ -15,7 +16,7 @@ const styles = (theme) => ({
     color: "white",
   },
   GridSecond: {
-    paddingTop: "60px",
+    marginTop: 20,
     paddingLeft: "100px",
     paddingRight: "100px",
   },
@@ -61,6 +62,107 @@ const styles = (theme) => ({
   test: {
     background: "transparent",
   },
+  ButtonAddEpisode: {
+    textTransform: "none",
+    marginTop: 15,
+    marginLeft: 1186,
+    height: 40,
+    width: 200,
+    fontSize: "14px",
+    background: "red",
+    color: "white",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#rgba(210, 210, 210, 0.25)",
+      color: "red",
+    },
+  },
+  DialogContentAddEpisodeStyle: {
+    color: "white",
+    backgroundColor: "#1F1F1F",
+    width: 1003,
+  },
+  ButtonAdd: {
+    height: "50px",
+    width: "350px",
+    fontSize: "18pxx",
+    background: "#E50914",
+    marginTop: "10px",
+    color: "white",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#870303",
+    },
+  },
+  // Styling kontent Modal
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    outline: "none",
+  },
+  Box: {
+    backgroundColor: "black",
+    opacity: "100%",
+    width: "416px",
+    height: "408px",
+    borderRadius: "10px",
+
+    // paddingTop: "30px",
+    // paddingBottom: "30px",
+    // paddingLeft: "25px",
+    // paddingRight: "25px",
+  },
+  Title2: {
+    color: "#FFFFFF",
+    fontSize: "36px",
+  },
+  GridInput: {
+    color: "#B1B1B1",
+  },
+  textField: {
+    background: "rgba(210, 210, 210, 0.25)",
+    // marginLeft: theme.spacing.unit,
+    // marginRight: theme.spacing.unit,
+    width: 350,
+  },
+
+  cssLabel: {
+    color: "#B1B1B1",
+  },
+
+  cssOutlinedInput: {
+    "&$cssFocused $notchedOutline": {
+      borderColor: `red !important`,
+    },
+  },
+
+  cssFocused: {
+    color: "white",
+  },
+
+  notchedOutline: {
+    borderWidth: "2px",
+    borderColor: "white !important",
+  },
+  ButtonLogin: {
+    height: "50px",
+    width: "350px",
+    fontSize: "18pxx",
+    background: "#E50914",
+    marginTop: "10px",
+    color: "white",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#870303",
+    },
+  },
+  GridClickHere: {
+    marginTop: "50px",
+  },
+  LinkCliclHere: {
+    color: "red",
+  },
 });
 
 class detailPlayer extends Component {
@@ -82,10 +184,13 @@ class detailPlayer extends Component {
       thumbnailTrailer: "null",
       reCycleEpisode: "null",
       thumbnailFilm: "null",
+      isAdmin: false,
+      isTvShow: false,
     };
   }
 
   componentDidMount(props) {
+    this.refs.modal.handleCloseAddEpisode()
     const {
       id,
       isMovie,
@@ -100,6 +205,8 @@ class detailPlayer extends Component {
       episode,
       linkEpisode,
       thumbnailFilm,
+      isTvShow,
+      isAdmin,
     } = this.props.location.state;
     this.setState((state, props) => {
       return {
@@ -116,10 +223,18 @@ class detailPlayer extends Component {
         episode: episode,
         linkEpisode: linkEpisode,
         thumbnailFilm: thumbnailFilm,
+        isTvShow: isTvShow,
+        isAdmin: isAdmin,
       };
     });
   }
+  handleOpenAddEpisodeModal=()=>{
+    this.refs.modal.handleOpenAddEpisode()
+  }
 
+  // addEpisodeModalRef = ({ handleOpenAddEpisode }) => {
+  //   this.showModalADD = handleOpenAddEpisode;
+  // };
   episodeIncrease = () => {
     if (this.state.currentEpisode <= Object.keys(this.state.episode).length) {
       this.setState({
@@ -138,10 +253,7 @@ class detailPlayer extends Component {
     }
   };
   episodeDecrease = () => {
-    if (
-      this.state.currentEpisode > 1 &&
-      Object.keys(this.state.episode).length
-    ) {
+    if (this.state.currentEpisode > 1 && Object.keys(this.state.episode).length) {
       this.setState({
         currentEpisode: this.state.currentEpisode - 1,
       });
@@ -150,29 +262,37 @@ class detailPlayer extends Component {
       });
     }
   };
+  // handleOpenAddEpisodeModal = () => {
+  //   this.showModalADD();
+  // };
+  // handleCloseAddEpisodeModal = () => {
+  //   this.setState({
+  //     openDialogAddEpisode: false,
+  //   });
+  // };
 
-  // findID(DataSeries, target){
-  //   var dataSeries = DataSeries.DataSeries;
-  //   for (var i = 0; i< dataSeries.length; i++){
-  //     if(dataSeries[i].id === target){
-  //       return(dataSeries[i].product);
-  //     }
-  //   }
-  // }
+  
 
   render(props, data) {
     const { classes } = this.props;
     // var series = this.findID(DataSeries, this.state.id);
+
+    console.log(this.state.isTvShow, this.state.isAdmin);
     return (
       <div>
+
+        <ModalAddEpisode ref="modal"/>
+        {/* DIALOG */}
+        {/* <ModalAddEpisode ref={this.addEpisodeModalRef}></ModalAddEpisode> */}
+
+
+
+
+{/* <ModalAddEpisode sendDataIsModalRegiset={this.getDataFromModalComponent} ref={this.addEpisodeModalRef}></ModalAddEpisode> */}
+        {/* CONTENT */}
         {/* {series} */}
         <Box className={classes.Box1}>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
+          <Grid container direction="column" justify="center" alignItems="center">
             <ReactPlayer
               height={"536px"}
               width={"954.44px"}
@@ -183,49 +303,36 @@ class detailPlayer extends Component {
             />
           </Grid>
         </Box>
-        <Grid
-          spacing={3}
-          className={classes.GridSecond}
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
+        {}
+
+        {this.state.isTvShow && this.state.isAdmin ? (
+          <div>
+            <Button variant="contained" onClick={this.handleOpenAddEpisodeModal} className={classes.ButtonAddEpisode}>
+              Add Episode
+            </Button>
+            {/* <Button variant="contained" onClick={this.handleOpenAddEpisodeModal} className={classes.ButtonAddEpisode}>
+              Add Episode
+            </Button> */}
+          </div>
+        ) : (
+          <div></div>
+        )}
+        <Grid spacing={3} className={classes.GridSecond} container direction="row" justify="flex-start" alignItems="flex-start">
           <Grid item xs>
-            <img
-              className={classes.imgCoverFilm}
-              src={this.state.thumbnail}
-              alt={this.state.title}
-            />
+            <img className={classes.imgCoverFilm} src={this.state.thumbnail} alt={this.state.title} />
           </Grid>
           <Grid item xs={5}>
-            <Grid
-              container
-              direction="column"
-              justify="flex-start"
-              alignItems="flex-start"
-            >
+            <Grid container direction="column" justify="flex-start" alignItems="flex-start">
               <Grid item xs>
                 <b className={classes.Title}>{this.state.title}</b>
               </Grid>
               <Grid item xs>
-                <Grid
-                  className={classes.yearAndType}
-                  container
-                  spacing="3"
-                  direction="row"
-                  justify="flex-start"
-                  alignItems="center"
-                >
+                <Grid className={classes.yearAndType} container spacing="3" direction="row" justify="flex-start" alignItems="center">
                   <Grid item xs>
                     {this.state.year}
                   </Grid>
                   <Grid item xs={14}>
-                    <Box
-                      border={1}
-                      borderRadius={4}
-                      className={classes.BorderedBox}
-                    >
+                    <Box border={1} borderRadius={4} className={classes.BorderedBox}>
                       {this.state.type}
                     </Box>
                   </Grid>
@@ -237,12 +344,7 @@ class detailPlayer extends Component {
             </Grid>
           </Grid>
           <Grid item xs={5}>
-            <Grid
-              container
-              direction="column"
-              justify="space-between"
-              alignItems="flex-start"
-            >
+            <Grid container direction="column" justify="space-between" alignItems="flex-start">
               <Grid item xs>
                 {this.state.isMovie ? (
                   <ReactPlayer
@@ -254,14 +356,7 @@ class detailPlayer extends Component {
                     light={this.state.thumbnailFilm}
                   />
                 ) : (
-                  <ReactPlayer
-                    height={"272px"}
-                    width={"494px"}
-                    url={this.state.linkEpisode}
-                    playing
-                    controls={true}
-                    light
-                  />
+                  <ReactPlayer height={"272px"} width={"494px"} url={this.state.linkEpisode} playing controls={true} light />
                 )}
               </Grid>
               <Grid item xs>
@@ -271,28 +366,18 @@ class detailPlayer extends Component {
                   </p>
                 ) : (
                   <p className={classes.TextInfo}>
-                    {this.state.title} : {this.state.type} - Episode{" "}
-                    {this.state.currentEpisode}{" "}
-                    <Button
-                      className={classes.test}
-                      onClick={this.episodeIncrease}
-                    >
+                    {this.state.title} : {this.state.type} - Episode {this.state.currentEpisode}{" "}
+                    <Button className={classes.test} onClick={this.episodeIncrease}>
                       <img src={NextIcon} alt="" />
                     </Button>
-                    {/* <Button className={classes.test} onClick={this.episodeIncrease}>NEXT</Button><Button className={classes.test} onClick={this.episodeDecrease}>PREV</Button> */}
-                    {/* <Button
-                    className={classes.test}
-                    onClick={this.episodeIncrease}
-                  >
-                    <img src={NextIcon} alt="" />
-                  </Button> */}
-                    {/* {this.state.linkEpisode} */}
                   </p>
                 )}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+
+        {/* DIALOG */}
       </div>
     );
   }

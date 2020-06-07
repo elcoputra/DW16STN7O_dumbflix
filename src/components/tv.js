@@ -69,74 +69,74 @@ const styles = (theme) => ({
   },
 });
 class tv extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAdmin: false,
+    };
+  }
+  componentDidMount() {
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin === "true") {
+      this.setState({
+        isAdmin: true,
+      });
+    }
+    if (isAdmin === "false") {
+      this.setState({
+        isAdmin: false,
+      });
+    }
+    console.log("didmount")
+    console.log("Data Dari Storage" + isAdmin)
+  }
+
+  render(props) {
     const { classes } = this.props;
     return (
       <div>
-        <Grid
-          className={classes.gridBase}
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
+        <Grid className={classes.gridBase} container direction="column" justify="flex-start" alignItems="flex-start">
           <Grid item xs>
             <b className={classes.title}>TV Series</b>
           </Grid>
           <Grid item xs>
-            <Grid
-              className={classes.gridCard}
-              spacing={4}
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="flex-start"
-            >
-              {DataTv.slice(this.props.init, this.props.end).map(
-                (detailData) => {
-                  return (
-                    <div className={classes.Div}>
-                      <Grid item xs>
-                        <Card className={classes.Card}>
-                          <CardActionArea className={classes.CardActionArea}>
-                            <Link
-                              className={classes.Link}
-                              to={{
-                                pathname: `/Detail/${detailData.title}`,
-                                state: {
-                                  id:detailData.id,
-                                  linkTrailer: detailData.linkTrailer,
-                                  thumbnail: detailData.thumbnail,
-                                  title: detailData.title,
-                                  year: detailData.year,
-                                  type: detailData.type,
-                                  description: detailData.description,
-                                  linkFilm: detailData.linkFilm,
-                                  thumbnailTrailer:detailData.thumbnailTrailer,
-                                  episode: detailData.episode,
-                                  linkEpisode : detailData.episode[1],
-                                },
-                              }}
-                            >
-                              <img
-                                src={detailData.thumbnail}
-                                alt="asdawda"
-                                className={classes.Img}
-                              />
-                              <Typography className={classes.TypographyTitle}>
-                                {detailData.title}
-                              </Typography>
-                              <Typography className={classes.TypographyYear}>
-                                {detailData.year}
-                              </Typography>
-                            </Link>
-                          </CardActionArea>
-                        </Card>
-                      </Grid>
-                    </div>
-                  );
-                }
-              )}
+            <Grid className={classes.gridCard} spacing={4} container direction="row" justify="flex-start" alignItems="flex-start">
+              {DataTv.slice(this.props.init, this.props.end).map((detailData) => {
+                return (
+                  <div className={classes.Div}>
+                    <Grid item xs>
+                      <Card className={classes.Card}>
+                        <CardActionArea className={classes.CardActionArea}>
+                          <Link
+                            className={classes.Link}
+                            to={{
+                              pathname: `/Detail/${detailData.title}`,
+                              state: {
+                                id: detailData.id,
+                                linkTrailer: detailData.linkTrailer,
+                                thumbnail: detailData.thumbnail,
+                                title: detailData.title,
+                                year: detailData.year,
+                                type: detailData.type,
+                                description: detailData.description,
+                                linkFilm: detailData.linkFilm,
+                                thumbnailTrailer: detailData.thumbnailTrailer,
+                                episode: detailData.episode,
+                                linkEpisode: detailData.episode[1],
+                                isTvShow: true,
+                                isAdmin: this.state.isAdmin,
+                              },
+                            }}>
+                            <img src={detailData.thumbnail} alt="asdawda" className={classes.Img} />
+                            <Typography className={classes.TypographyTitle}>{detailData.title}</Typography>
+                            <Typography className={classes.TypographyYear}>{detailData.year}</Typography>
+                          </Link>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                  </div>
+                );
+              })}
             </Grid>
           </Grid>
         </Grid>

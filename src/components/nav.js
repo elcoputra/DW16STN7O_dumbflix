@@ -6,7 +6,7 @@ import LoginModal from "./loginModal";
 import RegisterModal from "./registerModal";
 import { Link } from "react-router-dom";
 import Segitiga from "../img/decor/segitiga.png";
-import { PersonOutline, Payment, ExitToApp } from "@material-ui/icons";
+import { PersonOutline, Payment, ExitToApp,Movie } from "@material-ui/icons";
 
 const styles = (theme) => ({
   marginAutoItem: {},
@@ -28,6 +28,15 @@ const styles = (theme) => ({
     left: "-117%",
     width: "220px",
     height: "187px",
+    borderRadius: "10px",
+  },
+  divBaseFloatingMenuAdmin: {
+    backgroundColor: "#1F1F1F",
+    position: "absolute",
+    top: "36px",
+    left: "-117%",
+    width: "220px",
+    height: "150px",
     borderRadius: "10px",
   },
   AppBar: {
@@ -98,6 +107,10 @@ const styles = (theme) => ({
     width: 220,
     paddingRight: 53,
   },
+  buttonMenuFilm: {
+    width: 220,
+    paddingRight: 84,
+  },
 });
 
 class nav extends Component {
@@ -105,10 +118,35 @@ class nav extends Component {
     super(props);
     this.state = {
       isLogin: false,
+      isAdmin: false,
       isMenu: false,
     };
 
     this.getDataFromModalComponent = this.getDataFromModalComponent.bind(this);
+  }
+  componentDidMount() {
+    const isLogin = localStorage.getItem("isLogin");
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isLogin === "false") {
+      this.setState({
+        isLogin: false,
+      });
+    }
+    if (isAdmin === "false") {
+      this.setState({
+        isAdmin: false,
+      });
+    }
+    if (isLogin === "true") {
+      this.setState({
+        isLogin: true,
+      });
+    }
+    if (isAdmin === "true") {
+      this.setState({
+        isAdmin: true,
+      });
+    }
   }
 
   loginModalRef = ({ handleOpenLogin }) => {
@@ -141,11 +179,64 @@ class nav extends Component {
       });
     }
   };
+
   logutAccount = () => {
+    if (this.state.isLogin === true) {
+      localStorage.setItem("isLogin", false);
+      this.getDataLocalStorage();
+    }
     this.setState({
-      isLogin: false,
       isMenu: false,
     });
+  };
+  logutAdminAccount = () =>{
+    if (this.state.isAdmin === true) {
+      localStorage.setItem("isAdmin", false);
+      this.getDataLocalStorage();
+    }
+    this.setState({
+      isMenu: false,
+    });
+  }
+
+  loginAdmin = () => {
+    if (this.state.isAdmin === false) {
+      localStorage.setItem("isAdmin", true);
+      localStorage.setItem("isLogin", false);
+      this.getDataLocalStorage();
+    } else {
+      localStorage.setItem("isAdmin", false);
+      localStorage.setItem("isLogin", false);
+      this.getDataLocalStorage();
+    }
+  };
+
+  // ngambil data localstorage
+  getDataLocalStorage = () => {
+    const isLogin = localStorage.getItem("isLogin");
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isLogin === "false") {
+      this.setState({
+        isLogin: false,
+      });
+    }
+    if (isAdmin === "false") {
+      this.setState({
+        isAdmin: false,
+      });
+    }
+    if (isLogin === "true") {
+      this.setState({
+        isLogin: true,
+      });
+    }
+    if (isAdmin === "true") {
+      this.setState({
+        isAdmin: true,
+      });
+    }
+
+    console.log(isLogin, isAdmin);
   };
 
   render(props) {
@@ -175,15 +266,17 @@ class nav extends Component {
               </Box>
             </Grid>
             <Grid container direction="row" justify="center" alignItems="center">
-              <img src={LOGO} alt="Brand" />
+              <Button onClick={this.loginAdmin} className={classes.ButtonAvatar}>
+                <img src={LOGO} alt="Brand" />
+              </Button>
             </Grid>
             <Grid container direction="row" justify="flex-end" alignItems="center">
+              {/* AVA dan dropdown menu client, serta logic button login register untuk client dan admin */}
               {this.state.isLogin ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
                     <Avatar alt="Elco Lebih Ganteng" src="https://i.imgur.com/WcVXGbM.jpg" className={classes.Avatar} />
                   </Button>
-
                   {this.state.isMenu ? (
                     <div className={classes.divBase}>
                       <div className={classes.divBaseFloatingDecor}>
@@ -197,10 +290,10 @@ class nav extends Component {
                           </Button>
                         </Link>
                         <Link className={classes.Link} to="/Upgrade">
-                        <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
-                          <Payment className={classes.IconMenu} />
-                          <b className={classes.LabelMenu}>Pay</b>
-                        </Button>
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
+                            <Payment className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Pay</b>
+                          </Button>
                         </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>
@@ -215,15 +308,54 @@ class nav extends Component {
                   )}
                 </div>
               ) : (
-                <>
-                  <Button onClick={this.onRegisterClick} variant="contained" className={classes.ButtonRegister}>
-                    Register
-                  </Button>
+                <div>
+                  {this.state.isAdmin ? (
+                    <div></div>
+                  ) : (
+                    <>
+                      <Button onClick={this.onRegisterClick} variant="contained" className={classes.ButtonRegister}>
+                        Register
+                      </Button>
 
-                  <Button onClick={this.onLoginClick} variant="contained" color="secondary" className={classes.ButtonLogin}>
-                    Login
+                      <Button onClick={this.onLoginClick} variant="contained" color="secondary" className={classes.ButtonLogin}>
+                        Login
+                      </Button>
+                    </>
+                  )}
+                </div>
+              )}
+              {/* Aavatar dan dropdown menu untu admin */}
+              {this.state.isAdmin ? (
+                <div>
+                  <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
+                    <Avatar alt="Lisa Pacar Elco" src="https://i.imgur.com/woAAzCF.jpg" className={classes.Avatar} />
                   </Button>
-                </>
+                  {this.state.isMenu ? (
+                    <div className={classes.divBase}>
+                      <div className={classes.divBaseFloatingDecor}>
+                        <img src={Segitiga} alt="segitiga" />
+                      </div>
+                      <div className={classes.divBaseFloatingMenuAdmin}>
+                        <Link className={classes.Link} to="/ListFilm">
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuFilm}>
+                            <Movie className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Film</b>
+                          </Button>
+                        </Link>
+                        <Button className={classes.buttonMenuPay}></Button>
+                        <div className={classes.borderMenuDropdown}></div>
+                        <Button onClick={this.logutAdminAccount} className={classes.buttonMenuLogout}>
+                          <ExitToApp className={classes.IconMenu} />
+                          <b className={classes.LabelMenu}>Logout</b>
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                </div>
+              ) : (
+                <></>
               )}
             </Grid>
           </Toolbar>
