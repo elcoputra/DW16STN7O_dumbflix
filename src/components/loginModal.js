@@ -114,6 +114,7 @@ class loginModal extends Component {
   }
   stateLogin = () => {
     localStorage.setItem("isLogin", true);
+    localStorage.setItem("isAdmin", false);
     this.getDataLocalStorage();
     this.handleCloseLogin()
   };

@@ -173,8 +173,8 @@ class nav extends Component {
       this.getDataLocalStorage();
     }
     this.setState({
-      isMenu:false,
-    })
+      isMenu: false,
+    });
   };
 
   loginAdmin = () => {
@@ -285,15 +285,60 @@ class nav extends Component {
                   )}
                 </div>
               ) : (
-                <>
-                  <Button onClick={this.onRegisterClick} variant="contained" className={classes.ButtonRegister}>
-                    Register
-                  </Button>
+                <div>
+                  {this.state.isAdmin ? (
+                    <div></div>
+                  ) : (
+                    <>
+                      <Button onClick={this.onRegisterClick} variant="contained" className={classes.ButtonRegister}>
+                        Register
+                      </Button>
 
-                  <Button onClick={this.onLoginClick} variant="contained" color="secondary" className={classes.ButtonLogin}>
-                    Login
+                      <Button onClick={this.onLoginClick} variant="contained" color="secondary" className={classes.ButtonLogin}>
+                        Login
+                      </Button>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {this.state.isAdmin ? (
+                <div>
+                  <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
+                    <Avatar alt="Elco Lebih Ganteng" src="https://i.imgur.com/WcVXGbM.jpg" className={classes.Avatar} />
                   </Button>
-                </>
+                  {this.state.isMenu ? (
+                    <div className={classes.divBase}>
+                      <div className={classes.divBaseFloatingDecor}>
+                        <img src={Segitiga} alt="segitiga" />
+                      </div>
+                      <div className={classes.divBaseFloatingMenu}>
+                        <Link className={classes.Link} to="/Profile">
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuProfile}>
+                            <PersonOutline className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Profile</b>
+                          </Button>
+                        </Link>
+                        <Link className={classes.Link} to="/Upgrade">
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
+                            <Payment className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Pay</b>
+                          </Button>
+                        </Link>
+                        <Button className={classes.buttonMenuPay}></Button>
+                        <div className={classes.borderMenuDropdown}></div>
+                        <Button onClick={this.logutAccount} className={classes.buttonMenuLogout}>
+                          <ExitToApp className={classes.IconMenu} />
+                          <b className={classes.LabelMenu}>Logout</b>
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                </div>
+              ) : (
+                <></>
               )}
             </Grid>
           </Toolbar>
