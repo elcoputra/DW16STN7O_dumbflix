@@ -10,6 +10,7 @@ import DetailPlayer from "./pages/detailPlayer";
 import Profile from "./pages/profilePage";
 import Upgrade from './pages/upgradePage'
 import AddFilm from './pages/addFilm'
+import ListFilm from './pages/listFilm'
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
           <CssBaseline />
           <Navbar />
           <Switch>
+          <Route path="/ListFilm" component={ListFilm} />
           <Route path="/AddFilm" component={AddFilm} />
           <Route path="/Upgrade" component={Upgrade} />
             <Route path="/Profile" component={Profile} />

@@ -182,10 +182,9 @@ const styles = (theme) => ({
     borderRadius: 5,
     backgroundColor: "#353535",
   },
-  InputLabel:
-  {
-    color:"white"
-  }
+  InputLabel: {
+    color: "white",
+  },
 });
 
 class addFilm extends Component {
@@ -197,8 +196,8 @@ class addFilm extends Component {
   }
 
   handleChange = (event) => {
-    var dropdown = event.target.filmCategory
-    console.log(dropdown)
+    var dropdown = event.target.filmCategory;
+    console.log(dropdown);
     this.setState({
       filmCategory: dropdown,
     });
@@ -279,7 +278,9 @@ class addFilm extends Component {
           </Grid>
           <Grid item xs>
             <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel className={classes.InputLabel} id="demo-simple-select-outlined-label">Category</InputLabel>
+              <InputLabel className={classes.InputLabel} id="demo-simple-select-outlined-label">
+                Category
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
@@ -296,7 +297,7 @@ class addFilm extends Component {
                 <MenuItem value={this.state.filmCategory} key={this.state.filmCategory}>
                   {this.state.filmCategory}
                 </MenuItem>
-                <MenuItem value='Action'>Action</MenuItem>
+                <MenuItem value="Action">Action</MenuItem>
                 <MenuItem value="Drama">Drama</MenuItem>
                 <MenuItem value="Commedy">Commedy</MenuItem>
                 <MenuItem value="Romance">Romance</MenuItem>

@@ -15,7 +15,7 @@ const styles = (theme) => ({
     color: "white",
   },
   GridSecond: {
-    paddingTop: "60px",
+    marginTop:20,
     paddingLeft: "100px",
     paddingRight: "100px",
   },
@@ -61,6 +61,21 @@ const styles = (theme) => ({
   test: {
     background: "transparent",
   },
+  ButtonAddEpisode: {
+    textTransform: "none",
+    marginTop: 15,
+    marginLeft: 1186,
+    height: 40,
+    width: 200,
+    fontSize: "14px",
+    background: "red",
+    color: "white",
+    "&:hover": {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: "#rgba(210, 210, 210, 0.25)",
+      color: "red",
+    },
+  },
 });
 
 class detailPlayer extends Component {
@@ -82,6 +97,8 @@ class detailPlayer extends Component {
       thumbnailTrailer: "null",
       reCycleEpisode: "null",
       thumbnailFilm: "null",
+      isAdmin: false,
+      isTvShow: false,
     };
   }
 
@@ -100,6 +117,8 @@ class detailPlayer extends Component {
       episode,
       linkEpisode,
       thumbnailFilm,
+      isAdmin,
+      isTvShow,
     } = this.props.location.state;
     this.setState((state, props) => {
       return {
@@ -116,6 +135,8 @@ class detailPlayer extends Component {
         episode: episode,
         linkEpisode: linkEpisode,
         thumbnailFilm: thumbnailFilm,
+        isAdmin: isAdmin,
+        isTvShow: isTvShow,
       };
     });
   }
@@ -138,10 +159,7 @@ class detailPlayer extends Component {
     }
   };
   episodeDecrease = () => {
-    if (
-      this.state.currentEpisode > 1 &&
-      Object.keys(this.state.episode).length
-    ) {
+    if (this.state.currentEpisode > 1 && Object.keys(this.state.episode).length) {
       this.setState({
         currentEpisode: this.state.currentEpisode - 1,
       });
@@ -163,16 +181,13 @@ class detailPlayer extends Component {
   render(props, data) {
     const { classes } = this.props;
     // var series = this.findID(DataSeries, this.state.id);
+    console.log(this.state.isAdmin);
+    console.log(this.state.isTvShow);
     return (
       <div>
         {/* {series} */}
         <Box className={classes.Box1}>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
+          <Grid container direction="column" justify="center" alignItems="center">
             <ReactPlayer
               height={"536px"}
               width={"954.44px"}
@@ -183,49 +198,33 @@ class detailPlayer extends Component {
             />
           </Grid>
         </Box>
-        <Grid
-          spacing={3}
-          className={classes.GridSecond}
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
+        {}
+
+        {this.state.isTvShow && this.state.isAdmin ? (
+          <div>
+            <Button variant="contained" className={classes.ButtonAddEpisode}>
+              Add Episode
+            </Button>
+          </div>
+        ) : (
+          <div></div>
+        )}
+        <Grid spacing={3} className={classes.GridSecond} container direction="row" justify="flex-start" alignItems="flex-start">
           <Grid item xs>
-            <img
-              className={classes.imgCoverFilm}
-              src={this.state.thumbnail}
-              alt={this.state.title}
-            />
+            <img className={classes.imgCoverFilm} src={this.state.thumbnail} alt={this.state.title} />
           </Grid>
           <Grid item xs={5}>
-            <Grid
-              container
-              direction="column"
-              justify="flex-start"
-              alignItems="flex-start"
-            >
+            <Grid container direction="column" justify="flex-start" alignItems="flex-start">
               <Grid item xs>
                 <b className={classes.Title}>{this.state.title}</b>
               </Grid>
               <Grid item xs>
-                <Grid
-                  className={classes.yearAndType}
-                  container
-                  spacing="3"
-                  direction="row"
-                  justify="flex-start"
-                  alignItems="center"
-                >
+                <Grid className={classes.yearAndType} container spacing="3" direction="row" justify="flex-start" alignItems="center">
                   <Grid item xs>
                     {this.state.year}
                   </Grid>
                   <Grid item xs={14}>
-                    <Box
-                      border={1}
-                      borderRadius={4}
-                      className={classes.BorderedBox}
-                    >
+                    <Box border={1} borderRadius={4} className={classes.BorderedBox}>
                       {this.state.type}
                     </Box>
                   </Grid>
@@ -237,12 +236,7 @@ class detailPlayer extends Component {
             </Grid>
           </Grid>
           <Grid item xs={5}>
-            <Grid
-              container
-              direction="column"
-              justify="space-between"
-              alignItems="flex-start"
-            >
+            <Grid container direction="column" justify="space-between" alignItems="flex-start">
               <Grid item xs>
                 {this.state.isMovie ? (
                   <ReactPlayer
@@ -254,14 +248,7 @@ class detailPlayer extends Component {
                     light={this.state.thumbnailFilm}
                   />
                 ) : (
-                  <ReactPlayer
-                    height={"272px"}
-                    width={"494px"}
-                    url={this.state.linkEpisode}
-                    playing
-                    controls={true}
-                    light
-                  />
+                  <ReactPlayer height={"272px"} width={"494px"} url={this.state.linkEpisode} playing controls={true} light />
                 )}
               </Grid>
               <Grid item xs>
@@ -271,12 +258,8 @@ class detailPlayer extends Component {
                   </p>
                 ) : (
                   <p className={classes.TextInfo}>
-                    {this.state.title} : {this.state.type} - Episode{" "}
-                    {this.state.currentEpisode}{" "}
-                    <Button
-                      className={classes.test}
-                      onClick={this.episodeIncrease}
-                    >
+                    {this.state.title} : {this.state.type} - Episode {this.state.currentEpisode}{" "}
+                    <Button className={classes.test} onClick={this.episodeIncrease}>
                       <img src={NextIcon} alt="" />
                     </Button>
                     {/* <Button className={classes.test} onClick={this.episodeIncrease}>NEXT</Button><Button className={classes.test} onClick={this.episodeDecrease}>PREV</Button> */}

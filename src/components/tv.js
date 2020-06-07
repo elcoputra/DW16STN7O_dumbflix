@@ -115,6 +115,8 @@ class tv extends Component {
                                   thumbnailTrailer:detailData.thumbnailTrailer,
                                   episode: detailData.episode,
                                   linkEpisode : detailData.episode[1],
+                                  isAdmin:true,
+                                  isTvShow:true,
                                 },
                               }}
                             >

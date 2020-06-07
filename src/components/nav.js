@@ -105,6 +105,7 @@ class nav extends Component {
     super(props);
     this.state = {
       isLogin: false,
+      isAdmin:false,
       isMenu: false,
     };
 
