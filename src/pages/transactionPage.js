@@ -71,10 +71,58 @@ const styles = (theme) => ({
   ButtonActionIcon: {
     color: "#1C9CD2",
     fontSize: 100,
+    position: "relative",
+  },
+  divBaseDropdown: {
+    position: "absolute",
+    background: "#1F1F1F",
+    borderRadius: 4,
+    top: 34,
+    right: 82,
+    width: 89,
+    height: 74,
+    borderStyle:"solid",
+    borderWidth:1,
+    borderColor:"red"
+  },
+  tableActionMenu: {
+    position: "relative",
+  },
+  divBaseRelative: {
+    position: "relative",
+  },
+  ButtonApproved: {
+    color: "#0ACF83",
+    fontWeight: 500,
+    
+  },
+  ButtonCancel: {
+    color: "#FF0000",
+    fontWeight: 500,
   },
 });
 
 class transactionPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropdownMenuId: 0,
+    };
+  }
+
+  openDropdown(dataID) {
+    console.log(dataID);
+    if (this.state.dropdownMenuId === 0) {
+      this.setState({
+        dropdownMenuId: dataID,
+      });
+    } else {
+      this.setState({
+        dropdownMenuId: 0,
+      });
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -135,10 +183,25 @@ class transactionPage extends Component {
                         {row.payment}
                       </TableCell>
                     )}
-                    <TableCell className={classes.tableFontColorWhite} align="left">
-                      <Button className={classes.ButtonAction}>
+                    <TableCell className={classes.tableActionMenu} align="left">
+                      <Button onClick={() => this.openDropdown(row.id)} className={classes.ButtonAction}>
                         <ArrowDropDownIcon classname={classes.ButtonActionIcon} />
                       </Button>
+                      {/* Dropdown */}
+                      {this.state.dropdownMenuId === row.id ? (
+                        <div id={row.id} className={classes.divBaseDropdown}>
+                          <Grid container direction="column" justify="center" alignItems="center">
+                            <Button onClick={() => this.openDropdown(row.id)} className={classes.ButtonApproved}>
+                              Approved
+                            </Button>
+                            <Button onClick={() => this.openDropdown(row.id)} className={classes.ButtonCancel}>
+                              Cancel
+                            </Button>
+                          </Grid>
+                        </div>
+                      ) : null}
+
+                      {/* dropdown end */}
                     </TableCell>
                   </StyledTableRow>
                 ))}

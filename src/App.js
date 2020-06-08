@@ -14,6 +14,7 @@ import ListFilm from "./pages/listFilm";
 import Transaction from "./pages/transactionPage";
 
 class App extends Component {
+
   render() {
     return (
       <Router>
@@ -38,3 +39,6 @@ class App extends Component {
 }
 
 export default App;
+
+
+
