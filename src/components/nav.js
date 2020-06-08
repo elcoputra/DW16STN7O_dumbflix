@@ -266,9 +266,11 @@ class nav extends Component {
               </Box>
             </Grid>
             <Grid container direction="row" justify="center" alignItems="center">
+            <Link className={classes.Link} to="/Transaction">
               <Button onClick={this.loginAdmin} className={classes.ButtonAvatar}>
                 <img src={LOGO} alt="Brand" />
               </Button>
+              </Link>
             </Grid>
             <Grid container direction="row" justify="flex-end" alignItems="center">
               {/* AVA dan dropdown menu client, serta logic button login register untuk client dan admin */}
@@ -297,10 +299,12 @@ class nav extends Component {
                         </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>
+                        <Link className={classes.Link} to="/">
                         <Button onClick={this.logutAccount} className={classes.buttonMenuLogout}>
                           <ExitToApp className={classes.IconMenu} />
                           <b className={classes.LabelMenu}>Logout</b>
                         </Button>
+                        </Link>
                       </div>
                     </div>
                   ) : (
@@ -344,10 +348,12 @@ class nav extends Component {
                         </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>
+                        <Link className={classes.Link} to="/">
                         <Button onClick={this.logutAdminAccount} className={classes.buttonMenuLogout}>
                           <ExitToApp className={classes.IconMenu} />
                           <b className={classes.LabelMenu}>Logout</b>
                         </Button>
+                        </Link>
                       </div>
                     </div>
                   ) : (
