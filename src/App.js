@@ -8,9 +8,10 @@ import TVShows from "./pages/TvShowsPage";
 import Movies from "./pages/MoviesPage";
 import DetailPlayer from "./pages/detailPlayer";
 import Profile from "./pages/profilePage";
-import Upgrade from './pages/upgradePage'
-import AddFilm from './pages/addFilm'
-import ListFilm from './pages/listFilm'
+import Upgrade from "./pages/upgradePage";
+import AddFilm from "./pages/addFilm";
+import ListFilm from "./pages/listFilm";
+import Transaction from "./pages/transactionPage";
 
 class App extends Component {
   render() {
@@ -20,9 +21,10 @@ class App extends Component {
           <CssBaseline />
           <Navbar />
           <Switch>
-          <Route path="/ListFilm" component={ListFilm} />
-          <Route path="/AddFilm" component={AddFilm} />
-          <Route path="/Upgrade" component={Upgrade} />
+            <Route path="/Transaction" component={Transaction} />
+            <Route path="/ListFilm" component={ListFilm} />
+            <Route path="/AddFilm" component={AddFilm} />
+            <Route path="/Upgrade" component={Upgrade} />
             <Route path="/Profile" component={Profile} />
             <Route path="/Detail" component={DetailPlayer} />
             <Route path="/TVShows" component={TVShows} />
