@@ -1,0 +1,12 @@
+export const ADD_ARTICLE = 'ADD_ARTICLE';
+export const INC_COUNTER = 'INC_COUNTER';
+export const DEC_COUNTER = 'DEC_COUNTER';
+export const DATA_LOADED = 'DATA_LOADED';
+
+export const REGISTER = 'REGISTER';
+export const LOGIN = 'LOGIN';
+
+export const OPEN_MODAL_REGISTER = 'OPEN_MODAL_REGISTER';
+export const CLOSE_MODAL_REGISTER = 'CLOSE_MODAL_REGISTER';
+export const OPEN_MODAL_LOGIN = 'OPEN_MODAL_LOGIN';
+export const CLOSE_MODAL_LOGIN = 'CLOSE_MODAL_LOGIN';

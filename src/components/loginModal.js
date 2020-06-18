@@ -1,76 +1,79 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { Modal, Backdrop, Fade, Box, Grid, TextField, Button, Link } from "@material-ui/core";
-import RegisterModal from "./registerModal";
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { Modal, Backdrop, Fade, Box, Grid, TextField, Button, Link } from '@material-ui/core';
+import RegisterModal from './registerModal';
+import { closeModalLogin } from '../redux/actions/modal_actions';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
   modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    outline: "none",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    outline: 'none',
   },
   Box: {
-    backgroundColor: "black",
-    opacity: "100%",
-    width: "416px",
-    height: "408px",
-    borderRadius: "10px",
+    backgroundColor: 'black',
+    opacity: '100%',
+    width: '416px',
+    height: '408px',
+    borderRadius: '10px',
 
-    paddingTop: "30px",
-    paddingBottom: "30px",
-    paddingLeft: "25px",
-    paddingRight: "25px",
+    paddingTop: '30px',
+    paddingBottom: '30px',
+    paddingLeft: '25px',
+    paddingRight: '25px',
   },
   Title: {
-    color: "#FFFFFF",
-    fontSize: "36px",
+    color: '#FFFFFF',
+    fontSize: '36px',
   },
   GridInput: {
-    color: "#B1B1B1",
+    color: '#B1B1B1',
   },
   textField: {
-    background: "rgba(210, 210, 210, 0.25)",
+    background: 'rgba(210, 210, 210, 0.25)',
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 350,
   },
 
   cssLabel: {
-    color: "#B1B1B1",
+    color: '#B1B1B1',
   },
 
   cssOutlinedInput: {
-    "&$cssFocused $notchedOutline": {
+    '&$cssFocused $notchedOutline': {
       borderColor: `red !important`,
     },
   },
 
   cssFocused: {
-    color: "white",
+    color: 'white',
   },
 
   notchedOutline: {
-    borderWidth: "2px",
-    borderColor: "white !important",
+    borderWidth: '2px',
+    borderColor: 'white !important',
   },
   ButtonLogin: {
-    height: "50px",
-    width: "350px",
-    fontSize: "18pxx",
-    background: "#E50914",
-    marginTop: "10px",
-    color: "white",
-    "&:hover": {
+    height: '50px',
+    width: '350px',
+    fontSize: '18pxx',
+    background: '#E50914',
+    marginTop: '10px',
+    color: 'white',
+    '&:hover': {
       //you want this to be the same as the backgroundColor above
-      backgroundColor: "#870303",
+      backgroundColor: '#870303',
     },
   },
   GridClickHere: {
-    marginTop: "50px",
+    marginTop: '50px',
   },
   LinkCliclHere: {
-    color: "red",
+    color: 'red',
   },
 });
 
@@ -80,19 +83,23 @@ class loginModal extends Component {
     this.state = {
       isLogin: false,
       open: false,
+      email: '',
+      password: '',
+      token: '',
     };
     this.handleOpenLogin = this.handleOpenLogin.bind(this);
     this.handleCloseLogin = this.handleCloseLogin.bind(this);
     this.openRegister = this.openRegister.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
   componentDidMount() {
-    const isLogin = localStorage.getItem("isLogin");
-    if (isLogin === "false") {
+    const isLogin = localStorage.getItem('isLogin');
+    if (isLogin === 'false') {
       this.setState({
         isLogin: false,
       });
     }
-    if (isLogin === "true") {
+    if (isLogin === 'true') {
       this.setState({
         isLogin: true,
       });
@@ -112,26 +119,34 @@ class loginModal extends Component {
     this.handleCloseLogin();
     this.showModalRegister();
   }
-  stateLogin = () => {
-    localStorage.setItem("isLogin", true);
-    localStorage.setItem("isAdmin", false);
-    this.getDataLocalStorage();
-    this.handleCloseLogin();
+  // stateLogin = () => {
+  //   localStorage.setItem('isLogin', true);
+  //   localStorage.setItem('isAdmin', false);
+  //   this.getDataLocalStorage();
+  //   this.handleCloseLogin();
+  // };
+  handleButtonLogin = () => {
+    console.log(this.state.email, this.state.password);
   };
   getDataLocalStorage = () => {
-    const isLogin = localStorage.getItem("isLogin");
-    if (isLogin === "true") {
+    const isLogin = localStorage.getItem('isLogin');
+    if (isLogin === 'true') {
       this.setState({
         isLogin: true,
       });
     }
-    if (isLogin === "false") {
+    if (isLogin === 'false') {
       this.setState({
         isLogin: false,
       });
     }
     this.props.sendDataIsLogin(true);
   };
+  handleInputChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -141,75 +156,84 @@ class loginModal extends Component {
         <RegisterModal ref={this.RegisterModalRef}></RegisterModal>
         <Modal
           className={classes.modal}
-          open={this.state.open}
-          onClose={this.handleCloseLogin}
+          open={this.props.modalLogin}
+          onClose={this.props.closeModalLogin}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
-          }}>
-          <Fade in={this.state.open}>
+          }}
+        >
+          <Fade in={this.props.modalLogin}>
             <Box className={classes.Box}>
-              <b className={classes.Title}>Login</b>
-              <Grid className={classes.GridInput} container direction="column" justify="center" alignItems="center">
-                <Grid item xs={12}>
-                  <TextField
-                    id="standard-name"
-                    label="Email"
-                    className={classes.textField}
-                    margin="normal"
-                    variant="outlined"
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                      inputMode: "numeric",
-                    }}
-                  />
+              <form>
+                <b className={classes.Title}>Login</b>
+                <Grid className={classes.GridInput} container direction='column' justify='center' alignItems='center'>
+                  <Grid item xs={12}>
+                    <TextField
+                      id='email-login'
+                      label='Email'
+                      type='email'
+                      name='email'
+                      value={this.state.email}
+                      onChange={this.handleInputChange}
+                      className={classes.textField}
+                      margin='normal'
+                      variant='outlined'
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                          focused: classes.cssFocused,
+                          notchedOutline: classes.notchedOutline,
+                        },
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id='password-login'
+                      label='Password'
+                      type='password'
+                      name='password'
+                      value={this.state.password}
+                      onChange={this.handleInputChange}
+                      className={classes.textField}
+                      margin='normal'
+                      variant='outlined'
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                          focused: classes.cssFocused,
+                          notchedOutline: classes.notchedOutline,
+                        },
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button onClick={this.handleButtonLogin} variant='contained' className={classes.ButtonLogin}>
+                      Login
+                    </Button>
+                  </Grid>
+                  <Grid item xs className={classes.GridClickHere}>
+                    Don't have an account ? Klik
+                    <Link className={classes.LinkCliclHere} href='#' onClick={this.openRegister}>
+                      <b> Here</b>
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="standard-name"
-                    label="Password"
-                    className={classes.textField}
-                    margin="normal"
-                    variant="outlined"
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                      inputMode: "numeric",
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button onClick={this.stateLogin} variant="contained" className={classes.ButtonLogin}>
-                    Login
-                  </Button>
-                </Grid>
-                <Grid item xs className={classes.GridClickHere}>
-                  Don't have an account ? Klik
-                  <Link className={classes.LinkCliclHere} href="#" onClick={this.openRegister}>
-                    <b> Here</b>
-                  </Link>
-                </Grid>
-              </Grid>
+              </form>
             </Box>
           </Fade>
         </Modal>
@@ -217,5 +241,15 @@ class loginModal extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    modalLogin: state.modalLoginReducer.loginModalOpen,
+  };
+};
 
-export default withStyles(styles)(loginModal);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeModalLogin: () => dispatch(closeModalLogin()),
+  };
+};
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(loginModal);
