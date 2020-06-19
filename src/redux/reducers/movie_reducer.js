@@ -7,16 +7,18 @@ import {
   GET_TV_ERROR,
 } from '../actionTypes';
 
-const initialState = {
+const initialStateMovie = {
   dataMovies: [],
-  dataTvSeries: [],
   loading: false,
   error: '',
+};
+const initialStateTV = {
+  dataTvSeries: [],
   loadingTV: false,
   errorTV: '',
 };
 
-export const movieReducer = (state = initialState, action) => {
+export const movieReducer = (state = initialStateMovie, action) => {
   switch (action.type) {
     case GET_MOVIES_REQUEST:
       return {
@@ -39,7 +41,7 @@ export const movieReducer = (state = initialState, action) => {
       return state;
   }
 };
-export const tvReducer = (state = initialState, action) => {
+export const tvReducer = (state = initialStateTV, action) => {
   switch (action.type) {
     case GET_TV_REQUEST:
       return {
