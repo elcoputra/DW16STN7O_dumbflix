@@ -244,6 +244,7 @@ class nav extends Component {
 
   render(props) {
     const { classes } = this.props;
+    const { isLogin } = this.props.userReducer;
     // className={classes.AppBar}
     return (
       <div>
@@ -277,7 +278,7 @@ class nav extends Component {
             </Grid>
             <Grid container direction='row' justify='flex-end' alignItems='center'>
               {/* AVA dan dropdown menu client, serta logic button login register untuk client dan admin */}
-              {this.state.isLogin ? (
+              {isLogin ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
                     <Avatar alt='Elco Lebih Ganteng' src='https://i.imgur.com/WcVXGbM.jpg' className={classes.Avatar} />
@@ -378,10 +379,15 @@ class nav extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    userReducer: state.userReducer,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     openModalRegister: () => dispatch(openModalRegister()),
     openModalLogin: () => dispatch(openModalLogin()),
   };
 };
-export default compose(withStyles(styles), connect(null, mapDispatchToProps))(nav);
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(nav);

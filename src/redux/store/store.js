@@ -5,6 +5,7 @@ import { modalRegisterReducer, modalLoginReducer } from '../reducers/modal_reduc
 import { movieReducer, tvReducer, detailMovieReducer } from '../reducers/movie_reducer';
 import { episodeReducer } from '../reducers/episode_reducer';
 import { userReducer } from '../reducers/account_reducer';
+import { authReducer } from '../reducers/auth_reducer';
 
 // global reducer combine
 const reducers = combineReducers({
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   detailMovieReducer,
   episodeReducer,
   userReducer,
+  authReducer,
 });
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));

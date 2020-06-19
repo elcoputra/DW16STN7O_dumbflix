@@ -13,8 +13,13 @@ import AddFilm from './pages/addFilm';
 import ListFilm from './pages/listFilm';
 import Transaction from './pages/transactionPage';
 import learn from './pages/learnREDUX';
+import { authAction } from './redux/actions/auth_action';
+import { connect } from 'react-redux';
 
 class App extends Component {
+  componentDidMount = () => {
+    this.props.authAction();
+  };
   render() {
     return (
       <Router>
@@ -39,4 +44,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { authAction })(App);

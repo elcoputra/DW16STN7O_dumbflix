@@ -6,6 +6,7 @@ import { closeModalLogin } from '../redux/actions/modal_actions';
 import { loginAction } from '../redux/actions/account_action';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const styles = (theme) => ({
   modal: {
@@ -159,9 +160,11 @@ class loginModal extends Component {
 
   render() {
     const { classes } = this.props;
-    const { error } = this.props.userReducer;
+    const { error, isLogin } = this.props.userReducer;
     const errorHandling = error && error.data ? error.data.error : null;
     const errorMessageHandling = error && error.data ? error.data.message : null;
+
+    if (isLogin) return <Redirect to='/Upgrade' />;
 
     return (
       <div>
