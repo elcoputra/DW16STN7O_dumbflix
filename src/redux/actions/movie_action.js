@@ -5,6 +5,9 @@ import {
   GET_TV_REQUEST,
   GET_TV_SUCCSESS,
   GET_TV_ERROR,
+  GET_DETAIL_MOVIE_SUCCSESS,
+  GET_DETAIL_MOVIE_ERROR,
+  GET_DETAIL_MOVIE_REQUEST,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
 
@@ -25,7 +28,7 @@ import { API } from '../../config/axiosConfig';
 //     });
 //   }
 // };
-export function getDataMovie(category) {
+export function getDataMovie() {
   return function (dispatch) {
     dispatch({
       type: GET_MOVIES_REQUEST,
@@ -40,7 +43,7 @@ export function getDataMovie(category) {
       );
   };
 }
-export function getDataTv(category) {
+export function getDataTv() {
   return function (dispatch) {
     dispatch({
       type: GET_TV_REQUEST,
@@ -50,6 +53,21 @@ export function getDataTv(category) {
       .catch((response) =>
         dispatch({
           type: GET_TV_ERROR,
+          payload: response.error,
+        }),
+      );
+  };
+}
+export function getDetailMovie(idMovie) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_DETAIL_MOVIE_REQUEST,
+    });
+    API.get('/movie/' + idMovie)
+      .then((response) => dispatch({ type: GET_DETAIL_MOVIE_SUCCSESS, payload: response.data.data }))
+      .catch((response) =>
+        dispatch({
+          type: GET_DETAIL_MOVIE_ERROR,
           payload: response.error,
         }),
       );
