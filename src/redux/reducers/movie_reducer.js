@@ -71,7 +71,7 @@ export const tvReducer = (state = initialStateTV, action) => {
 };
 
 const initialStateDetailMovie = {
-  dataDetailMovie: [],
+  dataDetailMovie: {},
   loadingDetailMovie: false,
   errorDetailMovie: '',
 };
@@ -86,7 +86,7 @@ export const detailMovieReducer = (state = initialStateDetailMovie, action) => {
     case GET_DETAIL_MOVIE_SUCCSESS:
       return {
         ...state,
-        loadingTV: false,
+        loadingDetailMovie: false,
         dataDetailMovie: action.payload,
       };
     case GET_DETAIL_MOVIE_ERROR:

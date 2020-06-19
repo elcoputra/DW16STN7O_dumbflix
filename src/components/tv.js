@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Card, CardActionArea, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { getDataTv } from '../redux/actions/movie_action';
+import { getDataTv, getDetailMovie } from '../redux/actions/movie_action';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -123,13 +123,9 @@ class tv extends Component {
                           <CardActionArea className={classes.CardActionArea}>
                             <Link
                               className={classes.Link}
+                              onClick={() => this.props.getDetailMovie(detailData.id)}
                               to={{
                                 pathname: `/Detail/${detailData.id}/${detailData.title}`,
-                                state: {
-                                  id: detailData.id,
-                                  isTvShow: true,
-                                  isAdmin: this.state.isAdmin,
-                                },
                               }}
                             >
                               <img src={detailData.thumbnail} alt='asdawda' className={classes.Img} />
@@ -155,7 +151,7 @@ const mapStateToProps = (state) => {
     dataTv: state.tvReducer,
   };
 };
-export default compose(withStyles(styles), connect(mapStateToProps, { getDataTv }))(tv);
+export default compose(withStyles(styles), connect(mapStateToProps, { getDataTv, getDetailMovie }))(tv);
 
 // TUT memakai map
 // {DataTv.map((detailData, index) => {

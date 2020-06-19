@@ -104,12 +104,7 @@ class movie extends Component {
                               className={classes.Link}
                               onClick={() => this.props.getDetailMovie(detailData.id)}
                               to={{
-                                pathname: `/Detail/${detailData.title}`,
-                                state: {
-                                  id: detailData.id,
-                                  isMovie: true,
-                                  isAdmin: this.state.isAdmin,
-                                },
+                                pathname: `/Detail/${detailData.id}/${detailData.title}`,
                               }}
                             >
                               <img src={detailData.thumbnail} alt={detailData.title} className={classes.Img} />
