@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Modal, Backdrop, Fade, Box, Grid, TextField, Button, Link } from '@material-ui/core';
 import RegisterModal from './registerModal';
 import { closeModalLogin } from '../redux/actions/modal_actions';
+import { loginAction } from '../redux/actions/account_action';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -75,6 +76,9 @@ const styles = (theme) => ({
   LinkCliclHere: {
     color: 'red',
   },
+  errorResponse: {
+    color: 'white',
+  },
 });
 
 class loginModal extends Component {
@@ -86,39 +90,39 @@ class loginModal extends Component {
       email: '',
       password: '',
       token: '',
+      user: {},
     };
-    this.handleOpenLogin = this.handleOpenLogin.bind(this);
-    this.handleCloseLogin = this.handleCloseLogin.bind(this);
-    this.openRegister = this.openRegister.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleOpenLogin = this.handleOpenLogin.bind(this);
+    // this.handleCloseLogin = this.handleCloseLogin.bind(this);
+    // this.openRegister = this.openRegister.bind(this);
   }
   componentDidMount() {
-    const isLogin = localStorage.getItem('isLogin');
-    if (isLogin === 'false') {
-      this.setState({
-        isLogin: false,
-      });
-    }
-    if (isLogin === 'true') {
-      this.setState({
-        isLogin: true,
-      });
-    }
+    // const isLogin = localStorage.getItem('isLogin');
+    // if (isLogin === 'false') {
+    //   this.setState({
+    //     isLogin: false,
+    //   });
+    // }
+    // if (isLogin === 'true') {
+    //   this.setState({
+    //     isLogin: true,
+    //   });
+    // }
   }
-  RegisterModalRef = ({ handleOpenRegister }) => {
-    this.showModalRegister = handleOpenRegister;
-  };
-  handleOpenLogin() {
-    this.setState({ open: true });
-  }
+  // RegisterModalRef = ({ handleOpenRegister }) => {
+  //   this.showModalRegister = handleOpenRegister;
+  // };
+  // handleOpenLogin() {
+  //   this.setState({ open: true });
+  // }
 
-  handleCloseLogin() {
-    this.setState({ open: false });
-  }
-  openRegister() {
-    this.handleCloseLogin();
-    this.showModalRegister();
-  }
+  // handleCloseLogin() {
+  //   this.setState({ open: false });
+  // }
+  // openRegister() {
+  //   this.handleCloseLogin();
+  //   this.showModalRegister();
+  // }
   // stateLogin = () => {
   //   localStorage.setItem('isLogin', true);
   //   localStorage.setItem('isAdmin', false);
@@ -126,30 +130,38 @@ class loginModal extends Component {
   //   this.handleCloseLogin();
   // };
   handleButtonLogin = () => {
-    console.log(this.state.email, this.state.password);
-  };
-  getDataLocalStorage = () => {
-    const isLogin = localStorage.getItem('isLogin');
-    if (isLogin === 'true') {
-      this.setState({
-        isLogin: true,
-      });
-    }
-    if (isLogin === 'false') {
-      this.setState({
-        isLogin: false,
-      });
-    }
-    this.props.sendDataIsLogin(true);
-  };
-  handleInputChange(event) {
+    this.props.loginAction(this.state.user);
     this.setState({
-      [event.target.name]: event.target.value,
+      user: {},
     });
-  }
+  };
+  // getDataLocalStorage = () => {
+  //   const isLogin = localStorage.getItem('isLogin');
+  //   if (isLogin === 'true') {
+  //     this.setState({
+  //       isLogin: true,
+  //     });
+  //   }
+  //   if (isLogin === 'false') {
+  //     this.setState({
+  //       isLogin: false,
+  //     });
+  //   }
+  //   this.props.sendDataIsLogin(true);
+  // };
+  handleInputChange = (event) => {
+    const { user } = this.state;
+    this.setState({
+      // user: { ...user, [event.target.name]: event.target.value },
+      user: { ...user, [event.target.name]: event.target.value },
+    });
+  };
 
   render() {
     const { classes } = this.props;
+    const { error } = this.props.userReducer;
+    const errorHandling = error && error.data ? error.data.error : null;
+    const errorMessageHandling = error && error.data ? error.data.message : null;
 
     return (
       <div>
@@ -168,6 +180,10 @@ class loginModal extends Component {
             <Box className={classes.Box}>
               <form>
                 <b className={classes.Title}>Login</b>
+                <div className={classes.errorResponse}>
+                  {errorHandling}
+                  {errorMessageHandling}
+                </div>
                 <Grid className={classes.GridInput} container direction='column' justify='center' alignItems='center'>
                   <Grid item xs={12}>
                     <TextField
@@ -175,7 +191,7 @@ class loginModal extends Component {
                       label='Email'
                       type='email'
                       name='email'
-                      value={this.state.email}
+                      value={this.state.user.email}
                       onChange={this.handleInputChange}
                       className={classes.textField}
                       margin='normal'
@@ -201,7 +217,7 @@ class loginModal extends Component {
                       label='Password'
                       type='password'
                       name='password'
-                      value={this.state.password}
+                      value={this.state.user.password}
                       onChange={this.handleInputChange}
                       className={classes.textField}
                       margin='normal'
@@ -244,12 +260,8 @@ class loginModal extends Component {
 const mapStateToProps = (state) => {
   return {
     modalLogin: state.modalLoginReducer.loginModalOpen,
+    userReducer: state.userReducer,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    closeModalLogin: () => dispatch(closeModalLogin()),
-  };
-};
-export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(loginModal);
+export default compose(withStyles(styles), connect(mapStateToProps, { closeModalLogin, loginAction }))(loginModal);

@@ -14,10 +14,10 @@ export function getDataEpisodes(movieId) {
           payload: response.data.data,
         }),
       )
-      .catch((response) =>
+      .catch((error) =>
         dispatch({
           type: GET_EPISODE_BY_MOVIE_ERROR,
-          payload: response.error,
+          payload: error,
         }),
       );
   };
