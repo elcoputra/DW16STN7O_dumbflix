@@ -1,11 +1,13 @@
 import { OPEN_MODAL_REGISTER, CLOSE_MODAL_REGISTER, OPEN_MODAL_LOGIN, CLOSE_MODAL_LOGIN } from '../actionTypes';
 
-const initialState = {
+const initialStateRegisterModal = {
   registerModalOpen: false,
+};
+const initialStateLoginModal = {
   loginModalOpen: false,
 };
 
-export const modalRegisterReducer = (state = initialState, action) => {
+export const modalRegisterReducer = (state = initialStateRegisterModal, action) => {
   switch (action.type) {
     case OPEN_MODAL_REGISTER:
       return { ...state, registerModalOpen: action.payload };
@@ -16,7 +18,7 @@ export const modalRegisterReducer = (state = initialState, action) => {
   }
 };
 
-export const modalLoginReducer = (state = initialState, action) => {
+export const modalLoginReducer = (state = initialStateLoginModal, action) => {
   switch (action.type) {
     case OPEN_MODAL_LOGIN:
       return { ...state, loginModalOpen: action.payload };

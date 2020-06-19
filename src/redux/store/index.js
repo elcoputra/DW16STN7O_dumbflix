@@ -1,16 +1,16 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import rootReducer from '../reducers/rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import promise from 'redux-promise-middleware';
+import thunk from 'redux-thunk';
 import { modalRegisterReducer, modalLoginReducer } from '../reducers/modal_reducer';
+import movieReducer from '../reducers/movie_reducer';
 
 // global reducer combine
 const reducers = combineReducers({
-  rootReducer,
   modalRegisterReducer,
   modalLoginReducer,
+  movieReducer,
 });
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(promise)));
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;
