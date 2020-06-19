@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Card, CardActionArea, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import DataMovie from '../data/dataMovies.json';
 import { Link } from 'react-router-dom';
 import { getDataMovie } from '../redux/actions/movie_action';
 import { compose } from 'recompose';
@@ -78,7 +77,6 @@ class movie extends Component {
     const { dataMovies, loading, error } = this.props.dataMovies;
     return (
       <div>
-        {console.log(dataMovies, loading, error)}
         {loading ? (
           <div style={{ color: 'white' }}>loading...</div>
         ) : (
@@ -95,7 +93,7 @@ class movie extends Component {
                 justify='flex-start'
                 alignItems='flex-start'
               >
-                {DataMovie.slice(this.props.init, this.props.end).map((detailData) => {
+                {dataMovies.slice(this.props.init, this.props.end).map((detailData) => {
                   return (
                     <div className={classes.Div}>
                       <Grid item xs>
@@ -107,16 +105,8 @@ class movie extends Component {
                               to={{
                                 pathname: `/Detail/${detailData.title}`,
                                 state: {
-                                  linkTrailer: detailData.linkTrailer,
-                                  thumbnail: detailData.thumbnail,
-                                  title: detailData.title,
-                                  year: detailData.year,
-                                  type: detailData.type,
-                                  description: detailData.description,
-                                  linkFilm: detailData.linkFilm,
-                                  thumbnailTrailer: detailData.thumbnailTrailer,
+                                  id: detailData.id,
                                   isMovie: true,
-                                  thumbnailFilm: detailData.thumbnailFilm,
                                   isAdmin: this.state.isAdmin,
                                 },
                               }}
