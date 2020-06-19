@@ -3,6 +3,7 @@ import { Grid, Card, CardActionArea, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { getDataTv, getDetailMovie } from '../redux/actions/movie_action';
+import { getDataEpisodes } from '../redux/actions/episode_action';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -123,7 +124,10 @@ class tv extends Component {
                           <CardActionArea className={classes.CardActionArea}>
                             <Link
                               className={classes.Link}
-                              onClick={() => this.props.getDetailMovie(detailData.id)}
+                              onClick={() => {
+                                this.props.getDetailMovie(detailData.id);
+                                this.props.getDataEpisodes(detailData.id);
+                              }}
                               to={{
                                 pathname: `/Detail/${detailData.id}/${detailData.title}`,
                               }}
@@ -151,7 +155,7 @@ const mapStateToProps = (state) => {
     dataTv: state.tvReducer,
   };
 };
-export default compose(withStyles(styles), connect(mapStateToProps, { getDataTv, getDetailMovie }))(tv);
+export default compose(withStyles(styles), connect(mapStateToProps, { getDataTv, getDetailMovie, getDataEpisodes }))(tv);
 
 // TUT memakai map
 // {DataTv.map((detailData, index) => {

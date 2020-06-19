@@ -172,6 +172,7 @@ class detailPlayer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      numberEpisode: 0,
       isAdmin: false,
       isTvShow: false,
     };
@@ -188,31 +189,18 @@ class detailPlayer extends Component {
   //   this.showModalADD = handleOpenAddEpisode;
   // };
   episodeIncrease = () => {
-    if (this.state.currentEpisode <= Object.keys(this.state.episode).length) {
+    const maxEpisode = this.props.episodeReducer.dataEpisode.length - 1;
+    console.log(maxEpisode);
+    if (this.state.numberEpisode < maxEpisode) {
       this.setState({
-        currentEpisode: this.state.currentEpisode + 1,
-      });
-      this.setState({
-        linkEpisode: this.state.episode[this.state.currentEpisode],
+        numberEpisode: this.state.numberEpisode + 1,
       });
     } else {
       this.setState({
-        currentEpisode: 1,
-      });
-      this.setState({
-        linkEpisode: this.state.episode[1],
+        numberEpisode: 0,
       });
     }
-  };
-  episodeDecrease = () => {
-    if (this.state.currentEpisode > 1 && Object.keys(this.state.episode).length) {
-      this.setState({
-        currentEpisode: this.state.currentEpisode - 1,
-      });
-      this.setState({
-        linkEpisode: this.state.episode[this.state.currentEpisode],
-      });
-    }
+    console.log(this.state.numberEpisode);
   };
   // handleOpenAddEpisodeModal = () => {
   //   this.showModalADD();
@@ -222,18 +210,16 @@ class detailPlayer extends Component {
   //     openDialogAddEpisode: false,
   //   });
   // };
-
   render(props, data) {
     const { classes } = this.props;
-    const { dataDetailMovie } = this.props.detailMovieReducer;
+    const { dataDetailMovie, loadingDetailMovie } = this.props.detailMovieReducer;
+    const { dataEpisode, loadingEpisode } = this.props.episodeReducer;
     // fixing dapetin category undefined padahal ada, FvCK!!! bisin setengah hari buat kaya gini doang
     const nameCategory = dataDetailMovie && dataDetailMovie.category ? dataDetailMovie.category.name : null;
     // var series = this.findID(DataSeries, this.state.id);
-
-    console.log(this.state.isTvShow, this.state.isAdmin);
     return (
       <div>
-        {console.log(nameCategory)}
+        {/* {console.log(dataEpisode.length)} */}
         <ModalAddEpisode ref='modal' />
         {/* DIALOG */}
         {/* <ModalAddEpisode ref={this.addEpisodeModalRef}></ModalAddEpisode> */}
@@ -301,36 +287,47 @@ class detailPlayer extends Component {
             </Grid>
           </Grid>
           <Grid item xs={5}>
-            <Grid container direction='column' justify='space-between' alignItems='flex-start'>
-              <Grid item xs>
-                {this.state.isMovie ? (
-                  <ReactPlayer
-                    height={'272px'}
-                    width={'494px'}
-                    url={this.state.linkFilm}
-                    playing
-                    controls={true}
-                    light={this.state.thumbnailFilm}
-                  />
-                ) : (
-                  <ReactPlayer height={'272px'} width={'494px'} url={this.state.linkEpisode} playing controls={true} light />
-                )}
+            {loadingEpisode ? (
+              'Loading...'
+            ) : (
+              <Grid container direction='column' justify='space-between' alignItems='flex-start'>
+                <Grid item xs>
+                  {dataEpisode.length === 1 ? (
+                    <ReactPlayer
+                      height={'272px'}
+                      width={'494px'}
+                      url={dataEpisode[this.state.numberEpisode].linkEpisode}
+                      playing
+                      controls={true}
+                      light={dataEpisode[this.state.numberEpisode].thumbnailEpisode}
+                    />
+                  ) : dataEpisode.length > 1 ? (
+                    <ReactPlayer
+                      height={'272px'}
+                      width={'494px'}
+                      url={dataEpisode[this.state.numberEpisode].linkEpisode}
+                      playing
+                      controls={true}
+                      light
+                    />
+                  ) : null}
+                </Grid>
+                <Grid item xs>
+                  {dataEpisode.length === 1 ? (
+                    <p className={classes.TextInfo}>
+                      {dataEpisode[this.state.numberEpisode].title} : {dataEpisode[this.state.numberEpisode].movie.category.name}
+                    </p>
+                  ) : dataEpisode.length > 0 ? (
+                    <p className={classes.TextInfo}>
+                      {dataEpisode[this.state.numberEpisode].title} : {dataEpisode[this.state.numberEpisode].movie.category.name}{' '}
+                      <Button className={classes.test} onClick={this.episodeIncrease}>
+                        <img src={NextIcon} alt='' />
+                      </Button>
+                    </p>
+                  ) : null}
+                </Grid>
               </Grid>
-              <Grid item xs>
-                {this.state.isMovie ? (
-                  <p className={classes.TextInfo}>
-                    {this.state.title} : {this.state.type}
-                  </p>
-                ) : (
-                  <p className={classes.TextInfo}>
-                    {this.state.title} : {this.state.type} - Episode {this.state.currentEpisode}{' '}
-                    <Button className={classes.test} onClick={this.episodeIncrease}>
-                      <img src={NextIcon} alt='' />
-                    </Button>
-                  </p>
-                )}
-              </Grid>
-            </Grid>
+            )}
           </Grid>
         </Grid>
 
@@ -342,6 +339,7 @@ class detailPlayer extends Component {
 const mapStateToProps = (state) => {
   return {
     detailMovieReducer: state.detailMovieReducer,
+    episodeReducer: state.episodeReducer,
   };
 };
 

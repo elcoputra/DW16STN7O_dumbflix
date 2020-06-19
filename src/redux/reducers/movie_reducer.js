@@ -71,7 +71,7 @@ export const tvReducer = (state = initialStateTV, action) => {
 };
 
 const initialStateDetailMovie = {
-  dataDetailMovie: {},
+  dataDetailMovie: [],
   loadingDetailMovie: false,
   errorDetailMovie: '',
 };

@@ -3,6 +3,7 @@ import { Grid, Card, CardActionArea, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { getDataMovie, getDetailMovie } from '../redux/actions/movie_action';
+import { getDataEpisodes } from '../redux/actions/episode_action';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -102,7 +103,10 @@ class movie extends Component {
                             {/* <Link className={classes.Link} to={'/Detail'}> */}
                             <Link
                               className={classes.Link}
-                              onClick={() => this.props.getDetailMovie(detailData.id)}
+                              onClick={() => {
+                                this.props.getDetailMovie(detailData.id);
+                                this.props.getDataEpisodes(detailData.id);
+                              }}
                               to={{
                                 pathname: `/Detail/${detailData.id}/${detailData.title}`,
                               }}
@@ -130,4 +134,4 @@ const mapStateToProps = (state) => {
     dataMovies: state.movieReducer,
   };
 };
-export default compose(withStyles(styles), connect(mapStateToProps, { getDataMovie, getDetailMovie }))(movie);
+export default compose(withStyles(styles), connect(mapStateToProps, { getDataMovie, getDetailMovie, getDataEpisodes }))(movie);

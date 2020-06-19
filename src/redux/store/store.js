@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { modalRegisterReducer, modalLoginReducer } from '../reducers/modal_reducer';
 import { movieReducer, tvReducer, detailMovieReducer } from '../reducers/movie_reducer';
+import { episodeReducer } from '../reducers/episode_reducer';
 
 // global reducer combine
 const reducers = combineReducers({
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   movieReducer,
   tvReducer,
   detailMovieReducer,
+  episodeReducer,
 });
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
