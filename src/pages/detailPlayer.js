@@ -214,6 +214,7 @@ class detailPlayer extends Component {
     const { classes } = this.props;
     const { dataDetailMovie, loadingDetailMovie } = this.props.detailMovieReducer;
     const { dataEpisode, loadingEpisode } = this.props.episodeReducer;
+    const { userState, loading } = this.props.authReducer;
     // fixing dapetin category undefined padahal ada, FvCK!!! bisin setengah hari buat kaya gini doang
     const nameCategory = dataDetailMovie && dataDetailMovie.category ? dataDetailMovie.category.name : null;
     // var series = this.findID(DataSeries, this.state.id);
@@ -241,7 +242,7 @@ class detailPlayer extends Component {
         </Box>
         {}
 
-        {this.state.isTvShow && this.state.isAdmin ? (
+        {dataEpisode.length > 1 && userState.isAdmin ? (
           <div>
             <Button variant='contained' onClick={this.handleOpenAddEpisodeModal} className={classes.ButtonAddEpisode}>
               Add Episode
@@ -340,6 +341,7 @@ const mapStateToProps = (state) => {
   return {
     detailMovieReducer: state.detailMovieReducer,
     episodeReducer: state.episodeReducer,
+    authReducer: state.authReducer,
   };
 };
 

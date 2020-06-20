@@ -6,7 +6,7 @@ import LoginModal from './loginModal';
 import RegisterModal from './registerModal';
 import { Link } from 'react-router-dom';
 import Segitiga from '../img/decor/segitiga.png';
-import { PersonOutline, Payment, ExitToApp, Movie } from '@material-ui/icons';
+import { PersonOutline, Payment, ExitToApp, Movie, Receipt } from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { openModalRegister, openModalLogin } from '../redux/actions/modal_actions';
@@ -40,7 +40,7 @@ const styles = (theme) => ({
     top: '36px',
     left: '-117%',
     width: '220px',
-    height: '150px',
+    height: '180px',
     borderRadius: '10px',
   },
   AppBar: {
@@ -114,6 +114,10 @@ const styles = (theme) => ({
   buttonMenuFilm: {
     width: 220,
     paddingRight: 84,
+  },
+  buttonMenuReceipt: {
+    width: 220,
+    paddingRight: 67,
   },
 });
 
@@ -269,8 +273,8 @@ class nav extends Component {
               </Box>
             </Grid>
             <Grid container direction='row' justify='center' alignItems='center'>
-              <Link className={classes.Link} to='/Transaction'>
-                <Button onClick={this.loginAdmin} className={classes.ButtonAvatar}>
+              <Link className={classes.Link} to='/'>
+                <Button className={classes.ButtonAvatar}>
                   <img src={LOGO} alt='Brand' />
                 </Button>
               </Link>
@@ -354,6 +358,12 @@ class nav extends Component {
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuFilm}>
                             <Movie className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Film</b>
+                          </Button>
+                        </Link>
+                        <Link className={classes.Link} to='/Transactions'>
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuReceipt}>
+                            <Receipt className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Trans</b>
                           </Button>
                         </Link>
                         <Button className={classes.buttonMenuPay}></Button>

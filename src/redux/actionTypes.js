@@ -37,3 +37,7 @@ export const AUTH_SUCCSESS = 'AUTH_SUCCSESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const LOGOUT_USER = 'LOGOUT_USER';
+
+export const UPGRADE_REQUEST = 'UPGRADE_REQUEST';
+export const UPGRADE_SUCCSESS = 'UPGRADE_SUCCSESS';
+export const UPGRADE_ERROR = 'UPGRADE_ERROR';

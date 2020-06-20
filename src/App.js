@@ -27,7 +27,7 @@ class App extends Component {
           <CssBaseline />
           <Navbar />
           <Switch>
-            <Route path='/Transaction' component={Transaction} />
+            <Route path='/Transactions' component={Transaction} />
             <Route path='/learn' component={learn} />
             <Route path='/ListFilm' component={ListFilm} />
             <Route path='/AddFilm' component={AddFilm} />
