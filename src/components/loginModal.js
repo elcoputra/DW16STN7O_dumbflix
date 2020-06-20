@@ -161,10 +161,14 @@ class loginModal extends Component {
   render() {
     const { classes } = this.props;
     const { error, isLogin } = this.props.userReducer;
+    const { userState, loading } = this.props.authReducer;
+
     const errorHandling = error && error.data ? error.data.error : null;
     const errorMessageHandling = error && error.data ? error.data.message : null;
+    const isSubscribeState = userState ? userState.subscribe : false;
+    const isLoginState = userState ? userState.isLogin : false;
 
-    if (isLogin) return <Redirect to='/Upgrade' />;
+    if (!loading && isLoginState && !isSubscribeState) return <Redirect to='/Upgrade' />;
 
     return (
       <div>
@@ -264,6 +268,7 @@ const mapStateToProps = (state) => {
   return {
     modalLogin: state.modalLoginReducer.loginModalOpen,
     userReducer: state.userReducer,
+    authReducer: state.authReducer,
   };
 };
 

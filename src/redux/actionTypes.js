@@ -35,3 +35,5 @@ export const GET_EPISODE_BY_MOVIE_ERROR = 'GET_EPISODE_BY_MOVIE_ERROR';
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_SUCCSESS = 'AUTH_SUCCSESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+export const LOGOUT_USER = 'LOGOUT_USER';

@@ -10,6 +10,7 @@ import { PersonOutline, Payment, ExitToApp, Movie } from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { openModalRegister, openModalLogin } from '../redux/actions/modal_actions';
+import { authAction, logoutUser } from '../redux/actions/auth_action';
 
 const styles = (theme) => ({
   marginAutoItem: {},
@@ -184,22 +185,18 @@ class nav extends Component {
   };
 
   logutAccount = () => {
-    if (this.state.isLogin === true) {
-      localStorage.setItem('isLogin', false);
-      this.getDataLocalStorage();
-    }
+    localStorage.removeItem('token');
     this.setState({
       isMenu: false,
     });
+    this.props.logoutUser();
   };
   logutAdminAccount = () => {
-    if (this.state.isAdmin === true) {
-      localStorage.setItem('isAdmin', false);
-      this.getDataLocalStorage();
-    }
+    localStorage.removeItem('token');
     this.setState({
       isMenu: false,
     });
+    this.props.logoutUser();
   };
 
   loginAdmin = () => {
@@ -245,7 +242,9 @@ class nav extends Component {
   render(props) {
     const { classes } = this.props;
     const { isLogin } = this.props.userReducer;
-    // className={classes.AppBar}
+    const { userState, loading } = this.props.authReducer;
+    const isLoginUserState = userState ? userState.isLogin : false;
+    const isAdminState = userState ? userState.isAdmin : false;
     return (
       <div>
         <LoginModal sendDataIsLogin={this.getDataFromModalComponent} ref={this.loginModalRef}></LoginModal>
@@ -278,7 +277,7 @@ class nav extends Component {
             </Grid>
             <Grid container direction='row' justify='flex-end' alignItems='center'>
               {/* AVA dan dropdown menu client, serta logic button login register untuk client dan admin */}
-              {isLogin ? (
+              {isLoginUserState && !isAdminState ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
                     <Avatar alt='Elco Lebih Ganteng' src='https://i.imgur.com/WcVXGbM.jpg' className={classes.Avatar} />
@@ -317,8 +316,10 @@ class nav extends Component {
                 </div>
               ) : (
                 <div>
-                  {this.state.isAdmin ? (
+                  {isAdminState ? (
                     <div></div>
+                  ) : loading ? (
+                    'AUTHENTICATING ....'
                   ) : (
                     <>
                       <Button onClick={this.props.openModalRegister} variant='contained' className={classes.ButtonRegister}>
@@ -338,7 +339,7 @@ class nav extends Component {
                 </div>
               )}
               {/* Aavatar dan dropdown menu untu admin */}
-              {this.state.isAdmin ? (
+              {isAdminState ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
                     <Avatar alt='Lisa Pacar Elco' src='https://i.imgur.com/woAAzCF.jpg' className={classes.Avatar} />
@@ -382,12 +383,15 @@ class nav extends Component {
 const mapStateToProps = (state) => {
   return {
     userReducer: state.userReducer,
+    authReducer: state.authReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     openModalRegister: () => dispatch(openModalRegister()),
     openModalLogin: () => dispatch(openModalLogin()),
+    authAction: () => dispatch(authAction()),
+    logoutUser: () => dispatch(logoutUser()),
   };
 };
 export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(nav);
