@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Modal, Backdrop, Fade, Box, Grid, TextField, Button } from '@material-ui/core';
 import { closeModalRegister } from '../redux/actions/modal_actions';
+import { registerAction } from '../redux/actions/account_action';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const styles = (theme) => ({
   modal: {
@@ -71,6 +73,9 @@ const styles = (theme) => ({
   GridClickHere: {
     marginTop: '25px',
   },
+  errorResponse: {
+    color: 'white',
+  },
 });
 
 class registerModal extends Component {
@@ -79,6 +84,7 @@ class registerModal extends Component {
     this.state = {
       open: false,
       data: {},
+      user: {},
     };
   }
   handleOpenRegister = () => {
@@ -90,20 +96,31 @@ class registerModal extends Component {
   };
 
   handleChangeInput = (event) => {
-    const { data } = this.state;
+    const { user } = this.state;
     this.setState({
-      data: { ...data, [event.target.name]: event.target.value },
+      user: { ...user, [event.target.name]: event.target.value },
     });
   };
 
   handleSubmitRegister = async (event) => {
-    event.preventDefault();
-    this.props.register(this.state.data);
-    this.setState({ data: {} });
+    this.props.registerAction(this.state.user);
+    this.setState({
+      user: {},
+    });
+    console.log(this.state.user);
   };
 
   render() {
     const { classes } = this.props;
+    const { error, isLogin } = this.props.userReducer;
+    const { userState, loading } = this.props.authReducer;
+
+    const errorHandling = error && error.data ? error.data.error : null;
+    const errorMessageHandling = error && error.data ? error.data.message : null;
+    const isSubscribeState = userState ? userState.subscribe : false;
+    const isLoginState = userState ? userState.isLogin : false;
+
+    if (!loading && isLoginState && !isSubscribeState) return <Redirect to='/Upgrade' />;
     return (
       <div>
         {console.log(this.props.modalRegister)}
@@ -120,6 +137,10 @@ class registerModal extends Component {
           <Fade in={this.props.modalRegister}>
             <Box className={classes.Box}>
               <b className={classes.Title}>Register</b>
+              <div className={classes.errorResponse}>
+                {errorHandling}
+                {errorMessageHandling}
+              </div>
               <Grid className={classes.GridInput} container direction='column' justify='center' alignItems='center'>
                 <Grid item xs={12}>
                   <TextField
@@ -127,8 +148,8 @@ class registerModal extends Component {
                     label='Email'
                     name='email'
                     type='email'
-                    value={this.state.password ? this.state.password : ''}
-                    onChange={this.handleChange}
+                    value={this.state.user.email ? this.state.user.email : ''}
+                    onChange={this.handleChangeInput}
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
@@ -153,8 +174,8 @@ class registerModal extends Component {
                     label='Password'
                     name='password'
                     type='password'
-                    value={this.state.password ? this.state.password : ''}
-                    onChange={this.handleChange}
+                    value={this.state.user.password ? this.state.user.password : ''}
+                    onChange={this.handleChangeInput}
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
@@ -179,8 +200,8 @@ class registerModal extends Component {
                     label='Full Name'
                     name='fullName'
                     type='string'
-                    value={this.state.fullName ? this.state.fullName : ''}
-                    onChange={this.handleChange}
+                    value={this.state.user.fullName ? this.state.user.fullName : ''}
+                    onChange={this.handleChangeInput}
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
@@ -204,8 +225,8 @@ class registerModal extends Component {
                     id='standard-name'
                     label='Gender'
                     name='gender'
-                    value={this.state.gender ? this.state.gender : ''}
-                    onChange={this.handleChange}
+                    value={this.state.user.gender ? this.state.user.gender : ''}
+                    onChange={this.handleChangeInput}
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
@@ -229,8 +250,8 @@ class registerModal extends Component {
                     id='standard-name'
                     label='Phone'
                     name='phone'
-                    value={this.state.phone ? this.state.phone : ''}
-                    onChange={this.handleChange}
+                    value={this.state.user.phone ? this.state.user.phone : ''}
+                    onChange={this.handleChangeInput}
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
@@ -254,8 +275,8 @@ class registerModal extends Component {
                     id='standard-name'
                     label='Address'
                     name='address'
-                    value={this.state.address ? this.state.address : ''}
-                    onChange={this.handleChange}
+                    value={this.state.user.address ? this.state.user.address : ''}
+                    onChange={this.handleChangeInput}
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
@@ -294,12 +315,9 @@ class registerModal extends Component {
 const mapStateToProps = (state) => {
   return {
     modalRegister: state.modalRegisterReducer.registerModalOpen,
+    userReducer: state.userReducer,
+    authReducer: state.authReducer,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    closeModalRegister: () => dispatch(closeModalRegister()),
-  };
-};
-export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(registerModal);
+export default compose(withStyles(styles), connect(mapStateToProps, { closeModalRegister, registerAction }))(registerModal);
