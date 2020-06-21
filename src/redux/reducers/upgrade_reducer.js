@@ -1,7 +1,7 @@
 import { UPGRADE_ERROR, UPGRADE_REQUEST, UPGRADE_SUCCSESS } from '../actionTypes';
 
 const initialState = {
-  loading: false,
+  loading: null,
   error: '',
 };
 

@@ -158,7 +158,7 @@ class upgradePage extends Component {
 
   render() {
     const { classes } = this.props;
-    const { error } = this.props.upgradeReducer;
+    const { error, loading } = this.props.upgradeReducer;
     const errorHandling = error && error.data ? error.data.error : null;
     const errorMessageHandling = error && error.data ? error.data.message : null;
     return (
@@ -169,6 +169,7 @@ class upgradePage extends Component {
           </Grid>
           <Grid item xs>
             <div className={classes.errorResponse}>
+              {loading == null ? null : loading ? null : 'Succsess add your transaction'}
               {errorHandling}
               {errorMessageHandling}
             </div>

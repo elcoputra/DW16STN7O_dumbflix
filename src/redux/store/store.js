@@ -7,6 +7,7 @@ import { episodeReducer } from '../reducers/episode_reducer';
 import { userReducer } from '../reducers/account_reducer';
 import { authReducer } from '../reducers/auth_reducer';
 import { upgradeReducer } from '../reducers/upgrade_reducer';
+import { transactionsReducer, transactionByIdReducer } from '../reducers/transactions_reducer';
 
 // global reducer combine
 const reducers = combineReducers({
@@ -19,6 +20,8 @@ const reducers = combineReducers({
   userReducer,
   authReducer,
   upgradeReducer,
+  transactionsReducer,
+  transactionByIdReducer,
 });
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
