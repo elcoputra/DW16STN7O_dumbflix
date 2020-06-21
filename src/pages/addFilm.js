@@ -17,6 +17,7 @@ import { AttachFile, Add } from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { getCategories } from '../redux/actions/categories_action';
+import { addDataMovie } from '../redux/actions/movie_action';
 
 const styles = (theme) => ({
   // Styling Dropdown
@@ -240,23 +241,22 @@ const styles = (theme) => ({
 });
 
 class addFilm extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       uploadFilm: {},
-      uploadEpisodes: [{ title: '', linkEpisode: '', thumbnailEpisode: '', movieId: '' }],
+      uploadEpisodes: [{ title: '', linkEpisode: '', thumbnailEpisode: '', movieId: 0 }],
       open: false,
     };
   }
-
   componentDidMount() {
     this.props.getCategories();
   }
 
-  handleChange = (event) => {
-    const { upload } = this.state;
+  handleChangeFilmInputGroup = (event) => {
+    const { uploadFilm } = this.state;
     this.setState({
-      upload: { ...upload, [event.target.name]: event.target.value },
+      uploadFilm: { ...uploadFilm, [event.target.name]: event.target.value },
     });
   };
   handleCloseModalAttatch = () => {
@@ -276,6 +276,116 @@ class addFilm extends Component {
     });
   };
 
+  // REUSABLE ADD EPISODE COMPONENT
+
+  uiAddEpisode() {
+    const { classes } = this.props;
+    return this.state.uploadEpisodes.map((el, i) => (
+      <div key={i}>
+        <Grid item xs>
+          <Grid container direction='row' justify='flex-start' alignItems='center'>
+            <Grid item xs>
+              <TextField
+                id='standard-name'
+                label='Title Episode'
+                name='title'
+                value={el.title || ''}
+                onChange={this.handleChange.bind(this, i)}
+                className={classes.textField}
+                margin='normal'
+                variant='outlined'
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs>
+              <div className={classes.cheatMargin}>
+                <TextField
+                  id='standard-name'
+                  label='Thumbnail Episode'
+                  name='thumbnailEpisode'
+                  value={el.thumbnailEpisode || ''}
+                  onChange={this.handleChange.bind(this, i)}
+                  className={classes.textFieldInsertLinkThumbnailEpisode}
+                  margin='normal'
+                  variant='outlined'
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                />
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs>
+          <TextField
+            id='standard-name'
+            label='Link Episode'
+            name='linkEpisode'
+            value={el.linkEpisode || ''}
+            onChange={this.handleChange.bind(this, i)}
+            className={classes.textField2}
+            margin='normal'
+            variant='outlined'
+            InputLabelProps={{
+              classes: {
+                root: classes.cssLabel,
+                focused: classes.cssFocused,
+              },
+            }}
+            InputProps={{
+              classes: {
+                root: classes.cssOutlinedInput,
+                focused: classes.cssFocused,
+                notchedOutline: classes.notchedOutline,
+              },
+              inputMode: 'numeric',
+            }}
+          />
+        </Grid>
+      </div>
+    ));
+  }
+
+  handleChange(i, e) {
+    const { name, value } = e.target;
+    let uploadEpisodes = [...this.state.uploadEpisodes];
+    uploadEpisodes[i] = { ...uploadEpisodes[i], [name]: value };
+    this.setState({ uploadEpisodes });
+  }
+  addClick() {
+    this.setState((prevState) => ({
+      uploadEpisodes: [...prevState.uploadEpisodes, { title: '', linkEpisode: '', thumbnailEpisode: '', movieId: 0 }],
+    }));
+  }
+  handleSubmit = () => {
+    const { uploadFilm, uploadEpisodes } = this.state;
+    this.props.addDataMovie(uploadFilm, uploadEpisodes);
+  };
+
+  // REUSABLE ADD EPISODE COMPONENT END
+
   render(props) {
     const { classes } = this.props;
     const { categories, loading } = this.props.categoriesReducer;
@@ -294,7 +404,7 @@ class addFilm extends Component {
                   label='Title'
                   name='title'
                   value={this.state.uploadFilm.title}
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeFilmInputGroup}
                   className={classes.textField}
                   margin='normal'
                   variant='outlined'
@@ -335,7 +445,7 @@ class addFilm extends Component {
               label='Year'
               name='year'
               value={this.state.uploadFilm.year}
-              onChange={this.handleChange}
+              onChange={this.handleChangeFilmInputGroup}
               type='number'
               className={classes.textField2}
               margin='normal'
@@ -369,7 +479,7 @@ class addFilm extends Component {
                   name='categoryId'
                   label='Category'
                   value={this.state.uploadFilm.categoryId}
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeFilmInputGroup}
                   className={classes.select}
                   inputProps={{
                     classes: {
@@ -394,101 +504,14 @@ class addFilm extends Component {
               rowsMin={10}
               name='description'
               value={this.state.uploadFilm.description}
-              onChange={this.handleChange}
+              onChange={this.handleChangeFilmInputGroup}
               placeholder='Description'
             />
           </Grid>
+          {/* TI SINI TEMPAT RUSABLE DI SIMPEN */}
+          {this.uiAddEpisode()}
           <Grid item xs>
-            <Grid container direction='row' justify='flex-start' alignItems='center'>
-              <Grid item xs>
-                <TextField
-                  id='standard-name'
-                  name='Title Episode'
-                  // value={this.state.uploadFilm.description}
-                  // onChange={this.handleChange}
-                  label='Title Episode'
-                  className={classes.textField}
-                  margin='normal'
-                  variant='outlined'
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.cssLabel,
-                      focused: classes.cssFocused,
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      root: classes.cssOutlinedInput,
-                      focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                    },
-                  }}
-                />
-              </Grid>
-              <Grid item xs>
-                {/* <Button variant='contained' className={classes.ButtonAttatch}>
-                  <Grid container direction='row' justify='space-between' alignItems='center'>
-                    <Grid item xs={9}>
-                      <b className={classes.attatchText}>Attatch Thumbnail</b>
-                    </Grid>
-                    <Grid className={classes.attatchIcon} item xs>
-                      <AttachFile className={classes.icon} />
-                    </Grid>
-                  </Grid>
-                </Button> */}
-                <div className={classes.cheatMargin}>
-                  <TextField
-                    id='standard-name'
-                    name='Title Episode'
-                    // value={this.state.uploadFilm.description}
-                    // onChange={this.handleChange}
-                    label='Thumbnail Episode'
-                    className={classes.textFieldInsertLinkThumbnailEpisode}
-                    margin='normal'
-                    variant='outlined'
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
-                  />
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs>
-            <TextField
-              id='standard-name'
-              label='Link Episode'
-              className={classes.textField2}
-              margin='normal'
-              variant='outlined'
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-                inputMode: 'numeric',
-              }}
-            />
-          </Grid>
-          <Grid item xs>
-            <Button variant='contained' className={classes.ButtonAddForm}>
+            <Button variant='contained' onClick={this.addClick.bind(this)} className={classes.ButtonAddForm}>
               <Add className={classes.iconAddForm} />
             </Button>
           </Grid>
@@ -496,7 +519,7 @@ class addFilm extends Component {
             <Grid container>
               <Grid item xs={11}></Grid>
               <Grid item xs={1}>
-                <Button variant='contained' className={classes.ButtonSave}>
+                <Button variant='contained' onClick={this.handleSubmit} className={classes.ButtonSave}>
                   Save
                 </Button>
               </Grid>
@@ -527,7 +550,7 @@ class addFilm extends Component {
                 label='Thumbnail Film'
                 name='thumbnail'
                 value={this.state.uploadFilm.thumbnail}
-                onChange={this.handleChange}
+                onChange={this.handleChangeFilmInputGroup}
                 className={classes.textField}
                 margin='normal'
                 variant='outlined'
@@ -549,9 +572,9 @@ class addFilm extends Component {
               <TextField
                 id='standard-name'
                 label='Thumbnail Trailer'
-                name='thumbnailTrailer '
+                name='thumbnailTrailer'
                 value={this.state.uploadFilm.thumbnailTrailer}
-                onChange={this.handleChange}
+                onChange={this.handleChangeFilmInputGroup}
                 className={classes.textField}
                 margin='normal'
                 variant='outlined'
@@ -586,7 +609,9 @@ class addFilm extends Component {
 const mapStateToProps = (state) => {
   return {
     categoriesReducer: state.categoriesReducer,
+    addMovieReducer: state.addMovieReducer,
+    episodeAddReducer: state.episodeAddReducer,
   };
 };
 
-export default compose(withStyles(styles), connect(mapStateToProps, { getCategories }))(addFilm);
+export default compose(withStyles(styles), connect(mapStateToProps, { getCategories, addDataMovie }))(addFilm);

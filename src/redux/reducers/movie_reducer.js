@@ -11,7 +11,40 @@ import {
   ADD_EPISODE_REQUEST,
   ADD_EPISODE_ERROR,
   ADD_EPISODE_SUCCSESS,
+  ADD_MOVIE_SUCCSESS,
+  ADD_MOVIE_ERROR,
+  ADD_MOVIE_REQUEST,
 } from '../actionTypes';
+
+const initialStateAddMovie = {
+  dataMovie: {},
+  loading: false,
+  error: '',
+};
+
+export const addMovieReducer = (state = initialStateAddMovie, action) => {
+  switch (action.type) {
+    case ADD_MOVIE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_MOVIE_SUCCSESS:
+      return {
+        ...state,
+        loading: false,
+        dataMovie: action.payload,
+      };
+    case ADD_MOVIE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
 const initialStateMovie = {
   dataMovies: [],

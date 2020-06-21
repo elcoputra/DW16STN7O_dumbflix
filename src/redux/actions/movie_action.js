@@ -11,27 +11,35 @@ import {
   ADD_EPISODE_REQUEST,
   ADD_EPISODE_ERROR,
   ADD_EPISODE_SUCCSESS,
+  ADD_MOVIE_SUCCSESS,
+  ADD_MOVIE_ERROR,
+  ADD_MOVIE_REQUEST,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
-import { getDataEpisodes } from '../actions/episode_action';
+import { getDataEpisodes, addDataEpisodes } from '../actions/episode_action';
 
-// export const getDataMovie = () => async (dispatch) => {
-//   dispatch({
-//     type: GET_MOVIES_REQUEST,
-//   });
-//   try {
-//     const response = await API.get('/movies');
-//     dispatch({
-//       type: GET_MOVIES_SUCCSESS,
-//       payload: response.data.data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: GET_MOVIES_ERROR,
-//       payload: error,
-//     });
-//   }
-// };
+export function addDataMovie(uploadFilm, uploadEpisodes) {
+  return function (dispatch) {
+    dispatch({
+      type: ADD_MOVIE_REQUEST,
+      payload: true,
+    });
+    API.post('/movie', uploadFilm)
+      .then((response) =>
+        dispatch(
+          { type: ADD_MOVIE_SUCCSESS, payload: response.data.data },
+          dispatch(addDataEpisodes(response.data.data.id, uploadEpisodes)),
+        ),
+      )
+      .catch((response) =>
+        dispatch({
+          type: ADD_MOVIE_ERROR,
+          payload: response,
+        }),
+      );
+  };
+}
+
 export function getDataMovie() {
   return function (dispatch) {
     dispatch({

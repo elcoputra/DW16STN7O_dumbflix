@@ -107,7 +107,6 @@ class registerModal extends Component {
     this.setState({
       user: {},
     });
-    console.log(this.state.user);
   };
 
   render() {

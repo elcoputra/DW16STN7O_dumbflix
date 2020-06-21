@@ -148,7 +148,6 @@ class modalAddEpisode extends Component {
 
   handleButtonKirim = () => {
     const { dataDetailMovie } = this.props.detailMovieReducer;
-    console.log(dataDetailMovie.id, dataDetailMovie.title);
     const { upload } = this.state;
     // this.setState({
     //   upload: { movieId: dataDetailMovie.id },
