@@ -1,4 +1,12 @@
-import { LOGIN_SUCCSESS, LOGIN_REQUEST, LOGIN_ERROR, REGISTER_REQUEST, REGISTER_SUCCSESS, REGISTER_ERROR } from '../actionTypes';
+import {
+  LOGIN_SUCCSESS,
+  LOGIN_REQUEST,
+  LOGIN_ERROR,
+  REGISTER_REQUEST,
+  REGISTER_SUCCSESS,
+  REGISTER_ERROR,
+  CLEAR_LOGIN_DATA,
+} from '../actionTypes';
 
 const initialState = {
   userState: {},
@@ -31,6 +39,12 @@ export const userReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+    case CLEAR_LOGIN_DATA:
+      return {
+        ...state,
+        userState: {},
+      };
+
     default:
       return state;
   }

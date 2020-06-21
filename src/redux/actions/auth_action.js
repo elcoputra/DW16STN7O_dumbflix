@@ -1,6 +1,7 @@
-import { AUTH_ERROR, AUTH_REQUEST, AUTH_SUCCSESS } from '../actionTypes';
+import { AUTH_ERROR, AUTH_REQUEST, AUTH_SUCCSESS, LOGOUT_USER } from '../actionTypes';
 import { API, setAuthToken } from '../../config/axiosConfig';
 import { openModalLogin } from '../actions/modal_actions';
+import { clearUserData } from '../actions/account_action';
 
 export function authAction(input) {
   return function (dispatch) {
@@ -33,6 +34,11 @@ export function authAction(input) {
     }
   };
 }
-export const logoutUser = () => ({
-  type: 'LOGOUT_USER',
-});
+export function logoutUser() {
+  return function (dispatch) {
+    {
+      dispatch({ type: LOGOUT_USER });
+      dispatch(clearUserData());
+    }
+  };
+}

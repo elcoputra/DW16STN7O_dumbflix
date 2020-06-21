@@ -1,4 +1,12 @@
-import { LOGIN_SUCCSESS, LOGIN_REQUEST, LOGIN_ERROR, REGISTER_REQUEST, REGISTER_SUCCSESS, REGISTER_ERROR } from '../actionTypes';
+import {
+  LOGIN_SUCCSESS,
+  LOGIN_REQUEST,
+  LOGIN_ERROR,
+  REGISTER_REQUEST,
+  REGISTER_SUCCSESS,
+  REGISTER_ERROR,
+  CLEAR_LOGIN_DATA,
+} from '../actionTypes';
 import { API, setAuthToken } from '../../config/axiosConfig';
 import { closeModalLogin, closeModalRegister } from '../actions/modal_actions';
 import { authAction } from '../actions/auth_action';
@@ -55,5 +63,13 @@ export function registerAction(input) {
           payload: error.response,
         }),
       );
+  };
+}
+
+export function clearUserData() {
+  return function (dispatch) {
+    {
+      dispatch({ type: CLEAR_LOGIN_DATA });
+    }
   };
 }
