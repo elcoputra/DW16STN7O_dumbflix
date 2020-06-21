@@ -8,6 +8,9 @@ import {
   GET_DETAIL_MOVIE_REQUEST,
   GET_DETAIL_MOVIE_SUCCSESS,
   GET_DETAIL_MOVIE_ERROR,
+  ADD_EPISODE_REQUEST,
+  ADD_EPISODE_ERROR,
+  ADD_EPISODE_SUCCSESS,
 } from '../actionTypes';
 
 const initialStateMovie = {
@@ -94,6 +97,34 @@ export const detailMovieReducer = (state = initialStateDetailMovie, action) => {
         ...state,
         loadingTV: false,
         errorDetailMovie: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const initialStateAddEpisode = {
+  loadingAddEpisode: false,
+  errorAddEpisode: '',
+};
+
+export const addEpisode = (state = initialStateAddEpisode, action) => {
+  switch (action.type) {
+    case ADD_EPISODE_REQUEST:
+      return {
+        ...state,
+        loadingAddEpisode: true,
+      };
+    case ADD_EPISODE_SUCCSESS:
+      return {
+        ...state,
+        loadingAddEpisode: action.playload,
+      };
+    case ADD_EPISODE_ERROR:
+      return {
+        ...state,
+        loadingAddEpisode: false,
+        errorAddEpisode: action.playload,
       };
     default:
       return state;

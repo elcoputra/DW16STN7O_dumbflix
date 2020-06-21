@@ -8,8 +8,12 @@ import {
   GET_DETAIL_MOVIE_SUCCSESS,
   GET_DETAIL_MOVIE_ERROR,
   GET_DETAIL_MOVIE_REQUEST,
+  ADD_EPISODE_REQUEST,
+  ADD_EPISODE_ERROR,
+  ADD_EPISODE_SUCCSESS,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
+import { getDataEpisodes } from '../actions/episode_action';
 
 // export const getDataMovie = () => async (dispatch) => {
 //   dispatch({
@@ -68,6 +72,23 @@ export function getDetailMovie(idMovie) {
       .catch((response) =>
         dispatch({
           type: GET_DETAIL_MOVIE_ERROR,
+          payload: response.error,
+        }),
+      );
+  };
+}
+
+export function addEpisode(movieId, dataEpisode) {
+  return function (dispatch) {
+    dispatch({
+      type: ADD_EPISODE_REQUEST,
+    });
+    API.post('/episode', dataEpisode)
+      .then(() => dispatch({ type: ADD_EPISODE_SUCCSESS, payload: false }))
+      .then(() => dispatch(getDataEpisodes(movieId)))
+      .catch((response) =>
+        dispatch({
+          type: ADD_EPISODE_ERROR,
           payload: response.error,
         }),
       );

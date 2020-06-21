@@ -7,6 +7,7 @@ import { Box, Grid, Button } from '@material-ui/core';
 import ReactPlayer from 'react-player';
 import NextIcon from '../img/icon/Vector.png';
 import ModalAddEpisode from '../components/modalAddEpisode';
+import { openModalAddEpisode } from '../redux/actions/modal_actions';
 import { getDetailMovie } from '../redux/actions/movie_action';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
@@ -178,19 +179,15 @@ class detailPlayer extends Component {
     };
   }
 
-  componentDidMount(props) {
-    this.refs.modal.handleCloseAddEpisode();
-  }
-  handleOpenAddEpisodeModal = () => {
-    this.refs.modal.handleOpenAddEpisode();
-  };
+  componentDidMount(props) {}
+
+  handleOpenAddEpisodeModal = () => {};
 
   // addEpisodeModalRef = ({ handleOpenAddEpisode }) => {
   //   this.showModalADD = handleOpenAddEpisode;
   // };
   episodeIncrease = () => {
     const maxEpisode = this.props.episodeReducer.dataEpisode.length - 1;
-    console.log(maxEpisode);
     if (this.state.numberEpisode < maxEpisode) {
       this.setState({
         numberEpisode: this.state.numberEpisode + 1,
@@ -200,7 +197,6 @@ class detailPlayer extends Component {
         numberEpisode: 0,
       });
     }
-    console.log(this.state.numberEpisode);
   };
   // handleOpenAddEpisodeModal = () => {
   //   this.showModalADD();
@@ -221,7 +217,7 @@ class detailPlayer extends Component {
     return (
       <div>
         {/* {console.log(dataEpisode.length)} */}
-        <ModalAddEpisode ref='modal' />
+        <ModalAddEpisode />
         {/* DIALOG */}
         {/* <ModalAddEpisode ref={this.addEpisodeModalRef}></ModalAddEpisode> */}
 
@@ -244,7 +240,7 @@ class detailPlayer extends Component {
 
         {dataEpisode.length > 1 && userState.isAdmin ? (
           <div>
-            <Button variant='contained' onClick={this.handleOpenAddEpisodeModal} className={classes.ButtonAddEpisode}>
+            <Button variant='contained' onClick={() => this.props.openModalAddEpisode()} className={classes.ButtonAddEpisode}>
               Add Episode
             </Button>
             {/* <Button variant="contained" onClick={this.handleOpenAddEpisodeModal} className={classes.ButtonAddEpisode}>
@@ -345,4 +341,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(withStyles(styles), connect(mapStateToProps, { getDetailMovie }))(detailPlayer);
+export default compose(withStyles(styles), connect(mapStateToProps, { getDetailMovie, openModalAddEpisode }))(detailPlayer);
