@@ -1,14 +1,29 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { TextField, Grid, Button, FormControl, InputLabel, Select, MenuItem, TextareaAutosize } from "@material-ui/core";
-import { AttachFile, Add } from "@material-ui/icons";
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import {
+  Modal,
+  Backdrop,
+  Fade,
+  TextField,
+  Grid,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextareaAutosize,
+} from '@material-ui/core';
+import { AttachFile, Add } from '@material-ui/icons';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { getCategories } from '../redux/actions/categories_action';
 
 const styles = (theme) => ({
   // Styling Dropdown
   root: {
-    fontColor: "white",
-    color: "white",
-    labelColor: "white",
+    fontColor: 'white',
+    color: 'white',
+    labelColor: 'white',
   },
   formControl: {
     marginTop: 15,
@@ -16,35 +31,35 @@ const styles = (theme) => ({
     marginLeft: 5,
     height: 50,
     width: 1150,
-    border: "2px solid white",
-    fontColor: "white",
-    color: "white",
-    backgroundColor: "rgba(210, 210, 210, 0.25)",
-    laberColor: "white",
+    border: '2px solid white',
+    fontColor: 'white',
+    color: 'white',
+    backgroundColor: 'rgba(210, 210, 210, 0.25)',
+    laberColor: 'white',
     borderRadius: 5,
   },
   dropdownStyle: {
-    border: "2px solid white",
-    borderRadius: "5%",
-    backgroundColor: "#353535",
-    fontColor: "white",
-    color: "white",
-    laberColor: "white",
+    border: '2px solid white',
+    borderRadius: '5%',
+    backgroundColor: '#353535',
+    fontColor: 'white',
+    color: 'white',
+    laberColor: 'white',
   },
   select: {
-    "&:before": {
-      borderColor: "white",
-      labelColor: "white",
-      fontColor: "white",
+    '&:before': {
+      borderColor: 'white',
+      labelColor: 'white',
+      fontColor: 'white',
     },
-    "&:after": {
-      borderColor: "white",
-      labelColor: "white",
-      fontColor: "white",
+    '&:after': {
+      borderColor: 'white',
+      labelColor: 'white',
+      fontColor: 'white',
     },
   },
   iconDropdown: {
-    fill: "white",
+    fill: 'white',
   },
   // End Styling Dropdown
 
@@ -54,25 +69,30 @@ const styles = (theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
-    color: "white",
-    fontColor: "white",
+    color: 'white',
+    fontColor: 'white',
   },
   divider: {
     height: 50,
   },
   divWarping: {
-    backgroundColor: "green",
-    color: "white",
+    backgroundColor: 'green',
+    color: 'white',
   },
   textField: {
-    background: "rgba(210, 210, 210, 0.25)",
+    background: 'rgba(210, 210, 210, 0.25)',
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 927,
     height: 50,
   },
+  textFieldInsertLinkThumbnailEpisode: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    width: 211,
+    height: 50,
+  },
   textField3: {
-    background: "rgba(210, 210, 210, 0.25)",
+    background: 'rgba(210, 210, 210, 0.25)',
     marginTop: 20,
     marginBottom: 20,
     marginLeft: theme.spacing.unit,
@@ -81,85 +101,85 @@ const styles = (theme) => ({
     height: 50,
   },
   textField2: {
-    background: "rgba(210, 210, 210, 0.25)",
+    background: 'rgba(210, 210, 210, 0.25)',
     width: 1150,
     height: 50,
-    marginLeft: 10,
+    marginLeft: 4,
   },
   cssLabel: {
-    color: "#B1B1B1",
+    color: '#B1B1B1',
   },
 
   cssOutlinedInput: {
-    "&$cssFocused $notchedOutline": {
+    '&$cssFocused $notchedOutline': {
       borderColor: `red !important`,
       color: `white !important`,
     },
   },
 
   cssFocused: {
-    color: "white",
-    textColor: "white",
+    color: 'white',
+    textColor: 'white',
   },
 
   notchedOutline: {
-    borderWidth: "2px",
-    borderColor: "white !important",
+    borderWidth: '2px',
+    borderColor: 'white !important',
   },
   floatingLabelFocusStyle: {
-    color: "white",
+    color: 'white',
   },
   ButtonAttatch: {
-    textTransform: "none",
+    textTransform: 'none',
     marginTop: 13,
     height: 55,
     width: 213,
-    fontSize: "14px",
-    background: "rgba(210, 210, 210, 0.25)",
-    color: "#B1B1B1",
-    borderStyle: "solid",
-    borderColor: "white",
+    fontSize: '14px',
+    background: 'rgba(210, 210, 210, 0.25)',
+    color: '#B1B1B1',
+    borderStyle: 'solid',
+    borderColor: 'white',
     borderWidth: 2,
-    "&:hover": {
+    '&:hover': {
       //you want this to be the same as the backgroundColor above
-      backgroundColor: "#E50914",
-      color: "white",
+      backgroundColor: '#E50914',
+      color: 'white',
     },
   },
   ButtonAddForm: {
-    textTransform: "none",
+    textTransform: 'none',
     marginTop: 13,
     marginLeft: 9,
     height: 30,
     width: 1150,
-    fontSize: "14px",
-    background: "rgba(210, 210, 210, 0.25)",
-    color: "red",
-    borderStyle: "solid",
-    borderColor: "white",
+    fontSize: '14px',
+    background: 'rgba(210, 210, 210, 0.25)',
+    color: 'red',
+    borderStyle: 'solid',
+    borderColor: 'white',
     borderWidth: 2,
-    "&:hover": {
+    '&:hover': {
       //you want this to be the same as the backgroundColor above
-      backgroundColor: "#E50914",
-      color: "white",
+      backgroundColor: '#E50914',
+      color: 'white',
     },
   },
   ButtonSave: {
-    textTransform: "none",
+    textTransform: 'none',
     marginTop: 34,
     marginLeft: 208,
     height: 40,
     width: 200,
-    fontSize: "14px",
-    background: "red",
-    color: "white",
-    borderStyle: "solid",
-    borderColor: "white",
+    fontSize: '14px',
+    background: 'red',
+    color: 'white',
+    borderStyle: 'solid',
+    borderColor: 'white',
     borderWidth: 2,
-    "&:hover": {
+    '&:hover': {
       //you want this to be the same as the backgroundColor above
-      backgroundColor: "#rgba(210, 210, 210, 0.25)",
-      color: "red",
+      backgroundColor: '#rgba(210, 210, 210, 0.25)',
+      color: 'red',
     },
   },
   attatchText: {},
@@ -178,12 +198,44 @@ const styles = (theme) => ({
     marginLeft: 1,
     marginBottom: 30,
     width: 1145,
-    color: "white",
+    color: 'white',
     borderRadius: 5,
-    backgroundColor: "#353535",
+    backgroundColor: '#353535',
   },
   InputLabel: {
-    color: "white",
+    color: 'white',
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: '#1f1f1f',
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  fontModalTitle: {
+    color: 'white',
+    fontSize: 24,
+  },
+  Kirim: {
+    textTransform: 'none',
+    marginTop: 65,
+    height: 40,
+    width: 350,
+    fontSize: '18px',
+    background: '#E50914',
+    color: 'white',
+    '&:hover': {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: 'white',
+      color: '#E50914',
+    },
+  },
+  cheatMargin: {
+    width: 218,
   },
 });
 
@@ -191,36 +243,61 @@ class addFilm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filmCategory: "",
+      uploadFilm: {},
+      uploadEpisodes: [{ title: '', linkEpisode: '', thumbnailEpisode: '', movieId: '' }],
+      open: false,
     };
   }
 
+  componentDidMount() {
+    this.props.getCategories();
+  }
+
   handleChange = (event) => {
-    var dropdown = event.target.filmCategory;
-    console.log(dropdown);
+    const { upload } = this.state;
     this.setState({
-      filmCategory: dropdown,
+      upload: { ...upload, [event.target.name]: event.target.value },
+    });
+  };
+  handleCloseModalAttatch = () => {
+    this.setState({
+      open: false,
+    });
+  };
+  handleButtonAttatch = () => {
+    this.setState({
+      open: true,
+    });
+  };
+  handleButtonConfirmAttatch = () => {
+    console.log(this.state.upload);
+    this.setState({
+      open: false,
     });
   };
 
   render(props) {
     const { classes } = this.props;
+    const { categories, loading } = this.props.categoriesReducer;
     return (
       <div>
         <div className={classes.divider} />
-        <Grid container direction="column" justify="center" alignItems="center">
+        <Grid container direction='column' justify='center' alignItems='center'>
           <Grid item xs>
             <div>Add Film</div>
           </Grid>
           <Grid item xs>
-            <Grid container direction="row" justify="flex-start" alignItems="center">
+            <Grid container direction='row' justify='flex-start' alignItems='center'>
               <Grid item xs>
                 <TextField
-                  id="standard-name"
-                  label="Title"
+                  id='standard-name'
+                  label='Title'
+                  name='title'
+                  value={this.state.uploadFilm.title}
+                  onChange={this.handleChange}
                   className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
+                  margin='normal'
+                  variant='outlined'
                   InputLabelProps={{
                     classes: {
                       root: classes.cssLabel,
@@ -235,13 +312,12 @@ class addFilm extends Component {
                       notchedOutline: classes.notchedOutline,
                       FormHelperTextProps: classes.floatingLabelFocusStyle,
                     },
-                    inputMode: "numeric",
                   }}
                 />
               </Grid>
               <Grid item xs>
-                <Button variant="contained" className={classes.ButtonAttatch}>
-                  <Grid container direction="row" justify="space-between" alignItems="center">
+                <Button variant='contained' onClick={this.handleButtonAttatch} className={classes.ButtonAttatch}>
+                  <Grid container direction='row' justify='space-between' alignItems='center'>
                     <Grid item xs={9}>
                       <b className={classes.attatchText}>Attatch Thumbnail</b>
                     </Grid>
@@ -255,11 +331,15 @@ class addFilm extends Component {
           </Grid>
           <Grid item xs>
             <TextField
-              id="standard-name"
-              label="Year"
+              id='standard-name'
+              label='Year'
+              name='year'
+              value={this.state.uploadFilm.year}
+              onChange={this.handleChange}
+              type='number'
               className={classes.textField2}
-              margin="normal"
-              variant="outlined"
+              margin='normal'
+              variant='outlined'
               InputLabelProps={{
                 classes: {
                   root: classes.cssLabel,
@@ -272,51 +352,64 @@ class addFilm extends Component {
                   focused: classes.cssFocused,
                   notchedOutline: classes.notchedOutline,
                 },
-                inputMode: "numeric",
               }}
             />
           </Grid>
           <Grid item xs>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel className={classes.InputLabel} id="demo-simple-select-outlined-label">
-                Category
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={this.state.filmCategory}
-                onChange={this.handleChange.bind(this)}
-                label="Category"
-                className={classes.select}
-                inputProps={{
-                  classes: {
-                    icon: classes.icon,
-                  },
-                }}
-                MenuProps={{ classes: { paper: classes.dropdownStyle } }}>
-                <MenuItem value={this.state.filmCategory} key={this.state.filmCategory}>
-                  {this.state.filmCategory}
-                </MenuItem>
-                <MenuItem value="Action">Action</MenuItem>
-                <MenuItem value="Drama">Drama</MenuItem>
-                <MenuItem value="Commedy">Commedy</MenuItem>
-                <MenuItem value="Romance">Romance</MenuItem>
-                <MenuItem value="Fight">Fight</MenuItem>
-              </Select>
-            </FormControl>
+            {loading ? (
+              'Loading....'
+            ) : (
+              <FormControl variant='outlined' className={classes.formControl}>
+                <InputLabel className={classes.InputLabel} id='demo-simple-select-outlined-label'>
+                  Category
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-outlined-label'
+                  id='demo-simple-select-outlined'
+                  name='categoryId'
+                  label='Category'
+                  value={this.state.uploadFilm.categoryId}
+                  onChange={this.handleChange}
+                  className={classes.select}
+                  inputProps={{
+                    classes: {
+                      icon: classes.icon,
+                    },
+                  }}
+                  MenuProps={{ classes: { paper: classes.dropdownStyle } }}
+                >
+                  {loading
+                    ? 'FETCHING...'
+                    : categories.map((detailCategory) => {
+                        return <MenuItem value={detailCategory.id}>{detailCategory.name}</MenuItem>;
+                      })}
+                </Select>
+              </FormControl>
+            )}
           </Grid>
           <Grid item xs>
-            <TextareaAutosize className={classes.TextareaAutosize} aria-label="minimum height" rowsMin={10} placeholder="Description" />
+            <TextareaAutosize
+              className={classes.TextareaAutosize}
+              aria-label='minimum height'
+              rowsMin={10}
+              name='description'
+              value={this.state.uploadFilm.description}
+              onChange={this.handleChange}
+              placeholder='Description'
+            />
           </Grid>
           <Grid item xs>
-            <Grid container direction="row" justify="flex-start" alignItems="center">
+            <Grid container direction='row' justify='flex-start' alignItems='center'>
               <Grid item xs>
                 <TextField
-                  id="standard-name"
-                  label="Title Episode"
+                  id='standard-name'
+                  name='Title Episode'
+                  // value={this.state.uploadFilm.description}
+                  // onChange={this.handleChange}
+                  label='Title Episode'
                   className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
+                  margin='normal'
+                  variant='outlined'
                   InputLabelProps={{
                     classes: {
                       root: classes.cssLabel,
@@ -329,13 +422,12 @@ class addFilm extends Component {
                       focused: classes.cssFocused,
                       notchedOutline: classes.notchedOutline,
                     },
-                    inputMode: "numeric",
                   }}
                 />
               </Grid>
               <Grid item xs>
-                <Button variant="contained" className={classes.ButtonAttatch}>
-                  <Grid container direction="row" justify="space-between" alignItems="center">
+                {/* <Button variant='contained' className={classes.ButtonAttatch}>
+                  <Grid container direction='row' justify='space-between' alignItems='center'>
                     <Grid item xs={9}>
                       <b className={classes.attatchText}>Attatch Thumbnail</b>
                     </Grid>
@@ -343,17 +435,42 @@ class addFilm extends Component {
                       <AttachFile className={classes.icon} />
                     </Grid>
                   </Grid>
-                </Button>
+                </Button> */}
+                <div className={classes.cheatMargin}>
+                  <TextField
+                    id='standard-name'
+                    name='Title Episode'
+                    // value={this.state.uploadFilm.description}
+                    // onChange={this.handleChange}
+                    label='Thumbnail Episode'
+                    className={classes.textFieldInsertLinkThumbnailEpisode}
+                    margin='normal'
+                    variant='outlined'
+                    InputLabelProps={{
+                      classes: {
+                        root: classes.cssLabel,
+                        focused: classes.cssFocused,
+                      },
+                    }}
+                    InputProps={{
+                      classes: {
+                        root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline,
+                      },
+                    }}
+                  />
+                </div>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs>
             <TextField
-              id="standard-name"
-              label="Link Episode"
+              id='standard-name'
+              label='Link Episode'
               className={classes.textField2}
-              margin="normal"
-              variant="outlined"
+              margin='normal'
+              variant='outlined'
               InputLabelProps={{
                 classes: {
                   root: classes.cssLabel,
@@ -366,12 +483,12 @@ class addFilm extends Component {
                   focused: classes.cssFocused,
                   notchedOutline: classes.notchedOutline,
                 },
-                inputMode: "numeric",
+                inputMode: 'numeric',
               }}
             />
           </Grid>
           <Grid item xs>
-            <Button variant="contained" className={classes.ButtonAddForm}>
+            <Button variant='contained' className={classes.ButtonAddForm}>
               <Add className={classes.iconAddForm} />
             </Button>
           </Grid>
@@ -379,15 +496,97 @@ class addFilm extends Component {
             <Grid container>
               <Grid item xs={11}></Grid>
               <Grid item xs={1}>
-                <Button variant="contained" className={classes.ButtonSave}>
+                <Button variant='contained' className={classes.ButtonSave}>
                   Save
                 </Button>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+        {/* MODAL ADD ATTACHMENT STRING */}
+        <Modal
+          aria-labelledby='transition-modal-title'
+          aria-describedby='transition-modal-description'
+          className={classes.modal}
+          open={this.state.open}
+          onClose={this.handleCloseModalAttatch}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.open}>
+            <div className={classes.paper}>
+              {/* INPUT */}
+              <b className={classes.fontModalTitle}>Input thumbnail</b>
+              <br />
+              <br />
+              <TextField
+                id='standard-name'
+                label='Thumbnail Film'
+                name='thumbnail'
+                value={this.state.uploadFilm.thumbnail}
+                onChange={this.handleChange}
+                className={classes.textField}
+                margin='normal'
+                variant='outlined'
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
+              <br />
+              <TextField
+                id='standard-name'
+                label='Thumbnail Trailer'
+                name='thumbnailTrailer '
+                value={this.state.uploadFilm.thumbnailTrailer}
+                onChange={this.handleChange}
+                className={classes.textField}
+                margin='normal'
+                variant='outlined'
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
+              <Grid item xs>
+                <Button variant='contained' onClick={this.handleButtonConfirmAttatch} className={classes.Kirim}>
+                  <div>Attatch</div>
+                </Button>
+              </Grid>
+            </div>
+          </Fade>
+        </Modal>
+        {/* MODAL ADD ATTACHMENT STRING END*/}
       </div>
     );
   }
 }
-export default withStyles(styles)(addFilm);
+
+const mapStateToProps = (state) => {
+  return {
+    categoriesReducer: state.categoriesReducer,
+  };
+};
+
+export default compose(withStyles(styles), connect(mapStateToProps, { getCategories }))(addFilm);
