@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Navbar from './components/nav';
 import Home from './pages/Home';
 import TVShows from './pages/TvShowsPage';
@@ -20,22 +20,31 @@ class App extends Component {
   componentDidMount = () => {
     this.props.authAction();
   };
+
   render() {
+    const { userState } = this.props.authReducer;
+    const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
+      <Route {...rest} render={(props) => (userState.isAdmin === true ? <Component {...props} /> : <Redirect to='/' />)} />
+    );
+    const PrivateRouteUser = ({ component: Component, ...rest }) => (
+      <Route {...rest} render={(props) => (userState.isLogin === true ? <Component {...props} /> : <Redirect to='/' />)} />
+    );
     return (
       <Router>
         <div>
           <CssBaseline />
           <Navbar />
           <Switch>
-            <Route path='/Transactions' component={Transaction} />
+            <PrivateRouteAdmin path='/transactions' component={Transaction} />
             <Route path='/learn' component={learn} />
-            <Route path='/ListFilm' component={ListFilm} />
-            <Route path='/AddFilm' component={AddFilm} />
-            <Route path='/Upgrade' component={Upgrade} />
-            <Route path='/Profile' component={Profile} />
-            <Route path='/Detail' component={DetailPlayer} />
-            <Route path='/TVShows' component={TVShows} />
-            <Route path='/Movies' component={Movies} />
+            <Route path='/add-movie' component={AddFilm} />
+            <PrivateRouteUser path='/movies' component={ListFilm} />
+            <PrivateRouteUser path='/upgrade' component={Upgrade} />
+            <PrivateRouteUser path='/profile' component={Profile} />
+            <PrivateRouteUser path='/detail' component={DetailPlayer} />
+            <PrivateRouteUser path='/tv' component={TVShows} />
+            <PrivateRouteAdmin path='/Movies' component={Movies} />
+
             <Route path='/' component={Home} />
           </Switch>
         </div>
@@ -43,5 +52,9 @@ class App extends Component {
     );
   }
 }
-
-export default connect(null, { authAction })(App);
+const mapStateToProps = (state) => {
+  return {
+    authReducer: state.authReducer,
+  };
+};
+export default connect(mapStateToProps, { authAction })(App);

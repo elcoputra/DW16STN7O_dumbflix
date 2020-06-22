@@ -29,8 +29,8 @@ const styles = (theme) => ({
     backgroundColor: '#1F1F1F',
     position: 'absolute',
     top: '36px',
-    left: '-117%',
-    width: '220px',
+    left: '-150%',
+    width: '178px',
     height: '187px',
     borderRadius: '10px',
   },
@@ -38,8 +38,8 @@ const styles = (theme) => ({
     backgroundColor: '#1F1F1F',
     position: 'absolute',
     top: '36px',
-    left: '-117%',
-    width: '220px',
+    left: '-145%',
+    width: '178',
     height: '180px',
     borderRadius: '10px',
   },
@@ -79,7 +79,7 @@ const styles = (theme) => ({
     height: '50px',
   },
   ButtonAvatar: {
-    marginRight: '50px',
+    marginRight: '0',
   },
   PositionSegitiga: {
     left: '10%',
@@ -103,7 +103,7 @@ const styles = (theme) => ({
     paddingRight: 90,
   },
   borderMenuDropdown: {
-    width: 220,
+    width: 178,
     height: 2,
     backgroundColor: 'gray',
   },
@@ -262,12 +262,12 @@ class nav extends Component {
                 </Link>
               </Box>
               <Box className={classes.Box}>
-                <Link className={classes.Link} to='/TVShows'>
+                <Link className={classes.Link} to='/tv'>
                   TV Shows
                 </Link>
               </Box>
               <Box className={classes.Box}>
-                <Link className={classes.Link} to='/Movies'>
+                <Link className={classes.Link} to='/movies'>
                   Movies
                 </Link>
               </Box>
@@ -292,13 +292,13 @@ class nav extends Component {
                         <img src={Segitiga} alt='segitiga' />
                       </div>
                       <div className={classes.divBaseFloatingMenu}>
-                        <Link className={classes.Link} to='/Profile'>
+                        <Link className={classes.Link} to='/profile'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuProfile}>
                             <PersonOutline className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Profile</b>
                           </Button>
                         </Link>
-                        <Link className={classes.Link} to='/Upgrade'>
+                        <Link className={classes.Link} to='/upgrade'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
                             <Payment className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Pay</b>
@@ -354,13 +354,13 @@ class nav extends Component {
                         <img src={Segitiga} alt='segitiga' />
                       </div>
                       <div className={classes.divBaseFloatingMenuAdmin}>
-                        <Link className={classes.Link} to='/ListFilm'>
+                        <Link className={classes.Link} to='/movies'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuFilm}>
                             <Movie className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Film</b>
                           </Button>
                         </Link>
-                        <Link className={classes.Link} to='/Transactions'>
+                        <Link className={classes.Link} to='/transactions'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuReceipt}>
                             <Receipt className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Trans</b>

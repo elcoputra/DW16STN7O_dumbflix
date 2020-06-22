@@ -108,7 +108,8 @@ class movie extends Component {
                                 this.props.getDataEpisodes(detailData.id);
                               }}
                               to={{
-                                pathname: `/Detail/${detailData.id}/${detailData.title}`,
+                                // pathname: `/Detail/${detailData.id}/${detailData.title}`,
+                                pathname: `/detail`,
                               }}
                             >
                               <img src={detailData.thumbnail} alt={detailData.title} className={classes.Img} />
