@@ -267,7 +267,7 @@ class nav extends Component {
                 </Link>
               </Box>
               <Box className={classes.Box}>
-                <Link className={classes.Link} to='/movies'>
+                <Link className={classes.Link} to='/moviess'>
                   Movies
                 </Link>
               </Box>

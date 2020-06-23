@@ -29,6 +29,14 @@ class App extends Component {
     const PrivateRouteUser = ({ component: Component, ...rest }) => (
       <Route {...rest} render={(props) => (userState.isLogin === true ? <Component {...props} /> : <Redirect to='/' />)} />
     );
+    const PrivateRouteSubscribe = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={(props) =>
+          userState.isLogin === true && userState.subscribe === true ? <Component {...props} /> : <Redirect to='/upgrade' />
+        }
+      />
+    );
     return (
       <Router>
         <div>
@@ -41,9 +49,9 @@ class App extends Component {
             <PrivateRouteUser path='/movies' component={ListFilm} />
             <PrivateRouteUser path='/upgrade' component={Upgrade} />
             <PrivateRouteUser path='/profile' component={Profile} />
-            <PrivateRouteUser path='/detail' component={DetailPlayer} />
+            <PrivateRouteSubscribe path='/detail' component={DetailPlayer} />
             <PrivateRouteUser path='/tv' component={TVShows} />
-            <PrivateRouteAdmin path='/Movies' component={Movies} />
+            <PrivateRouteAdmin path='/moviess' component={Movies} />
 
             <Route path='/' component={Home} />
           </Switch>
