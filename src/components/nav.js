@@ -1,94 +1,98 @@
-import React, { Component } from "react";
-import { AppBar, Box, Toolbar, Button, Grid, Avatar } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import LOGO from "../img/LOGO.png";
-import LoginModal from "./loginModal";
-import RegisterModal from "./registerModal";
-import { Link } from "react-router-dom";
-import Segitiga from "../img/decor/segitiga.png";
-import { PersonOutline, Payment, ExitToApp,Movie } from "@material-ui/icons";
+import React, { Component } from 'react';
+import { AppBar, Box, Toolbar, Button, Grid, Avatar } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import LOGO from '../img/LOGO.png';
+import LoginModal from './loginModal';
+import RegisterModal from './registerModal';
+import { Link } from 'react-router-dom';
+import Segitiga from '../img/decor/segitiga.png';
+import { PersonOutline, Payment, ExitToApp, Movie, Receipt } from '@material-ui/icons';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { openModalRegister, openModalLogin } from '../redux/actions/modal_actions';
+import { authAction, logoutUser } from '../redux/actions/auth_action';
 
 const styles = (theme) => ({
   marginAutoItem: {},
   divBase: {
-    position: "relative",
-    width: "auto",
+    position: 'relative',
+    width: 'auto',
   },
   divBaseFloatingDecor: {
-    position: "absolute",
-    top: "1px",
-    left: "7px",
-    width: "auto",
-    height: "auto",
+    position: 'absolute',
+    top: '1px',
+    left: '7px',
+    width: 'auto',
+    height: 'auto',
   },
   divBaseFloatingMenu: {
-    backgroundColor: "#1F1F1F",
-    position: "absolute",
-    top: "36px",
-    left: "-117%",
-    width: "220px",
-    height: "187px",
-    borderRadius: "10px",
+    backgroundColor: '#1F1F1F',
+    position: 'absolute',
+    top: '36px',
+    left: '-150%',
+    width: '178px',
+    height: '187px',
+    borderRadius: '10px',
   },
   divBaseFloatingMenuAdmin: {
-    backgroundColor: "#1F1F1F",
-    position: "absolute",
-    top: "36px",
-    left: "-117%",
-    width: "220px",
-    height: "150px",
-    borderRadius: "10px",
+    backgroundColor: '#1F1F1F',
+    position: 'absolute',
+    top: '36px',
+    left: '-145%',
+    width: '178',
+    height: '180px',
+    borderRadius: '10px',
   },
   AppBar: {
-    background: "#1F1F1F",
-    height: "70px",
-    width: "100%",
+    background: '#1F1F1F',
+    height: '70px',
+    width: '100%',
   },
   Toolbar: {
-    height: "70px",
-    position: "relative",
+    height: '70px',
+    position: 'relative',
   },
   ButtonLogin: {
-    height: "30px",
-    width: "100px",
-    margin: "10px",
-    background: "#E50914",
-    color: "white",
+    height: '30px',
+    width: '100px',
+    margin: '10px',
+    background: '#E50914',
+    color: 'white',
   },
   ButtonRegister: {
-    color: "#E50914",
-    height: "30px",
-    width: "100px",
-    margin: "10px",
+    color: '#E50914',
+    height: '30px',
+    width: '100px',
+    margin: '10px',
   },
   Box: {
-    margin: "10px",
+    margin: '10px',
   },
   Link: {
-    textDecoration: "none",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "14px",
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '14px',
   },
   Avatar: {
-    width: "50px",
-    height: "50px",
+    width: '50px',
+    height: '50px',
   },
   ButtonAvatar: {
-    marginRight: "50px",
+    marginRight: '0',
   },
   PositionSegitiga: {
-    left: "10%",
-    top: "10&",
+    left: '10%',
+    top: '10&',
   },
 
   IconMenu: {
     fontSize: 40,
-    color: "#E50914",
+    color: '#E50914',
   },
   LabelMenu: {
     fontSize: 18,
-    color: "white",
+    color: 'white',
   },
   buttonMenuProfile: {
     width: 220,
@@ -99,9 +103,9 @@ const styles = (theme) => ({
     paddingRight: 90,
   },
   borderMenuDropdown: {
-    width: 220,
+    width: 178,
     height: 2,
-    backgroundColor: "gray",
+    backgroundColor: 'gray',
   },
   buttonMenuLogout: {
     width: 220,
@@ -110,6 +114,10 @@ const styles = (theme) => ({
   buttonMenuFilm: {
     width: 220,
     paddingRight: 84,
+  },
+  buttonMenuReceipt: {
+    width: 220,
+    paddingRight: 67,
   },
 });
 
@@ -122,51 +130,51 @@ class nav extends Component {
       isMenu: false,
     };
 
-    this.getDataFromModalComponent = this.getDataFromModalComponent.bind(this);
+    // this.getDataFromModalComponent = this.getDataFromModalComponent.bind(this);
   }
   componentDidMount() {
-    const isLogin = localStorage.getItem("isLogin");
-    const isAdmin = localStorage.getItem("isAdmin");
-    if (isLogin === "false") {
+    const isLogin = localStorage.getItem('isLogin');
+    const isAdmin = localStorage.getItem('isAdmin');
+    if (isLogin === 'false') {
       this.setState({
         isLogin: false,
       });
     }
-    if (isAdmin === "false") {
+    if (isAdmin === 'false') {
       this.setState({
         isAdmin: false,
       });
     }
-    if (isLogin === "true") {
+    if (isLogin === 'true') {
       this.setState({
         isLogin: true,
       });
     }
-    if (isAdmin === "true") {
+    if (isAdmin === 'true') {
       this.setState({
         isAdmin: true,
       });
     }
   }
 
-  loginModalRef = ({ handleOpenLogin }) => {
-    this.showModalLogin = handleOpenLogin;
-  };
-  RegisterModalRef = ({ handleOpenRegister }) => {
-    this.showModalRegister = handleOpenRegister;
-  };
+  // loginModalRef = ({ handleOpenLogin }) => {
+  //   this.showModalLogin = handleOpenLogin;
+  // };
+  // RegisterModalRef = ({ handleOpenRegister }) => {
+  //   this.showModalRegister = handleOpenRegister;
+  // };
 
-  onLoginClick = () => {
-    this.showModalLogin();
-  };
-  onRegisterClick = () => {
-    this.showModalRegister();
-  };
-  getDataFromModalComponent = (isLoginFromLoginModal) => {
-    this.setState({
-      isLogin: isLoginFromLoginModal,
-    });
-  };
+  // onLoginClick = () => {
+  //   this.showModalLogin();
+  // };
+  // onRegisterClick = () => {
+  //   this.showModalRegister();
+  // };
+  // getDataFromModalComponent = (isLoginFromLoginModal) => {
+  //   this.setState({
+  //     isLogin: isLoginFromLoginModal,
+  //   });
+  // };
 
   dropdownMenu = () => {
     if (this.state.isMenu === false) {
@@ -181,56 +189,52 @@ class nav extends Component {
   };
 
   logutAccount = () => {
-    if (this.state.isLogin === true) {
-      localStorage.setItem("isLogin", false);
-      this.getDataLocalStorage();
-    }
+    localStorage.removeItem('token');
     this.setState({
       isMenu: false,
     });
+    this.props.logoutUser();
   };
-  logutAdminAccount = () =>{
-    if (this.state.isAdmin === true) {
-      localStorage.setItem("isAdmin", false);
-      this.getDataLocalStorage();
-    }
+  logutAdminAccount = () => {
+    localStorage.removeItem('token');
     this.setState({
       isMenu: false,
     });
-  }
+    this.props.logoutUser();
+  };
 
   loginAdmin = () => {
     if (this.state.isAdmin === false) {
-      localStorage.setItem("isAdmin", true);
-      localStorage.setItem("isLogin", false);
+      localStorage.setItem('isAdmin', true);
+      localStorage.setItem('isLogin', false);
       this.getDataLocalStorage();
     } else {
-      localStorage.setItem("isAdmin", false);
-      localStorage.setItem("isLogin", false);
+      localStorage.setItem('isAdmin', false);
+      localStorage.setItem('isLogin', false);
       this.getDataLocalStorage();
     }
   };
 
   // ngambil data localstorage
   getDataLocalStorage = () => {
-    const isLogin = localStorage.getItem("isLogin");
-    const isAdmin = localStorage.getItem("isAdmin");
-    if (isLogin === "false") {
+    const isLogin = localStorage.getItem('isLogin');
+    const isAdmin = localStorage.getItem('isAdmin');
+    if (isLogin === 'false') {
       this.setState({
         isLogin: false,
       });
     }
-    if (isAdmin === "false") {
+    if (isAdmin === 'false') {
       this.setState({
         isAdmin: false,
       });
     }
-    if (isLogin === "true") {
+    if (isLogin === 'true') {
       this.setState({
         isLogin: true,
       });
     }
-    if (isAdmin === "true") {
+    if (isAdmin === 'true') {
       this.setState({
         isAdmin: true,
       });
@@ -241,57 +245,60 @@ class nav extends Component {
 
   render(props) {
     const { classes } = this.props;
-    // className={classes.AppBar}
+    const { isLogin } = this.props.userReducer;
+    const { userState, loading } = this.props.authReducer;
+    const isLoginUserState = userState ? userState.isLogin : false;
+    const isAdminState = userState ? userState.isAdmin : false;
     return (
       <div>
         <LoginModal sendDataIsLogin={this.getDataFromModalComponent} ref={this.loginModalRef}></LoginModal>
         <RegisterModal ref={this.RegisterModalRef}></RegisterModal>
         <AppBar className={classes.AppBar}>
           <Toolbar className={classes.Toolbar}>
-            <Grid container direction="row" justify="flex-start" alignItems="center">
+            <Grid container direction='row' justify='flex-start' alignItems='center'>
               <Box className={classes.Box}>
-                <Link className={classes.Link} to="/">
+                <Link className={classes.Link} to='/'>
                   Home
                 </Link>
               </Box>
               <Box className={classes.Box}>
-                <Link className={classes.Link} to="/TVShows">
+                <Link className={classes.Link} to='/tv'>
                   TV Shows
                 </Link>
               </Box>
               <Box className={classes.Box}>
-                <Link className={classes.Link} to="/Movies">
+                <Link className={classes.Link} to='/moviess'>
                   Movies
                 </Link>
               </Box>
             </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
-            <Link className={classes.Link} to="/Transaction">
-              <Button onClick={this.loginAdmin} className={classes.ButtonAvatar}>
-                <img src={LOGO} alt="Brand" />
-              </Button>
+            <Grid container direction='row' justify='center' alignItems='center'>
+              <Link className={classes.Link} to='/'>
+                <Button className={classes.ButtonAvatar}>
+                  <img src={LOGO} alt='Brand' />
+                </Button>
               </Link>
             </Grid>
-            <Grid container direction="row" justify="flex-end" alignItems="center">
+            <Grid container direction='row' justify='flex-end' alignItems='center'>
               {/* AVA dan dropdown menu client, serta logic button login register untuk client dan admin */}
-              {this.state.isLogin ? (
+              {isLoginUserState && !isAdminState ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
-                    <Avatar alt="Elco Lebih Ganteng" src="https://i.imgur.com/WcVXGbM.jpg" className={classes.Avatar} />
+                    <Avatar alt='Elco Lebih Ganteng' src='https://i.imgur.com/WcVXGbM.jpg' className={classes.Avatar} />
                   </Button>
                   {this.state.isMenu ? (
                     <div className={classes.divBase}>
                       <div className={classes.divBaseFloatingDecor}>
-                        <img src={Segitiga} alt="segitiga" />
+                        <img src={Segitiga} alt='segitiga' />
                       </div>
                       <div className={classes.divBaseFloatingMenu}>
-                        <Link className={classes.Link} to="/Profile">
+                        <Link className={classes.Link} to='/profile'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuProfile}>
                             <PersonOutline className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Profile</b>
                           </Button>
                         </Link>
-                        <Link className={classes.Link} to="/Upgrade">
+                        <Link className={classes.Link} to='/upgrade'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuPay}>
                             <Payment className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Pay</b>
@@ -299,11 +306,11 @@ class nav extends Component {
                         </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>
-                        <Link className={classes.Link} to="/">
-                        <Button onClick={this.logutAccount} className={classes.buttonMenuLogout}>
-                          <ExitToApp className={classes.IconMenu} />
-                          <b className={classes.LabelMenu}>Logout</b>
-                        </Button>
+                        <Link className={classes.Link} to='/'>
+                          <Button onClick={this.logutAccount} className={classes.buttonMenuLogout}>
+                            <ExitToApp className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Logout</b>
+                          </Button>
                         </Link>
                       </div>
                     </div>
@@ -313,15 +320,22 @@ class nav extends Component {
                 </div>
               ) : (
                 <div>
-                  {this.state.isAdmin ? (
+                  {isAdminState ? (
                     <div></div>
+                  ) : loading ? (
+                    'AUTHENTICATING ....'
                   ) : (
                     <>
-                      <Button onClick={this.onRegisterClick} variant="contained" className={classes.ButtonRegister}>
+                      <Button onClick={this.props.openModalRegister} variant='contained' className={classes.ButtonRegister}>
                         Register
                       </Button>
 
-                      <Button onClick={this.onLoginClick} variant="contained" color="secondary" className={classes.ButtonLogin}>
+                      <Button
+                        onClick={this.props.openModalLogin}
+                        variant='contained'
+                        color='secondary'
+                        className={classes.ButtonLogin}
+                      >
                         Login
                       </Button>
                     </>
@@ -329,30 +343,36 @@ class nav extends Component {
                 </div>
               )}
               {/* Aavatar dan dropdown menu untu admin */}
-              {this.state.isAdmin ? (
+              {isAdminState ? (
                 <div>
                   <Button onClick={this.dropdownMenu} className={classes.ButtonAvatar}>
-                    <Avatar alt="Lisa Pacar Elco" src="https://i.imgur.com/woAAzCF.jpg" className={classes.Avatar} />
+                    <Avatar alt='Lisa Pacar Elco' src='https://i.imgur.com/woAAzCF.jpg' className={classes.Avatar} />
                   </Button>
                   {this.state.isMenu ? (
                     <div className={classes.divBase}>
                       <div className={classes.divBaseFloatingDecor}>
-                        <img src={Segitiga} alt="segitiga" />
+                        <img src={Segitiga} alt='segitiga' />
                       </div>
                       <div className={classes.divBaseFloatingMenuAdmin}>
-                        <Link className={classes.Link} to="/ListFilm">
+                        <Link className={classes.Link} to='/movies'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuFilm}>
                             <Movie className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Film</b>
                           </Button>
                         </Link>
+                        <Link className={classes.Link} to='/transactions'>
+                          <Button onClick={this.dropdownMenu} className={classes.buttonMenuReceipt}>
+                            <Receipt className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Trans</b>
+                          </Button>
+                        </Link>
                         <Button className={classes.buttonMenuPay}></Button>
                         <div className={classes.borderMenuDropdown}></div>
-                        <Link className={classes.Link} to="/">
-                        <Button onClick={this.logutAdminAccount} className={classes.buttonMenuLogout}>
-                          <ExitToApp className={classes.IconMenu} />
-                          <b className={classes.LabelMenu}>Logout</b>
-                        </Button>
+                        <Link className={classes.Link} to='/'>
+                          <Button onClick={this.logutAdminAccount} className={classes.buttonMenuLogout}>
+                            <ExitToApp className={classes.IconMenu} />
+                            <b className={classes.LabelMenu}>Logout</b>
+                          </Button>
                         </Link>
                       </div>
                     </div>
@@ -370,4 +390,18 @@ class nav extends Component {
     );
   }
 }
-export default withStyles(styles)(nav);
+const mapStateToProps = (state) => {
+  return {
+    userReducer: state.userReducer,
+    authReducer: state.authReducer,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openModalRegister: () => dispatch(openModalRegister()),
+    openModalLogin: () => dispatch(openModalLogin()),
+    authAction: () => dispatch(authAction()),
+    logoutUser: () => dispatch(logoutUser()),
+  };
+};
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(nav);
