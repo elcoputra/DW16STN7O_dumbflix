@@ -49,12 +49,12 @@ class App extends Component {
             <PrivateRouteAdmin path='/transactions' component={Transaction} />
             <Route path='/learn' component={learn} />
             <Route path='/add-movie' component={AddFilm} />
-            <PrivateRouteUser path='/movies' component={ListFilm} />
+            <PrivateRouteAdmin path='/list-film' component={ListFilm} />
             <PrivateRouteUser path='/upgrade' component={Upgrade} />
             <PrivateRouteUser path='/profile' component={Profile} />
             <PrivateRouteSubscribe path='/detail' component={DetailPlayer} />
             <PrivateRouteUser path='/tv' component={TVShows} />
-            <PrivateRouteAdmin path='/moviess' component={Movies} />
+            <PrivateRouteUser path='/movies' component={Movies} />
 
             <Route path='/' component={Home} />
           </Switch>

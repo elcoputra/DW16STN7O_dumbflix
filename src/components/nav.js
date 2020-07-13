@@ -267,7 +267,7 @@ class nav extends Component {
                 </Link>
               </Box>
               <Box className={classes.Box}>
-                <Link className={classes.Link} to='/moviess'>
+                <Link className={classes.Link} to='/movies'>
                   Movies
                 </Link>
               </Box>
@@ -354,7 +354,7 @@ class nav extends Component {
                         <img src={Segitiga} alt='segitiga' />
                       </div>
                       <div className={classes.divBaseFloatingMenuAdmin}>
-                        <Link className={classes.Link} to='/movies'>
+                        <Link className={classes.Link} to='/list-film'>
                           <Button onClick={this.dropdownMenu} className={classes.buttonMenuFilm}>
                             <Movie className={classes.IconMenu} />
                             <b className={classes.LabelMenu}>Film</b>

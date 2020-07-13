@@ -167,6 +167,7 @@ const styles = (theme) => ({
   LinkCliclHere: {
     color: 'red',
   },
+  divSlideEpisode: { backgroundColor: 'gray', width: 494, height: 272, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' },
 });
 
 class detailPlayer extends Component {
@@ -226,14 +227,16 @@ class detailPlayer extends Component {
         {/* {series} */}
         <Box className={classes.Box1}>
           <Grid container direction='column' justify='center' alignItems='center'>
-            <ReactPlayer
-              height={'536px'}
-              width={'954.44px'}
-              url={dataDetailMovie.linkTrailer}
-              controls={true}
-              light={dataDetailMovie.thumbnailTrailer}
-              playing
-            />
+            {loadingEpisode ? (
+              'LOADING'
+            ) : (
+              <ReactPlayer
+                height={'536px'}
+                width={'954.44px'}
+                url={dataEpisode[this.state.numberEpisode].linkEpisode}
+                controls={true}
+              />
+            )}
           </Grid>
         </Box>
         {}
@@ -290,24 +293,26 @@ class detailPlayer extends Component {
               <Grid container direction='column' justify='space-between' alignItems='flex-start'>
                 <Grid item xs>
                   {dataEpisode.length === 1 ? (
-                    <ReactPlayer
-                      height={'272px'}
-                      width={'494px'}
-                      url={dataEpisode[this.state.numberEpisode].linkEpisode}
-                      playing
-                      controls={true}
-                      light={dataEpisode[this.state.numberEpisode].thumbnailEpisode}
-                    />
+                    <Button
+                      onClick={() => this.props.openModalAddEpisode()}
+                      style={{ backgroundImage: `url(${dataEpisode[this.state.numberEpisode].thumbnailEpisode})` }}
+                      className={classes.divSlideEpisode}
+                    ></Button>
                   ) : dataEpisode.length > 1 ? (
-                    <ReactPlayer
-                      height={'272px'}
-                      width={'494px'}
-                      url={dataEpisode[this.state.numberEpisode].linkEpisode}
-                      playing
-                      controls={true}
-                      light
-                    />
-                  ) : null}
+                    <Button
+                      onClick={() => this.props.openModalAddEpisode()}
+                      style={{ backgroundImage: `url(${dataEpisode[this.state.numberEpisode].thumbnailEpisode})` }}
+                      className={classes.divSlideEpisode}
+                    ></Button>
+                  ) : // <ReactPlayer
+                  //   height={'272px'}
+                  //   width={'494px'}
+                  //   url={dataEpisode[this.state.numberEpisode].linkEpisode}
+                  //   playing
+                  //   controls={true}
+                  //   light
+                  // />
+                  null}
                 </Grid>
                 <Grid item xs>
                   {dataEpisode.length === 1 ? (
