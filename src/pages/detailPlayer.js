@@ -1,6 +1,3 @@
-// BUG Nex Play,
-// Button Belum di rapihin
-
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Grid, Button, Typography } from '@material-ui/core';
@@ -21,6 +18,7 @@ class detailPlayer extends Component {
     this.state = {
       numberEpisode: 0,
       episodePlay: 0,
+      readmore: false,
       isPlay: false,
       isAdmin: false,
       isTvShow: false,
@@ -74,21 +72,35 @@ class detailPlayer extends Component {
             ) : (
               <ReactPlayer
                 height={'536px'}
-                width={'954.44px'}
+                width={'1070.44px'}
                 url={dataEpisode[this.state.episodePlay].linkEpisode}
                 playing={this.state.isPlay}
                 controls={true}
+                light={dataEpisode[this.state.episodePlay].thumbnailEpisode}
               />
             )}
           </Grid>
         </Box>
         {}
 
-        {dataEpisode.length > 1 && userState.isAdmin ? (
-          <div>
-            <Button variant='contained' onClick={() => this.props.openModalAddEpisode()} className={classes.ButtonAddEpisode}>
-              Add Episode
-            </Button>
+        {userState.isAdmin ? (
+          <div style={{ width: '93%' }}>
+            <Grid container {...this.gridButtonAdmin}>
+              <Grid item>
+                <Button
+                  variant='contained'
+                  onClick={() => this.props.openModalAddEpisode()}
+                  className={classes.ButtonUpdateMovie}
+                >
+                  Update Movie
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant='contained' onClick={() => this.props.openModalAddEpisode()} className={classes.ButtonAddEpisode}>
+                  Add Episode
+                </Button>
+              </Grid>
+            </Grid>
           </div>
         ) : (
           <div></div>
@@ -123,7 +135,7 @@ class detailPlayer extends Component {
                   </Grid>
                 </Grid>
                 <Grid item xs className={classes.Description}>
-                  <p>{dataDetailMovie.description}</p>
+                  <p className={classes.DescripionP}>{dataDetailMovie.description}</p>
                 </Grid>
               </Grid>
             </div>
@@ -137,44 +149,54 @@ class detailPlayer extends Component {
                   {dataEpisode.length === 1 ? (
                     <div
                       style={{ backgroundImage: `url(${dataEpisode[this.state.numberEpisode].thumbnailEpisode})` }}
-                      className={classes.divSlideEpisode}
-                    ></div>
+                      className={classes.divSlideEpisodeSingle}
+                    >
+                      <div className={classes.divSlideEpisodeSingleMask}>
+                        <Typography variant='h5'>NOW PLAYING</Typography>
+                      </div>
+                    </div>
                   ) : dataEpisode.length > 1 ? (
                     <div
                       style={{ backgroundImage: `url(${dataEpisode[this.state.numberEpisode].thumbnailEpisode})` }}
                       className={classes.divSlideEpisode}
                     >
-                      <Grid container {...this.gridInsideEpisodeChoser}>
-                        <Grid item style={{ height: '100%' }}>
-                          <Button onClick={this.episodeDecrease} className={classes.btnSelectEpisode}>
-                            <ArrowBackIosOutlinedIcon style={{ fontSize: 24 }} />
-                          </Button>
+                      <div
+                        className={
+                          this.state.numberEpisode !== this.state.episodePlay
+                            ? classes.divSlideEpisodeMaskClear
+                            : classes.divSlideEpisodeMask
+                        }
+                      >
+                        <Grid container {...this.gridInsideEpisodeChoser}>
+                          <Grid item style={{ height: '100%' }}>
+                            <Button onClick={this.episodeDecrease} className={classes.btnSelectEpisode}>
+                              <ArrowBackIosOutlinedIcon style={{ fontSize: 24 }} />
+                            </Button>
+                          </Grid>
+                          <Grid item style={{ height: '100%', width: 366 }}>
+                            <Button
+                              onClick={() => this.handleChoseEpisode(this.state.numberEpisode)}
+                              className={classes.btnSelectEpisode}
+                            >
+                              {this.state.numberEpisode !== this.state.episodePlay ? (
+                                <PlayCircleOutlineIcon style={{ fontSize: 120 }} />
+                              ) : (
+                                <Typography variant='h5'>NOW PLAYING</Typography>
+                              )}
+                            </Button>
+                          </Grid>
+                          <Grid item style={{ height: '100%' }}>
+                            <Button onClick={this.episodeIncrease} className={classes.btnSelectEpisode}>
+                              <ArrowForwardIosOutlinedIcon style={{ fontSize: 24 }} />
+                            </Button>
+                          </Grid>
                         </Grid>
-                        <Grid item style={{ height: '100%', width: 366 }}>
-                          <Button
-                            onClick={() => this.handleChoseEpisode(this.state.numberEpisode)}
-                            className={classes.btnSelectEpisode}
-                          >
-                            {this.state.numberEpisode !== this.state.episodePlay ? (
-                              <PlayCircleOutlineIcon style={{ fontSize: 120 }} />
-                            ) : (
-                              <Typography variant='h5'>NOW PLAYING</Typography>
-                            )}
-                          </Button>
-                        </Grid>
-                        <Grid item style={{ height: '100%' }}>
-                          <Button onClick={this.episodeIncrease} className={classes.btnSelectEpisode}>
-                            <ArrowForwardIosOutlinedIcon style={{ fontSize: 24 }} />
-                          </Button>
-                        </Grid>
-                      </Grid>
+                      </div>
                     </div>
                   ) : null}
                 </Grid>
                 <Grid item xs>
-                  <p className={classes.TextInfo}>
-                    {dataEpisode[this.state.numberEpisode].title} : {dataEpisode[this.state.numberEpisode].movie.category.name}
-                  </p>
+                  <p className={classes.TextInfo}>{dataEpisode[this.state.numberEpisode].title}</p>
                 </Grid>
               </Grid>
             )}
@@ -189,6 +211,12 @@ class detailPlayer extends Component {
     direction: 'row',
     justify: 'flex-start',
     alignItems: 'flex-start',
+  };
+  gridButtonAdmin = {
+    direction: 'row',
+    spacing: 2,
+    justify: 'flex-end',
+    alignItems: 'center',
   };
 }
 
@@ -229,6 +257,10 @@ const styles = (theme) => ({
     color: 'white',
     textAlign: 'justify',
   },
+  DescripionP: {
+    height: 180,
+    overflow: 'auto',
+  },
   yearAndType: {
     color: '#929292',
     fontSize: '18px',
@@ -243,18 +275,30 @@ const styles = (theme) => ({
   test: {
     background: 'transparent',
   },
+  ButtonUpdateMovie: {
+    textTransform: 'none',
+    marginTop: 15,
+    height: 40,
+    width: 200,
+    fontSize: '14px',
+    background: '#rgba(210, 210, 210, 0.25)',
+    color: 'red',
+    '&:hover': {
+      backgroundColor: 'rgb(109, 109, 109)',
+      color: 'white',
+    },
+  },
   ButtonAddEpisode: {
     textTransform: 'none',
     marginTop: 15,
-    marginLeft: 1186,
     height: 40,
     width: 200,
     fontSize: '14px',
     background: 'red',
     color: 'white',
     '&:hover': {
-      backgroundColor: '#rgba(210, 210, 210, 0.25)',
-      color: 'red',
+      backgroundColor: 'rgb(137, 0, 0)',
+      color: 'white',
     },
   },
   DialogContentAddEpisodeStyle: {
@@ -339,6 +383,41 @@ const styles = (theme) => ({
     backgroundColor: 'gray',
     width: 494,
     height: 272,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+  },
+  divSlideEpisodeSingle: {
+    display: 'flex',
+    color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'gray',
+    width: 494,
+    height: 272,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+  },
+  divSlideEpisodeSingleMask: {
+    display: 'flex',
+    color: 'white',
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 494,
+    height: 272,
+  },
+  divSlideEpisodeMask: {
+    display: 'flex',
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    width: '100%',
+    height: '100%',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+  },
+  divSlideEpisodeMaskClear: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
   },

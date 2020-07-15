@@ -103,9 +103,9 @@ const styles = (theme) => ({
   },
   textField2: {
     background: 'rgba(210, 210, 210, 0.25)',
-    width: 1150,
+    width: 1146,
     height: 50,
-    marginLeft: 4,
+    marginLeft: 8,
   },
   cssLabel: {
     color: '#B1B1B1',

@@ -11,115 +11,7 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { openModalRegister, openModalLogin } from '../redux/actions/modal_actions';
 import { authAction, logoutUser } from '../redux/actions/auth_action';
-
-const styles = (theme) => ({
-  marginAutoItem: {},
-  divBase: {
-    position: 'relative',
-    width: 'auto',
-  },
-  divBaseFloatingDecor: {
-    position: 'absolute',
-    top: '1px',
-    left: '7px',
-    width: 'auto',
-    height: 'auto',
-  },
-  divBaseFloatingMenu: {
-    backgroundColor: '#1F1F1F',
-    position: 'absolute',
-    top: '36px',
-    left: '-150%',
-    width: '178px',
-    height: '187px',
-    borderRadius: '10px',
-  },
-  divBaseFloatingMenuAdmin: {
-    backgroundColor: '#1F1F1F',
-    position: 'absolute',
-    top: '36px',
-    left: '-145%',
-    width: '178',
-    height: '180px',
-    borderRadius: '10px',
-  },
-  AppBar: {
-    background: '#1F1F1F',
-    height: '70px',
-    width: '100%',
-  },
-  Toolbar: {
-    height: '70px',
-    position: 'relative',
-  },
-  ButtonLogin: {
-    height: '30px',
-    width: '100px',
-    margin: '10px',
-    background: '#E50914',
-    color: 'white',
-  },
-  ButtonRegister: {
-    color: '#E50914',
-    height: '30px',
-    width: '100px',
-    margin: '10px',
-  },
-  Box: {
-    margin: '10px',
-  },
-  Link: {
-    textDecoration: 'none',
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: '14px',
-  },
-  Avatar: {
-    width: '50px',
-    height: '50px',
-  },
-  ButtonAvatar: {
-    marginRight: '0',
-  },
-  PositionSegitiga: {
-    left: '10%',
-    top: '10&',
-  },
-
-  IconMenu: {
-    fontSize: 40,
-    color: '#E50914',
-  },
-  LabelMenu: {
-    fontSize: 18,
-    color: 'white',
-  },
-  buttonMenuProfile: {
-    width: 220,
-    paddingRight: 50,
-  },
-  buttonMenuPay: {
-    width: 220,
-    paddingRight: 90,
-  },
-  borderMenuDropdown: {
-    width: 178,
-    height: 2,
-    backgroundColor: 'gray',
-  },
-  buttonMenuLogout: {
-    width: 220,
-    paddingRight: 53,
-  },
-  buttonMenuFilm: {
-    width: 220,
-    paddingRight: 84,
-  },
-  buttonMenuReceipt: {
-    width: 220,
-    paddingRight: 67,
-  },
-});
+import SearchIcon from '@material-ui/icons/Search';
 
 class nav extends Component {
   constructor(props) {
@@ -271,6 +163,11 @@ class nav extends Component {
                   Movies
                 </Link>
               </Box>
+              <Box className={classes.Box}>
+                <Link className={classes.Link} to='/search'>
+                  Search
+                </Link>
+              </Box>
             </Grid>
             <Grid container direction='row' justify='center' alignItems='center'>
               <Link className={classes.Link} to='/'>
@@ -390,6 +287,116 @@ class nav extends Component {
     );
   }
 }
+
+const styles = (theme) => ({
+  marginAutoItem: {},
+  divBase: {
+    position: 'relative',
+    width: 'auto',
+  },
+  divBaseFloatingDecor: {
+    position: 'absolute',
+    top: '1px',
+    left: '7px',
+    width: 'auto',
+    height: 'auto',
+  },
+  divBaseFloatingMenu: {
+    backgroundColor: '#1F1F1F',
+    position: 'absolute',
+    top: '36px',
+    left: '-150%',
+    width: '178px',
+    height: '187px',
+    borderRadius: '10px',
+  },
+  divBaseFloatingMenuAdmin: {
+    backgroundColor: '#1F1F1F',
+    position: 'absolute',
+    top: '36px',
+    left: '-145%',
+    width: '178',
+    height: '180px',
+    borderRadius: '10px',
+  },
+  AppBar: {
+    background: '#1F1F1F',
+    height: '70px',
+    width: '100%',
+  },
+  Toolbar: {
+    height: '70px',
+    position: 'relative',
+  },
+  ButtonLogin: {
+    height: '30px',
+    width: '100px',
+    margin: '10px',
+    background: '#E50914',
+    color: 'white',
+  },
+  ButtonRegister: {
+    color: '#E50914',
+    height: '30px',
+    width: '100px',
+    margin: '10px',
+  },
+  Box: {
+    margin: '10px',
+  },
+  Link: {
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '14px',
+  },
+  Avatar: {
+    width: '50px',
+    height: '50px',
+  },
+  ButtonAvatar: {
+    marginRight: '0',
+  },
+  PositionSegitiga: {
+    left: '10%',
+    top: '10&',
+  },
+
+  IconMenu: {
+    fontSize: 40,
+    color: '#E50914',
+  },
+  LabelMenu: {
+    fontSize: 18,
+    color: 'white',
+  },
+  buttonMenuProfile: {
+    width: 220,
+    paddingRight: 50,
+  },
+  buttonMenuPay: {
+    width: 220,
+    paddingRight: 90,
+  },
+  borderMenuDropdown: {
+    width: 178,
+    height: 2,
+    backgroundColor: 'gray',
+  },
+  buttonMenuLogout: {
+    width: 220,
+    paddingRight: 53,
+  },
+  buttonMenuFilm: {
+    width: 220,
+    paddingRight: 84,
+  },
+  buttonMenuReceipt: {
+    width: 220,
+    paddingRight: 67,
+  },
+});
+
 const mapStateToProps = (state) => {
   return {
     userReducer: state.userReducer,

@@ -12,7 +12,9 @@ import Upgrade from './pages/upgradePage';
 import AddFilm from './pages/addFilm';
 import ListFilm from './pages/listFilm';
 import Transaction from './pages/transactionPage';
-import learn from './pages/learnREDUX';
+import Snackbar from './components/snackbar';
+import UpdatePage from './pages/updatePage';
+
 import { authAction } from './redux/actions/auth_action';
 import { connect } from 'react-redux';
 
@@ -45,9 +47,9 @@ class App extends Component {
         <div>
           <CssBaseline />
           <Navbar />
+          <Snackbar />
           <Switch>
             <PrivateRouteAdmin path='/transactions' component={Transaction} />
-            <Route path='/learn' component={learn} />
             <Route path='/add-movie' component={AddFilm} />
             <PrivateRouteAdmin path='/list-film' component={ListFilm} />
             <PrivateRouteUser path='/upgrade' component={Upgrade} />
@@ -55,8 +57,8 @@ class App extends Component {
             <PrivateRouteSubscribe path='/detail' component={DetailPlayer} />
             <PrivateRouteUser path='/tv' component={TVShows} />
             <PrivateRouteUser path='/movies' component={Movies} />
-
-            <Route path='/' component={Home} />
+            {/* <Route path='/' component={Home} /> */}
+            <Route path='/' component={UpdatePage} />
           </Switch>
         </div>
       </Router>

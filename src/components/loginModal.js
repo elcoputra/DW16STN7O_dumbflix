@@ -131,10 +131,10 @@ class loginModal extends Component {
   //   this.handleCloseLogin();
   // };
   handleButtonLogin = () => {
-    this.props.loginAction(this.state.user);
     this.setState({
       user: {},
     });
+    this.props.loginAction(this.state.user);
   };
   // getDataLocalStorage = () => {
   //   const isLogin = localStorage.getItem('isLogin');
@@ -198,7 +198,7 @@ class loginModal extends Component {
                       label='Email'
                       type='email'
                       name='email'
-                      value={this.state.user.email}
+                      value={this.state.user.email ? this.state.user.email : ''}
                       onChange={this.handleInputChange}
                       className={classes.textField}
                       margin='normal'
@@ -224,7 +224,7 @@ class loginModal extends Component {
                       label='Password'
                       type='password'
                       name='password'
-                      value={this.state.user.password}
+                      value={this.state.user.password ? this.state.user.password : ''}
                       onChange={this.handleInputChange}
                       className={classes.textField}
                       margin='normal'
