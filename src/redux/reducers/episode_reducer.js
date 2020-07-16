@@ -10,6 +10,11 @@ import {
   DELETE_EPISODE_BY_MOVIE_ERROR,
   CLEAR_DELETE_EPISODE_BY_MOVIE_MESSAGE,
   CLEAR_DELETE_EPISODE_BY_MOVIE_ERROR,
+  UPDATE_EPISODE_REQUEST,
+  UPDATE_EPISODE_SUCCESS,
+  UPDATE_EPISODE_ERROR,
+  CLEAR_UPDATE_EPISODE_MESSAGE,
+  CLEAR_UPDATE_EPISODE_ERROR,
 } from '../actionTypes';
 
 const initialStateAddEpisode = {
@@ -113,6 +118,52 @@ export const deleteEpisodeReducer = (state = initialDeleteEpisode, action) => {
         ...state,
         errorDeleteEpisodeBool: false,
         errorDeleteEpisode: '',
+      };
+    default:
+      return state;
+  }
+};
+
+// Update episode
+const initialDataUpdateEpisode = {
+  loadingUpdateEpisode: false,
+  messageUpdateEpisodeBool: false,
+  errorUpdateEpisodeBool: false,
+  messageUpdateEpisode: '',
+  errorUpdateEpisode: '',
+};
+export const updateEpisodeReducer = (state = initialDataUpdateEpisode, action) => {
+  switch (action.type) {
+    case UPDATE_EPISODE_REQUEST:
+      return {
+        ...state,
+        loadingUpdateEpisode: true,
+      };
+    case UPDATE_EPISODE_SUCCESS:
+      return {
+        ...state,
+        loadingUpdateEpisode: false,
+        messageUpdateEpisodeBool: true,
+        messageUpdateEpisode: action.payload,
+      };
+    case UPDATE_EPISODE_ERROR:
+      return {
+        ...state,
+        errorUpdateEpisodeBool: true,
+        loadingUpdateEpisode: false,
+        errorUpdateEpisode: action.payload,
+      };
+    case CLEAR_UPDATE_EPISODE_MESSAGE:
+      return {
+        ...state,
+        messageUpdateEpisodeBool: false,
+        messageUpdateEpisode: '',
+      };
+    case CLEAR_UPDATE_EPISODE_ERROR:
+      return {
+        ...state,
+        errorUpdateEpisodeBool: false,
+        errorUpdateEpisode: '',
       };
     default:
       return state;

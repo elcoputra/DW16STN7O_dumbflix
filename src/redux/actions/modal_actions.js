@@ -5,6 +5,8 @@ import {
   CLOSE_MODAL_LOGIN,
   CLOSE_MODAL_ADD_EPISODE,
   OPEN_MODAL_ADD_EPISODE,
+  OPEN_MODAL_UPDATE_EPISODE,
+  CLOSE_MODAL_UPDATE_EPISODE,
 } from '../actionTypes';
 
 export const openModalRegister = () => {
@@ -40,6 +42,19 @@ export const openModalAddEpisode = () => {
 export const closeModalAddEpisode = () => {
   return {
     type: CLOSE_MODAL_ADD_EPISODE,
+    payload: false,
+  };
+};
+export const openModalUpdateEpisode = (index) => {
+  return {
+    type: OPEN_MODAL_UPDATE_EPISODE,
+    index: index,
+    payload: true,
+  };
+};
+export const closeModalUpdateEpisode = () => {
+  return {
+    type: CLOSE_MODAL_UPDATE_EPISODE,
     payload: false,
   };
 };

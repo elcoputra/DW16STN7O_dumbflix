@@ -6,10 +6,11 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
 import ModalAddEpisode from '../components/modalAddEpisode';
+import ModalUpdateEpisode from '../components/updateEpisodeModal';
 
 import { deleteEpisodeAction, getDataEpisodes } from '../redux/actions/episode_action';
 import { getCategories } from '../redux/actions/categories_action';
-import { openModalAddEpisode } from '../redux/actions/modal_actions';
+import { openModalAddEpisode, openModalUpdateEpisode } from '../redux/actions/modal_actions';
 import { updateMovieAction } from '../redux/actions/movie_action';
 
 class updatePage extends Component {
@@ -17,8 +18,8 @@ class updatePage extends Component {
     super(props);
     this.state = {
       movie: {},
+      index: 0,
       episode: {},
-      currency: 'USD',
       mouseHover: false,
       idMouseHover: 0,
       prevMovie: {},
@@ -50,9 +51,10 @@ class updatePage extends Component {
     });
   };
 
-  onMouseEnterHandler = (id) => {
+  onMouseEnterHandler = (id, index) => {
     this.setState({ idMouseHover: id });
     this.setState({ mouseHover: true });
+    this.setState({ index: index });
   };
 
   onMouseLeaveHandler = (id) => {
@@ -82,7 +84,7 @@ class updatePage extends Component {
       <div className={classes.hoverItem} id={id} onMouseLeave={() => this.onMouseLeaveHandler(id)}>
         <Grid container style={{ display: 'flex', width: '100%', height: '100%' }} {...this.gridConf.GridColumnItemOnHover}>
           <Grid item>
-            <Button className={classes.buttonOnHoverEdit} onClick={() => this.props.openModalAddEpisode()}>
+            <Button className={classes.buttonOnHoverEdit} onClick={() => this.props.openModalUpdateEpisode(this.state.index)}>
               Edit
             </Button>
           </Grid>
@@ -104,6 +106,7 @@ class updatePage extends Component {
     return (
       <div style={{ display: 'flex', maxWidth: '100vw', minHeight: '100vh', paddingTop: 70 }}>
         <ModalAddEpisode />
+        <ModalUpdateEpisode />
         <Grid container {...this.gridConf.gridColumnRoot} className={classes.gridRootStyle}>
           <Grid item>
             <Typography className={classes.titleUpdate}>Update</Typography>
@@ -193,11 +196,11 @@ class updatePage extends Component {
 
                   <div className={classes.divCardContentRight}>
                     <Grid container {...this.gridConf.GridRowEpisode}>
-                      {dataEpisode.map((data) => {
+                      {dataEpisode.map((data, index) => {
                         return (
                           <Grid item xl={1} lg={2} sm={3} xs={12}>
                             <div
-                              onMouseEnter={() => this.onMouseEnterHandler(data.id)}
+                              onMouseEnter={() => this.onMouseEnterHandler(data.id, index)}
                               className={classes.divEpisode}
                               onMouseLeave={() => this.onMouseLeaveHandler(data.id)}
                             >
@@ -444,5 +447,12 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, { getCategories, openModalAddEpisode, deleteEpisodeAction, getDataEpisodes, updateMovieAction }),
+  connect(mapStateToProps, {
+    getCategories,
+    openModalAddEpisode,
+    deleteEpisodeAction,
+    getDataEpisodes,
+    updateMovieAction,
+    openModalUpdateEpisode,
+  }),
 )(updatePage);

@@ -10,6 +10,11 @@ import {
   DELETE_EPISODE_BY_MOVIE_ERROR,
   CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
   CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
+  UPDATE_EPISODE_REQUEST,
+  UPDATE_EPISODE_SUCCESS,
+  UPDATE_EPISODE_ERROR,
+  CLEAR_UPDATE_EPISODE_MESSAGE,
+  CLEAR_UPDATE_EPISODE_ERROR,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
 
@@ -62,7 +67,7 @@ export function getDataEpisodes(movieId) {
   };
 }
 
-// Delete song async await
+// Delete episode async await
 export function deleteEpisodeAction(id) {
   return async (dispatch) => {
     try {
@@ -83,14 +88,46 @@ export function deleteEpisodeAction(id) {
   };
 }
 
-export function clearMessageDeleteSongAction() {
+export function clearMessageDeleteEpisodeAction() {
   return function (dispatch) {
     dispatch({ type: CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE });
   };
 }
 
-export function clearErrorDeleteSongAction() {
+export function clearErrorDeleteEpisodeAction() {
   return function (dispatch) {
     dispatch({ type: CLEAR_UPDATE_DETAIL_MOVIE_ERROR });
+  };
+}
+// update episode async await
+export function updateEpisodeAction(id, data) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: UPDATE_EPISODE_REQUEST,
+      });
+      const response = await API.patch('/episode/' + id, data);
+      dispatch({
+        type: UPDATE_EPISODE_SUCCESS,
+        payload: response.data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_EPISODE_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
+}
+
+export function clearMessageUpdateEpisodeAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_UPDATE_EPISODE_MESSAGE });
+  };
+}
+
+export function clearErrorUpdateEpisodeAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_UPDATE_EPISODE_ERROR });
   };
 }
