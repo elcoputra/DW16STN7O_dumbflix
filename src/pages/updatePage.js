@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { Grid, Typography, TextField, MenuItem, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+
+import { getCategories } from '../redux/actions/categories_action';
+
 class updatePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      movie: {},
+      episode: {},
       currency: 'USD',
     };
   }
@@ -14,68 +21,18 @@ class updatePage extends Component {
     this.setState({ currency: event.target.value });
   };
 
+  componentDidMount = async () => {
+    await this.props.getCategories();
+    await this.setState({
+      movie: this.props.detailMovieReducer.dataDetailMovie,
+    });
+    console.log(this.state.movie);
+  };
+
   render() {
-    const currencies = [
-      {
-        value: 'USD',
-        label: '$',
-      },
-      {
-        value: 'EUR',
-        label: '€',
-      },
-      {
-        value: 'BTC',
-        label: '฿',
-      },
-      {
-        value: 'JPY',
-        label: '¥',
-      },
-    ];
-    const fakeEpisodes = [
-      {
-        movieId: 1,
-        title: '1. Episode satu',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-      {
-        movieId: 2,
-        title: '2. Episode dua',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-      {
-        movieId: 3,
-        title: '3. Episode tiga',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-      {
-        movieId: 4,
-        title: '4. Episode empat',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-      {
-        movieId: 5,
-        title: '5. Episode lima',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-      {
-        movieId: 6,
-        title: '6. Episode enam',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-      {
-        movieId: 7,
-        title: '7. Episode tujuh',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-      {
-        movieId: 8,
-        title: '8. Episode delapan',
-        thumbnailEpisode: 'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg',
-      },
-    ];
     const { classes } = this.props;
+    const { dataEpisode } = this.props.episodeReducer;
+    const { categories, loading } = this.props.categoriesReducer;
     return (
       <div style={{ display: 'flex', maxWidth: '100vw', minHeight: '100vh', paddingTop: 70 }}>
         <Grid container {...this.gridConf.gridColumnRoot} className={classes.gridRootStyle}>
@@ -91,26 +48,37 @@ class updatePage extends Component {
                       <Typography className={classes.titleSubUpdate}>Movie</Typography>
                     </Grid>
                     <Grid item>
-                      <TextField label='Title' variant='outlined' className={classes.texfieldInputMovie} />
+                      <TextField
+                        label='Title'
+                        value={this.state.movie.title ? this.state.movie.title : ''}
+                        variant='outlined'
+                        className={classes.texfieldInputMovie}
+                      />
                       <TextField
                         select
                         label='Select'
                         className={classes.texfieldInputMovie}
-                        value={this.state.currency}
+                        value={!loading && this.state.movie.categoryId ? this.state.movie.categoryId : 'Loading....'}
                         onChange={this.handleChange}
                         helperText='Please select movie category'
                         variant='outlined'
                       >
-                        {currencies.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                        {categories.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.name}
                           </MenuItem>
                         ))}
                       </TextField>
-                      <TextField label='Year' variant='outlined' className={classes.texfieldInputMovie} />
+                      <TextField
+                        label='Year'
+                        variant='outlined'
+                        value={this.state.movie.year ? this.state.movie.year : ''}
+                        className={classes.texfieldInputMovie}
+                      />
                       <TextField
                         className={classes.texfieldInputMovie}
                         label='Description'
+                        value={this.state.movie.description ? this.state.movie.description : ''}
                         multiline
                         rows={4}
                         variant='outlined'
@@ -118,6 +86,7 @@ class updatePage extends Component {
                       <TextField
                         className={classes.texfieldInputMovie}
                         label='Link Thumbnail'
+                        value={this.state.movie.thumbnailTrailer ? this.state.movie.thumbnailTrailer : ''}
                         multiline
                         rows={2}
                         variant='outlined'
@@ -142,25 +111,25 @@ class updatePage extends Component {
 
                   <div className={classes.divCardContentRight}>
                     <Grid container {...this.gridConf.GridRowEpisode}>
-                      {fakeEpisodes.map((data) => {
+                      {dataEpisode.map((data) => {
                         return (
                           <Grid item xl={1} lg={2} sm={3} xs={12}>
                             <div className={classes.divEpisode}>
                               <div
                                 className={classes.imgContainerCard}
                                 style={{
-                                  backgroundImage: `url(${'https://sinopsisfilmindia.com/wp-content/uploads/2019/12/TheWitcherSeason1Episode1.jpg'})`,
+                                  backgroundImage: `url(${data.thumbnailEpisode})`,
                                 }}
                               ></div>
                               <div className={classes.warperNameEpisode}>
                                 <Grid container {...this.gridConf.gridRowNameAndYear}>
                                   <Grid item xs={9}>
                                     <Typography noWrap className={classes.nameEpisode}>
-                                      1. Asdawdawd ASdawdaw ASdawd
+                                      {data.title}
                                     </Typography>
                                   </Grid>
                                   <Grid item xs={3}>
-                                    <Typography className={classes.nameEpisode}>2019</Typography>
+                                    <Typography className={classes.nameEpisode}>{data.title.year}</Typography>
                                   </Grid>
                                 </Grid>
                               </div>
@@ -251,7 +220,6 @@ const styles = (theme) => ({
     '& .MuiFormHelperText-root': {
       color: '#B7B7B7',
     },
-    // MuiPaper-root MuiMenu-paper MuiPopover-paper MuiPaper-elevation8 MuiPaper-rounded
 
     '& .MuiOutlinedInput-root': {
       color: 'white',
@@ -340,4 +308,12 @@ const styles = (theme) => ({
   yearEpisode: { color: '#D2D2D2', fontSize: 14 },
 });
 
-export default withStyles(styles)(updatePage);
+const mapStateToProps = (state) => {
+  return {
+    categoriesReducer: state.categoriesReducer,
+    detailMovieReducer: state.detailMovieReducer,
+    episodeReducer: state.episodeReducer,
+  };
+};
+
+export default compose(withStyles(styles), connect(mapStateToProps, { getCategories }))(updatePage);

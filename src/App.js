@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+
 import Navbar from './components/nav';
 import Home from './pages/Home';
 import TVShows from './pages/TvShowsPage';
@@ -49,16 +51,16 @@ class App extends Component {
           <Navbar />
           <Snackbar />
           <Switch>
+            <PrivateRouteAdmin path='/update' component={UpdatePage} />
             <PrivateRouteAdmin path='/transactions' component={Transaction} />
-            <Route path='/add-movie' component={AddFilm} />
+            <PrivateRouteAdmin path='/add-movie' component={AddFilm} />
             <PrivateRouteAdmin path='/list-film' component={ListFilm} />
             <PrivateRouteUser path='/upgrade' component={Upgrade} />
             <PrivateRouteUser path='/profile' component={Profile} />
             <PrivateRouteSubscribe path='/detail' component={DetailPlayer} />
             <PrivateRouteUser path='/tv' component={TVShows} />
             <PrivateRouteUser path='/movies' component={Movies} />
-            {/* <Route path='/' component={Home} /> */}
-            <Route path='/' component={UpdatePage} />
+            <Route path='/' component={Home} />
           </Switch>
         </div>
       </Router>

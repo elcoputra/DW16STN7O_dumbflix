@@ -1,244 +1,11 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  Modal,
-  Backdrop,
-  Fade,
-  TextField,
-  Grid,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextareaAutosize,
-} from '@material-ui/core';
+import { Modal, Backdrop, Fade, TextField, Grid, Button, MenuItem, TextareaAutosize } from '@material-ui/core';
 import { AttachFile, Add } from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { getCategories } from '../redux/actions/categories_action';
 import { addDataMovie } from '../redux/actions/movie_action';
-
-const styles = (theme) => ({
-  // Styling Dropdown
-  root: {
-    fontColor: 'white',
-    color: 'white',
-    labelColor: 'white',
-  },
-  formControl: {
-    marginTop: 15,
-    marginBottom: 15,
-    marginLeft: 5,
-    height: 50,
-    width: 1150,
-    border: '2px solid white',
-    fontColor: 'white',
-    color: 'white',
-    backgroundColor: 'rgba(210, 210, 210, 0.25)',
-    laberColor: 'white',
-    borderRadius: 5,
-  },
-  dropdownStyle: {
-    border: '2px solid white',
-    borderRadius: '5%',
-    backgroundColor: '#353535',
-    fontColor: 'white',
-    color: 'white',
-    laberColor: 'white',
-  },
-  select: {
-    '&:before': {
-      borderColor: 'white',
-      labelColor: 'white',
-      fontColor: 'white',
-    },
-    '&:after': {
-      borderColor: 'white',
-      labelColor: 'white',
-      fontColor: 'white',
-    },
-  },
-  iconDropdown: {
-    fill: 'white',
-  },
-  // End Styling Dropdown
-
-  divGrid: {
-    width: 1150,
-    height: 2222,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-    color: 'white',
-    fontColor: 'white',
-  },
-  divider: {
-    height: 50,
-  },
-  divWarping: {
-    backgroundColor: 'green',
-    color: 'white',
-  },
-  textField: {
-    background: 'rgba(210, 210, 210, 0.25)',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 927,
-    height: 50,
-  },
-  textFieldInsertLinkThumbnailEpisode: {
-    background: 'rgba(210, 210, 210, 0.25)',
-    width: 211,
-    height: 50,
-  },
-  textField3: {
-    background: 'rgba(210, 210, 210, 0.25)',
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 927,
-    height: 50,
-  },
-  textField2: {
-    background: 'rgba(210, 210, 210, 0.25)',
-    width: 1146,
-    height: 50,
-    marginLeft: 8,
-  },
-  cssLabel: {
-    color: '#B1B1B1',
-  },
-
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: `red !important`,
-      color: `white !important`,
-    },
-  },
-
-  cssFocused: {
-    color: 'white',
-    textColor: 'white',
-  },
-
-  notchedOutline: {
-    borderWidth: '2px',
-    borderColor: 'white !important',
-  },
-  floatingLabelFocusStyle: {
-    color: 'white',
-  },
-  ButtonAttatch: {
-    textTransform: 'none',
-    marginTop: 13,
-    height: 55,
-    width: 213,
-    fontSize: '14px',
-    background: 'rgba(210, 210, 210, 0.25)',
-    color: '#B1B1B1',
-    borderStyle: 'solid',
-    borderColor: 'white',
-    borderWidth: 2,
-    '&:hover': {
-      //you want this to be the same as the backgroundColor above
-      backgroundColor: '#E50914',
-      color: 'white',
-    },
-  },
-  ButtonAddForm: {
-    textTransform: 'none',
-    marginTop: 13,
-    marginLeft: 9,
-    height: 30,
-    width: 1150,
-    fontSize: '14px',
-    background: 'rgba(210, 210, 210, 0.25)',
-    color: 'red',
-    borderStyle: 'solid',
-    borderColor: 'white',
-    borderWidth: 2,
-    '&:hover': {
-      //you want this to be the same as the backgroundColor above
-      backgroundColor: '#E50914',
-      color: 'white',
-    },
-  },
-  ButtonSave: {
-    textTransform: 'none',
-    marginTop: 34,
-    marginLeft: 208,
-    height: 40,
-    width: 200,
-    fontSize: '14px',
-    background: 'red',
-    color: 'white',
-    borderStyle: 'solid',
-    borderColor: 'white',
-    borderWidth: 2,
-    '&:hover': {
-      //you want this to be the same as the backgroundColor above
-      backgroundColor: '#rgba(210, 210, 210, 0.25)',
-      color: 'red',
-    },
-  },
-  attatchText: {},
-  attatchIcon: {
-    paddingLeft: 4,
-    paddingTop: 11,
-  },
-  icon: {
-    fontSize: 40,
-  },
-  iconAddForm: {
-    fontSize: 40,
-  },
-  TextareaAutosize: {
-    marginTop: 5,
-    marginLeft: 1,
-    marginBottom: 30,
-    width: 1145,
-    color: 'white',
-    borderRadius: 5,
-    backgroundColor: '#353535',
-  },
-  InputLabel: {
-    color: 'white',
-  },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    backgroundColor: '#1f1f1f',
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  fontModalTitle: {
-    color: 'white',
-    fontSize: 24,
-  },
-  Kirim: {
-    textTransform: 'none',
-    marginTop: 65,
-    height: 40,
-    width: 350,
-    fontSize: '18px',
-    background: '#E50914',
-    color: 'white',
-    '&:hover': {
-      //you want this to be the same as the backgroundColor above
-      backgroundColor: 'white',
-      color: '#E50914',
-    },
-  },
-  cheatMargin: {
-    width: 218,
-  },
-});
 
 class addFilm extends Component {
   constructor(props, context) {
@@ -251,6 +18,13 @@ class addFilm extends Component {
   }
   componentDidMount() {
     this.props.getCategories();
+    // const { categories } = this.props.categoriesReducer;
+    // this.setState({
+    //   uploadFilm: {
+    //     categoryId: categories[0].id,
+    //   },
+    // });
+    // console.log(this.state.uploadFilm.categoryId);
   }
 
   handleChangeFilmInputGroup = (event) => {
@@ -281,88 +55,45 @@ class addFilm extends Component {
   uiAddEpisode() {
     const { classes } = this.props;
     return this.state.uploadEpisodes.map((el, i) => (
-      <div key={i}>
-        <Grid item xs>
-          <Grid container direction='row' justify='flex-start' alignItems='center'>
-            <Grid item xs>
-              <TextField
-                id='standard-name'
-                label='Title Episode'
-                name='title'
-                value={el.title || ''}
-                onChange={this.handleChange.bind(this, i)}
-                className={classes.textField}
-                margin='normal'
-                variant='outlined'
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    root: classes.cssOutlinedInput,
-                    focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item xs>
-              <div className={classes.cheatMargin}>
+      <div style={{ display: 'flex', width: 1146, alignItems: 'center', justifyContent: 'center' }} key={i}>
+        <Grid container spacing={1} direction='column' justify='center' alignItems='center'>
+          <Grid item>
+            <Grid container style={{ width: 1146 }} direction='row' justify='space-between' alignItems='center'>
+              <Grid item xs>
                 <TextField
                   id='standard-name'
-                  label='Thumbnail Episode'
+                  label='Title Episode'
+                  name='title'
+                  value={el.title || ''}
+                  onChange={this.handleChange.bind(this, i)}
+                  className={classes.textField}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  id='standard-name'
+                  label='Link Thumbnail Episode'
                   name='thumbnailEpisode'
                   value={el.thumbnailEpisode || ''}
                   onChange={this.handleChange.bind(this, i)}
                   className={classes.textFieldInsertLinkThumbnailEpisode}
-                  margin='normal'
                   variant='outlined'
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.cssLabel,
-                      focused: classes.cssFocused,
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      root: classes.cssOutlinedInput,
-                      focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                    },
-                  }}
                 />
-              </div>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs>
-          <TextField
-            id='standard-name'
-            label='Link Episode'
-            name='linkEpisode'
-            value={el.linkEpisode || ''}
-            onChange={this.handleChange.bind(this, i)}
-            className={classes.textField2}
-            margin='normal'
-            variant='outlined'
-            InputLabelProps={{
-              classes: {
-                root: classes.cssLabel,
-                focused: classes.cssFocused,
-              },
-            }}
-            InputProps={{
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              },
-              inputMode: 'numeric',
-            }}
-          />
+          <Grid item>
+            <TextField
+              id='standard-name'
+              label='Link Episode'
+              name='linkEpisode'
+              value={el.linkEpisode || ''}
+              onChange={this.handleChange.bind(this, i)}
+              className={classes.textField2}
+              variant='outlined'
+            />
+          </Grid>
         </Grid>
       </div>
     ));
@@ -390,14 +121,10 @@ class addFilm extends Component {
     const { classes } = this.props;
     const { categories, loading } = this.props.categoriesReducer;
     return (
-      <div>
-        <div className={classes.divider} />
-        <Grid container direction='column' justify='center' alignItems='center'>
+      <div className={classes.divRoot}>
+        <Grid container spacing={1} direction='column' justify='center' alignItems='center'>
           <Grid item xs>
-            <div>Add Film</div>
-          </Grid>
-          <Grid item xs>
-            <Grid container direction='row' justify='flex-start' alignItems='center'>
+            <Grid container spacing={1} direction='row' justify='flex-start' alignItems='center'>
               <Grid item xs>
                 <TextField
                   id='standard-name'
@@ -406,23 +133,7 @@ class addFilm extends Component {
                   value={this.state.uploadFilm.title}
                   onChange={this.handleChangeFilmInputGroup}
                   className={classes.textField}
-                  margin='normal'
                   variant='outlined'
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.cssLabel,
-                      focused: classes.cssFocused,
-                      FormHelperTextProps: classes.floatingLabelFocusStyle,
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      root: classes.cssOutlinedInput,
-                      focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                      FormHelperTextProps: classes.floatingLabelFocusStyle,
-                    },
-                  }}
                 />
               </Grid>
               <Grid item xs>
@@ -448,64 +159,79 @@ class addFilm extends Component {
               onChange={this.handleChangeFilmInputGroup}
               type='number'
               className={classes.textField2}
-              margin='normal'
               variant='outlined'
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
             />
           </Grid>
           <Grid item xs>
             {loading ? (
               'Loading....'
             ) : (
-              <FormControl variant='outlined' className={classes.formControl}>
-                <InputLabel className={classes.InputLabel} id='demo-simple-select-outlined-label'>
-                  Category
-                </InputLabel>
-                <Select
-                  labelId='demo-simple-select-outlined-label'
-                  id='demo-simple-select-outlined'
-                  name='categoryId'
-                  label='Category'
-                  value={this.state.uploadFilm.categoryId}
-                  onChange={this.handleChangeFilmInputGroup}
-                  className={classes.select}
-                  inputProps={{
-                    classes: {
-                      icon: classes.icon,
-                    },
-                  }}
-                  MenuProps={{ classes: { paper: classes.dropdownStyle } }}
-                >
-                  {loading
-                    ? 'FETCHING...'
-                    : categories.map((detailCategory) => {
-                        return <MenuItem value={detailCategory.id}>{detailCategory.name}</MenuItem>;
-                      })}
-                </Select>
-              </FormControl>
+              // <FormControl variant='outlined' className={classes.formControl}>
+              //   <InputLabel className={classes.InputLabel} id='demo-simple-select-outlined-label'>
+              //     Category
+              //   </InputLabel>
+              //   <Select
+              //     labelId='demo-simple-select-outlined-label'
+              //     id='demo-simple-select-outlined'
+              //     name='categoryId'
+              //     label='Category'
+              //     value={this.state.uploadFilm.categoryId}
+              //     onChange={this.handleChangeFilmInputGroup}
+              //     className={classes.select}
+              //     inputProps={{
+              //       classes: {
+              //         icon: classes.icon,
+              //       },
+              //     }}
+              //     MenuProps={{ classes: { paper: classes.dropdownStyle } }}
+              //   >
+              //     {loading
+              //       ? 'FETCHING...'
+              //       : categories.map((detailCategory) => {
+              //           return <MenuItem value={detailCategory.id}>{detailCategory.name}</MenuItem>;
+              //         })}
+              //   </Select>
+              // </FormControl>
+
+              <TextField
+                select
+                label='Select'
+                name='categoryId'
+                className={classes.formControl}
+                value={loading ? 'Loading...' : this.state.uploadFilm.categoryId}
+                onChange={this.handleChangeFilmInputGroup}
+                helperText='Please select movie category'
+                variant='outlined'
+              >
+                {categories.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </TextField>
             )}
           </Grid>
           <Grid item xs>
-            <TextareaAutosize
-              className={classes.TextareaAutosize}
+            {/* <TextareaAutosize
+              className={classes.textField2}
               aria-label='minimum height'
               rowsMin={10}
               name='description'
               value={this.state.uploadFilm.description}
               onChange={this.handleChangeFilmInputGroup}
               placeholder='Description'
+            /> */}
+
+            <TextField
+              multiline
+              label='Description'
+              name='description'
+              value={this.state.uploadFilm.description}
+              onChange={this.handleChangeFilmInputGroup}
+              type='number'
+              rows={4}
+              className={classes.textFieldMultiline}
+              variant='outlined'
             />
           </Grid>
           {/* TI SINI TEMPAT RUSABLE DI SIMPEN */}
@@ -552,21 +278,7 @@ class addFilm extends Component {
                 value={this.state.uploadFilm.thumbnail}
                 onChange={this.handleChangeFilmInputGroup}
                 className={classes.textField}
-                margin='normal'
                 variant='outlined'
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    root: classes.cssOutlinedInput,
-                    focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
               />
               <br />
               <TextField
@@ -576,21 +288,7 @@ class addFilm extends Component {
                 value={this.state.uploadFilm.thumbnailTrailer}
                 onChange={this.handleChangeFilmInputGroup}
                 className={classes.textField}
-                margin='normal'
                 variant='outlined'
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    root: classes.cssOutlinedInput,
-                    focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
               />
               <Grid item xs>
                 <Button variant='contained' onClick={this.handleButtonConfirmAttatch} className={classes.Kirim}>
@@ -605,6 +303,400 @@ class addFilm extends Component {
     );
   }
 }
+
+const styles = (theme) => ({
+  divRoot: {
+    display: 'flex',
+    width: '100%',
+    minHeight: '100vh',
+    paddingTop: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // Styling Dropdown
+  formControl: {
+    width: 1146,
+    borderRadius: 5,
+    backgroundColor: '#353535',
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  // Not Used
+  // dropdownStyle: {
+  //   border: '2px solid white',
+  //   borderRadius: '5%',
+  //   backgroundColor: '#353535',
+  //   fontColor: 'white',
+  //   color: 'white',
+  //   laberColor: 'white',
+  // },
+  // select: {
+  //   '&:before': {
+  //     borderColor: 'white',
+  //     labelColor: 'white',
+  //     fontColor: 'white',
+  //   },
+  //   '&:after': {
+  //     borderColor: 'white',
+  //     labelColor: 'white',
+  //     fontColor: 'white',
+  //   },
+  // },
+  // iconDropdown: {
+  //   fill: 'white',
+  // },
+  // End Styling Dropdown
+
+  // divGrid: {
+  //   width: 1150,
+  //   height: 2222,
+  // },
+  // selectEmpty: {
+  //   marginTop: theme.spacing(2),
+  //   color: 'white',
+  //   fontColor: 'white',
+  // },
+  // divider: {
+  //   height: 50,
+  // },
+  // divWarping: {
+  //   backgroundColor: 'green',
+  //   color: 'white',
+  // },
+  textField: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    borderRadius: 5,
+    width: 927,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  textFieldInsertLinkThumbnailEpisode: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    borderRadius: 5,
+    marginLeft: 8,
+    width: 211,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  textField3: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    width: 927,
+    borderRadius: 5,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  textField2: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    width: 1146,
+    borderRadius: 5,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  textFieldMultiline: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    width: 1146,
+    borderRadius: 5,
+    marginBottom: 10,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  cssLabel: {
+    color: '#B1B1B1',
+  },
+
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: `red !important`,
+      color: `white !important`,
+    },
+  },
+
+  cssFocused: {
+    color: 'white',
+    textColor: 'white',
+  },
+
+  notchedOutline: {
+    borderWidth: '2px',
+    borderColor: 'white !important',
+  },
+  floatingLabelFocusStyle: {
+    color: 'white',
+  },
+  ButtonAttatch: {
+    textTransform: 'none',
+    height: 55,
+    width: 213,
+    fontSize: '14px',
+    background: 'rgba(210, 210, 210, 0.25)',
+    color: '#B1B1B1',
+    borderStyle: 'solid',
+    borderColor: 'white',
+    borderWidth: 2,
+    '&:hover': {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: '#E50914',
+      color: 'white',
+    },
+  },
+  ButtonAddForm: {
+    textTransform: 'none',
+    marginTop: 13,
+    height: 30,
+    width: 1146,
+    fontSize: '14px',
+    background: 'rgba(210, 210, 210, 0.25)',
+    color: 'red',
+    borderStyle: 'solid',
+    borderColor: 'white',
+    borderWidth: 2,
+    '&:hover': {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: '#E50914',
+      color: 'white',
+    },
+  },
+  ButtonSave: {
+    textTransform: 'none',
+    marginTop: 34,
+    marginLeft: 208,
+    height: 40,
+    width: 200,
+    fontSize: '14px',
+    background: 'red',
+    color: 'white',
+    borderStyle: 'solid',
+    borderColor: 'white',
+    borderWidth: 2,
+    '&:hover': {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: '#rgba(210, 210, 210, 0.25)',
+      color: 'red',
+    },
+  },
+  attatchText: {},
+  attatchIcon: {
+    paddingLeft: 4,
+    paddingTop: 11,
+  },
+  icon: {
+    fontSize: 40,
+  },
+  iconAddForm: {
+    fontSize: 40,
+  },
+  TextareaAutosize: {
+    marginTop: 5,
+    marginBottom: 30,
+    width: 1145,
+    color: 'white',
+    borderRadius: 5,
+    backgroundColor: '#353535',
+  },
+  InputLabel: {
+    color: 'white',
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: '#1f1f1f',
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  fontModalTitle: {
+    color: 'white',
+    fontSize: 24,
+  },
+  Kirim: {
+    textTransform: 'none',
+    marginTop: 65,
+    height: 40,
+    width: 350,
+    fontSize: '18px',
+    background: '#E50914',
+    color: 'white',
+    '&:hover': {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: 'white',
+      color: '#E50914',
+    },
+  },
+  cheatMargin: {
+    width: 218,
+  },
+});
 
 const mapStateToProps = (state) => {
   return {

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Grid, Button, Typography } from '@material-ui/core';
 import ReactPlayer from 'react-player';
 import ModalAddEpisode from '../components/modalAddEpisode';
 import { openModalAddEpisode } from '../redux/actions/modal_actions';
 import { getDetailMovie } from '../redux/actions/movie_action';
+
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -87,11 +90,7 @@ class detailPlayer extends Component {
           <div style={{ width: '93%' }}>
             <Grid container {...this.gridButtonAdmin}>
               <Grid item>
-                <Button
-                  variant='contained'
-                  onClick={() => this.props.openModalAddEpisode()}
-                  className={classes.ButtonUpdateMovie}
-                >
+                <Button variant='contained' component={Link} to='/update' className={classes.ButtonUpdateMovie}>
                   Update Movie
                 </Button>
               </Grid>

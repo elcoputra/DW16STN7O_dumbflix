@@ -6,112 +6,6 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { closeModalAddEpisode } from '../redux/actions/modal_actions';
 import { addEpisode } from '../redux/actions/movie_action';
-const styles = (theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    outline: 'none',
-  },
-  modal2: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  Box: {
-    backgroundColor: '#353535',
-    opacity: '100%',
-    // height: "408px",
-    borderRadius: '10px',
-
-    paddingTop: '30px',
-    paddingBottom: '30px',
-    paddingLeft: '25px',
-    paddingRight: '25px',
-  },
-  Title: {
-    color: '#FFFFFF',
-    fontSize: '36px',
-  },
-  GridInput: {
-    color: '#B1B1B1',
-  },
-  textField: {
-    background: 'rgba(210, 210, 210, 0.25)',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 350,
-  },
-  textFieldLinkFilm: {
-    background: 'rgba(210, 210, 210, 0.25)',
-    marginLeft: 5,
-    width: 425,
-  },
-
-  cssLabel: {
-    color: '#B1B1B1',
-  },
-
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: `red !important`,
-    },
-  },
-
-  cssFocused: {
-    color: 'white',
-  },
-
-  notchedOutline: {
-    borderWidth: '2px',
-    borderColor: 'white !important',
-  },
-  ButtonAdd: {
-    height: '50px',
-    width: '150px',
-    marginLeft: 200,
-    fontSize: '18pxx',
-    background: '#E50914',
-    marginTop: '10px',
-    color: 'white',
-    '&:hover': {
-      //you want this to be the same as the backgroundColor above
-      backgroundColor: '#870303',
-    },
-  },
-  GridClickHere: {
-    marginTop: '50px',
-  },
-  LinkCliclHere: {
-    color: 'red',
-  },
-  ButtonAttatch: {
-    textTransform: 'none',
-    fontSize: 15,
-    marginTop: 5,
-    height: 53,
-    background: 'rgba(210, 210, 210, 0.25)',
-    color: '#B1B1B1',
-    borderStyle: 'solid',
-    borderColor: 'white',
-    borderWidth: 2,
-    '&:hover': {
-      //you want this to be the same as the backgroundColor above
-      backgroundColor: '#E50914',
-      color: 'white',
-    },
-  },
-  paper2: {
-    backgroundColor: '#1f1f1f',
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  fontModalTitle2: {
-    color: 'white',
-    fontSize: 24,
-  },
-});
 
 class modalAddEpisode extends Component {
   constructor(props, context) {
@@ -268,7 +162,7 @@ class modalAddEpisode extends Component {
                 name='thumbnailEpisode'
                 value={this.state.upload.thumbnailEpisode}
                 onChange={this.handleInputChange}
-                className={classes.textField2}
+                className={classes.textField}
                 margin='normal'
                 variant='outlined'
                 InputLabelProps={{
@@ -297,6 +191,173 @@ class modalAddEpisode extends Component {
     );
   }
 }
+
+const styles = (theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    outline: 'none',
+  },
+  modal2: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  Box: {
+    backgroundColor: '#353535',
+    opacity: '100%',
+    // height: "408px",
+    borderRadius: '10px',
+
+    paddingTop: '30px',
+    paddingBottom: '30px',
+    paddingLeft: '25px',
+    paddingRight: '25px',
+  },
+  Title: {
+    color: '#FFFFFF',
+    fontSize: '36px',
+  },
+  GridInput: {
+    color: '#B1B1B1',
+  },
+  textField: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 350,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  textFieldLinkFilm: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    marginLeft: 5,
+    width: 425,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+
+  cssLabel: {
+    color: '#B1B1B1',
+  },
+
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: `red !important`,
+    },
+  },
+
+  cssFocused: {
+    color: 'white',
+  },
+
+  notchedOutline: {
+    borderWidth: '2px',
+    borderColor: 'white !important',
+  },
+  ButtonAdd: {
+    height: '50px',
+    width: '150px',
+    marginLeft: 200,
+    fontSize: '18pxx',
+    background: '#E50914',
+    marginTop: '10px',
+    color: 'white',
+    '&:hover': {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: '#870303',
+    },
+  },
+  GridClickHere: {
+    marginTop: '50px',
+  },
+  LinkCliclHere: {
+    color: 'red',
+  },
+  ButtonAttatch: {
+    textTransform: 'none',
+    fontSize: 15,
+    marginTop: 5,
+    height: 53,
+    background: 'rgba(210, 210, 210, 0.25)',
+    color: '#B1B1B1',
+    borderStyle: 'solid',
+    borderColor: 'white',
+    borderWidth: 2,
+    '&:hover': {
+      //you want this to be the same as the backgroundColor above
+      backgroundColor: '#E50914',
+      color: 'white',
+    },
+  },
+  paper2: {
+    backgroundColor: '#1f1f1f',
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  fontModalTitle2: {
+    color: 'white',
+    fontSize: 24,
+  },
+});
 
 const mapStateToProps = (state) => {
   return {

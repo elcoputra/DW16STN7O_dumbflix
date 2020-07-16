@@ -93,19 +93,6 @@ class registerModal extends Component {
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -119,19 +106,6 @@ class registerModal extends Component {
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -145,26 +119,11 @@ class registerModal extends Component {
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControl variant='outlined' className={classes.formControl}>
-                    <InputLabel className={classes.InputLabel} id='demo-simple-select-outlined-label'>
-                      Gender
-                    </InputLabel>
+                  {/* <FormControl variant='outlined' className={classes.formControl}>
+                    <InputLabel id='demo-simple-select-outlined-label'>Gender</InputLabel>
                     <Select
                       labelId='gender'
                       id='gender'
@@ -172,18 +131,26 @@ class registerModal extends Component {
                       value={this.state.user.gender}
                       onChange={this.handleChangeInput}
                       className={classes.select}
-                      inputProps={{
-                        classes: {
-                          icon: classes.icon,
-                          root: classes.inputProps,
-                        },
-                      }}
                       MenuProps={{ classes: { paper: classes.dropdownStyle } }}
                     >
                       <MenuItem value='Male'>Male</MenuItem>
                       <MenuItem value='Female'>Female</MenuItem>
                     </Select>
-                  </FormControl>
+                  </FormControl> */}
+
+                  <TextField
+                    select
+                    label='Select'
+                    className={classes.textField}
+                    value={this.state.user.gender}
+                    name='gender'
+                    onChange={this.handleChangeInput}
+                    helperText='Please select your gender'
+                    variant='outlined'
+                  >
+                    <MenuItem value='Male'>Male</MenuItem>
+                    <MenuItem value='Female'>Female</MenuItem>
+                  </TextField>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -195,19 +162,6 @@ class registerModal extends Component {
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -220,19 +174,6 @@ class registerModal extends Component {
                     className={classes.textField}
                     margin='normal'
                     variant='outlined'
-                    InputLabelProps={{
-                      classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                      },
-                    }}
-                    InputProps={{
-                      classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline,
-                      },
-                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -257,16 +198,44 @@ const styles = (theme) => ({
     marginTop: 15,
     marginBottom: 10,
     width: 350,
-    border: '2px solid white',
     fontColor: 'white',
     color: 'white',
     backgroundColor: 'rgba(210, 210, 210, 0.25)',
     laberColor: 'white',
     borderRadius: 5,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
 
   dropdownStyle: {
-    border: '2px solid white',
     backgroundColor: '#353535',
     fontColor: 'white',
     color: 'white',
@@ -336,9 +305,41 @@ const styles = (theme) => ({
   },
   textField: {
     background: 'rgba(210, 210, 210, 0.25)',
+    marginTop: 10,
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 350,
+    borderRadius: 5,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
 
   cssLabel: {
