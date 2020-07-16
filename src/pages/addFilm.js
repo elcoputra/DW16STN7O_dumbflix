@@ -55,7 +55,7 @@ class addFilm extends Component {
   uiAddEpisode() {
     const { classes } = this.props;
     return this.state.uploadEpisodes.map((el, i) => (
-      <div style={{ display: 'flex', width: 1146, alignItems: 'center', justifyContent: 'center' }} key={i}>
+      <div style={{ display: 'flex', width: 1146, alignItems: 'center', justifyContent: 'center', marginBottom: 20 }} key={i}>
         <Grid container spacing={1} direction='column' justify='center' alignItems='center'>
           <Grid item>
             <Grid container style={{ width: 1146 }} direction='row' justify='space-between' alignItems='center'>
@@ -280,16 +280,6 @@ class addFilm extends Component {
                 className={classes.textField}
                 variant='outlined'
               />
-              <br />
-              <TextField
-                id='standard-name'
-                label='Thumbnail Trailer'
-                name='thumbnailTrailer'
-                value={this.state.uploadFilm.thumbnailTrailer}
-                onChange={this.handleChangeFilmInputGroup}
-                className={classes.textField}
-                variant='outlined'
-              />
               <Grid item xs>
                 <Button variant='contained' onClick={this.handleButtonConfirmAttatch} className={classes.Kirim}>
                   <div>Attatch</div>
@@ -307,9 +297,9 @@ class addFilm extends Component {
 const styles = (theme) => ({
   divRoot: {
     display: 'flex',
-    width: '100%',
+    maxWidth: '100vw',
     minHeight: '100vh',
-    paddingTop: 70,
+    paddingTop: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },

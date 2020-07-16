@@ -5,7 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
+import ModalAddEpisode from '../components/modalAddEpisode';
+
+import { deleteEpisodeAction, getDataEpisodes } from '../redux/actions/episode_action';
 import { getCategories } from '../redux/actions/categories_action';
+import { openModalAddEpisode } from '../redux/actions/modal_actions';
 
 class updatePage extends Component {
   constructor(props) {
@@ -14,12 +18,10 @@ class updatePage extends Component {
       movie: {},
       episode: {},
       currency: 'USD',
+      mouseHover: false,
+      idMouseHover: 0,
     };
   }
-
-  handleChange = (event) => {
-    this.setState({ currency: event.target.value });
-  };
 
   componentDidMount = async () => {
     await this.props.getCategories();
@@ -29,12 +31,50 @@ class updatePage extends Component {
     console.log(this.state.movie);
   };
 
+  handleChange = (event) => {
+    this.setState({ currency: event.target.value });
+  };
+
+  onMouseEnterHandler = (id) => {
+    this.setState({ idMouseHover: id });
+    this.setState({ mouseHover: true });
+  };
+  onMouseLeaveHandler = (id) => {
+    this.setState({ mouseHover: false });
+  };
+
+  handleDeleteSong = async (id, movieId) => {
+    await this.props.deleteEpisodeAction(id);
+    await this.props.getDataEpisodes(movieId);
+  };
+  onHoverItem(id, movieId, thumbnailEpisode, linkEpisode) {
+    const { classes } = this.props;
+    return (
+      <div className={classes.hoverItem} id={id} onMouseLeave={() => this.onMouseLeaveHandler(id)}>
+        <Grid container style={{ display: 'flex', width: '100%', height: '100%' }} {...this.gridConf.GridColumnItemOnHover}>
+          <Grid item>
+            <Button className={classes.buttonOnHoverEdit} onClick={() => this.props.openModalAddEpisode()}>
+              Edit
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button className={classes.buttonOnHoverDelete} onClick={() => this.handleDeleteSong(id, movieId)}>
+              Delete
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
+
   render() {
     const { classes } = this.props;
     const { dataEpisode } = this.props.episodeReducer;
     const { categories, loading } = this.props.categoriesReducer;
+    // console.log('mouseHover ', this.state.mouseHover, ' hoverID ', this.state.idMouseHover);
     return (
       <div style={{ display: 'flex', maxWidth: '100vw', minHeight: '100vh', paddingTop: 70 }}>
+        <ModalAddEpisode />
         <Grid container {...this.gridConf.gridColumnRoot} className={classes.gridRootStyle}>
           <Grid item>
             <Typography className={classes.titleUpdate}>Update</Typography>
@@ -105,7 +145,9 @@ class updatePage extends Component {
                       <Typography className={classes.titleSubUpdate}>Episodes</Typography>
                     </Grid>
                     <Grid item>
-                      <Button className={classes.buttonAddEpisode}>Add Episode</Button>
+                      <Button className={classes.buttonAddEpisode} onClick={() => this.props.openModalAddEpisode()}>
+                        Add Episode
+                      </Button>
                     </Grid>
                   </Grid>
 
@@ -114,13 +156,21 @@ class updatePage extends Component {
                       {dataEpisode.map((data) => {
                         return (
                           <Grid item xl={1} lg={2} sm={3} xs={12}>
-                            <div className={classes.divEpisode}>
+                            <div
+                              onMouseEnter={() => this.onMouseEnterHandler(data.id)}
+                              className={classes.divEpisode}
+                              onMouseLeave={() => this.onMouseLeaveHandler(data.id)}
+                            >
                               <div
                                 className={classes.imgContainerCard}
                                 style={{
                                   backgroundImage: `url(${data.thumbnailEpisode})`,
                                 }}
-                              ></div>
+                              >
+                                {this.state.mouseHover && data.id === this.state.idMouseHover
+                                  ? this.onHoverItem(data.id, data.movieId, data.thumbnailEpisode, data.linkEpisode)
+                                  : null}
+                              </div>
                               <div className={classes.warperNameEpisode}>
                                 <Grid container {...this.gridConf.gridRowNameAndYear}>
                                   <Grid item xs={9}>
@@ -180,6 +230,11 @@ class updatePage extends Component {
       direction: 'row',
       spacing: 1,
       justify: 'flex-start',
+      alignItems: 'center',
+    },
+    GridColumnItemOnHover: {
+      direction: 'row',
+      justify: 'space-evenly',
       alignItems: 'center',
     },
   };
@@ -282,6 +337,7 @@ const styles = (theme) => ({
       color: '#d2d2d2',
     },
   },
+
   divEpisode: { width: '100%', height: 200, backgroundColor: '#4c4c4c', borderRadius: 5 },
   imgContainerCard: {
     width: '100%',
@@ -306,6 +362,36 @@ const styles = (theme) => ({
   },
   nameEpisode: { color: '#D2D2D2', fontSize: 14 },
   yearEpisode: { color: '#D2D2D2', fontSize: 14 },
+  hoverItem: {
+    borderRadius: 5,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+  },
+  buttonOnHoverEdit: {
+    textTransform: 'none',
+    height: '30%',
+    width: '100%',
+    fontSize: '14px',
+    background: 'white',
+    color: 'red',
+    '&:hover': {
+      backgroundColor: 'rgb(109, 109, 109)',
+      color: 'white',
+    },
+  },
+  buttonOnHoverDelete: {
+    textTransform: 'none',
+    height: '30%',
+    width: '100%',
+    fontSize: '14px',
+    background: 'red',
+    color: '#d2d2d2',
+    '&:hover': {
+      backgroundColor: '#be1f2a',
+      color: '#d2d2d2',
+    },
+  },
 });
 
 const mapStateToProps = (state) => {
@@ -316,4 +402,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(withStyles(styles), connect(mapStateToProps, { getCategories }))(updatePage);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { getCategories, openModalAddEpisode, deleteEpisodeAction, getDataEpisodes }),
+)(updatePage);

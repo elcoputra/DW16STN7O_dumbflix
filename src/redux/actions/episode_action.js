@@ -5,6 +5,11 @@ import {
   GET_EPISODE_BY_MOVIE_ERROR,
   GET_EPISODE_BY_MOVIE_SUCCSESS,
   GET_EPISODE_BY_MOVIE_REQUEST,
+  DELETE_EPISODE_BY_MOVIE_REQUEST,
+  DELETE_EPISODE_BY_MOVIE_SUCCESS,
+  DELETE_EPISODE_BY_MOVIE_ERROR,
+  CLEAR_EPISODE_BY_MOVIE_MESSAGE,
+  CLEAR_EPISODE_BY_MOVIE_ERROR,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
 
@@ -54,5 +59,38 @@ export function getDataEpisodes(movieId) {
           payload: response.error,
         }),
       );
+  };
+}
+
+// Delete song async await
+export function deleteEpisodeAction(id) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DELETE_EPISODE_BY_MOVIE_REQUEST,
+      });
+      const response = await API.delete('/episode/' + id);
+      dispatch({
+        type: DELETE_EPISODE_BY_MOVIE_SUCCESS,
+        payload: response.data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_EPISODE_BY_MOVIE_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
+}
+
+export function clearMessageDeleteSongAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_EPISODE_BY_MOVIE_MESSAGE });
+  };
+}
+
+export function clearErrorDeleteSongAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_EPISODE_BY_MOVIE_ERROR });
   };
 }

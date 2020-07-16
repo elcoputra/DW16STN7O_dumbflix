@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { modalRegisterReducer, modalLoginReducer, modalAddEpisodeReducer } from '../reducers/modal_reducer';
 import { movieReducer, tvReducer, addMovieReducer, detailMovieReducer, addEpisode } from '../reducers/movie_reducer';
-import { episodeReducer, episodeAddReducer } from '../reducers/episode_reducer';
+import { episodeReducer, episodeAddReducer, deleteEpisodeReducer } from '../reducers/episode_reducer';
 import { userReducer } from '../reducers/account_reducer';
 import { authReducer } from '../reducers/auth_reducer';
 import { upgradeReducer } from '../reducers/upgrade_reducer';
@@ -27,6 +27,7 @@ const reducers = combineReducers({
   categoriesReducer,
   addMovieReducer,
   episodeAddReducer,
+  deleteEpisodeReducer,
 });
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
