@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Modal, Backdrop, Fade, TextField, Grid, Button, MenuItem, TextareaAutosize } from '@material-ui/core';
+import { Modal, Backdrop, Fade, TextField, Grid, Button, MenuItem, TextareaAutosize, Typography } from '@material-ui/core';
 import { AttachFile, Add } from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
@@ -55,47 +55,50 @@ class addFilm extends Component {
   uiAddEpisode() {
     const { classes } = this.props;
     return this.state.uploadEpisodes.map((el, i) => (
-      <div style={{ display: 'flex', width: 1146, alignItems: 'center', justifyContent: 'center', marginBottom: 20 }} key={i}>
-        <Grid container spacing={1} direction='column' justify='center' alignItems='center'>
-          <Grid item>
-            <Grid container style={{ width: 1146 }} direction='row' justify='space-between' alignItems='center'>
-              <Grid item xs>
-                <TextField
-                  id='standard-name'
-                  label='Title Episode'
-                  name='title'
-                  value={el.title || ''}
-                  onChange={this.handleChange.bind(this, i)}
-                  className={classes.textField}
-                  variant='outlined'
-                />
-              </Grid>
-              <Grid item xs>
-                <TextField
-                  id='standard-name'
-                  label='Link Thumbnail Episode'
-                  name='thumbnailEpisode'
-                  value={el.thumbnailEpisode || ''}
-                  onChange={this.handleChange.bind(this, i)}
-                  className={classes.textFieldInsertLinkThumbnailEpisode}
-                  variant='outlined'
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item>
+      <>
+        <Grid
+          container
+          style={{ display: 'flex', width: '100%' }}
+          direction='row'
+          spacing={1}
+          justify='space-between'
+          alignItems='center'
+        >
+          <Grid item style={{ display: 'flex', width: '100%' }} md={10}>
             <TextField
               id='standard-name'
-              label='Link Episode'
-              name='linkEpisode'
-              value={el.linkEpisode || ''}
+              label='Title Episode'
+              name='title'
+              value={el.title || ''}
               onChange={this.handleChange.bind(this, i)}
-              className={classes.textField2}
+              className={classes.textField}
+              variant='outlined'
+            />
+          </Grid>
+          <Grid item style={{ display: 'flex', width: '100%' }} md={2}>
+            <TextField
+              id='standard-name'
+              label='Link Thumbnail'
+              name='thumbnailEpisode'
+              value={el.thumbnailEpisode || ''}
+              onChange={this.handleChange.bind(this, i)}
+              className={classes.textFieldInsertLinkThumbnailEpisode}
               variant='outlined'
             />
           </Grid>
         </Grid>
-      </div>
+        <Grid style={{ display: 'flex', width: '100%' }} item>
+          <TextField
+            id='standard-name'
+            label='Link Episode'
+            name='linkEpisode'
+            value={el.linkEpisode || ''}
+            onChange={this.handleChange.bind(this, i)}
+            className={classes.textField2}
+            variant='outlined'
+          />
+        </Grid>
+      </>
     ));
   }
 
@@ -122,10 +125,17 @@ class addFilm extends Component {
     const { categories, loading } = this.props.categoriesReducer;
     return (
       <div className={classes.divRoot}>
-        <Grid container spacing={1} direction='column' justify='center' alignItems='center'>
-          <Grid item xs>
-            <Grid container spacing={1} direction='row' justify='flex-start' alignItems='center'>
-              <Grid item xs>
+        <Grid
+          container
+          style={{ display: 'flex', width: '80%' }}
+          spacing={1}
+          direction='column'
+          justify='center'
+          alignItems='center'
+        >
+          <Grid item md style={{ display: 'flex', width: '100%' }}>
+            <Grid container style={{ display: 'flex', width: '100%' }} direction='row' justify='center' alignItems='center'>
+              <Grid style={{ display: 'flex', width: '100%' }} md={10} xs={12}>
                 <TextField
                   id='standard-name'
                   label='Title'
@@ -136,13 +146,15 @@ class addFilm extends Component {
                   variant='outlined'
                 />
               </Grid>
-              <Grid item xs>
+              <Grid item style={{ display: 'flex', width: '100%' }} md={2} xs={12}>
                 <Button variant='contained' onClick={this.handleButtonAttatch} className={classes.ButtonAttatch}>
-                  <Grid container direction='row' justify='space-between' alignItems='center'>
-                    <Grid item xs={9}>
-                      <b className={classes.attatchText}>Attatch Thumbnail</b>
+                  <Grid container direction='row' justify='center' alignItems='center'>
+                    <Grid item lg={9}>
+                      <Typography noWrap className={classes.attatchText}>
+                        Attatch Thumbnail
+                      </Typography>
                     </Grid>
-                    <Grid className={classes.attatchIcon} item xs>
+                    <Grid item lg={3}>
                       <AttachFile className={classes.icon} />
                     </Grid>
                   </Grid>
@@ -150,7 +162,7 @@ class addFilm extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs>
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
             <TextField
               id='standard-name'
               label='Year'
@@ -162,37 +174,10 @@ class addFilm extends Component {
               variant='outlined'
             />
           </Grid>
-          <Grid item xs>
+          <Grid item style={{ width: '100%' }} md>
             {loading ? (
               'Loading....'
             ) : (
-              // <FormControl variant='outlined' className={classes.formControl}>
-              //   <InputLabel className={classes.InputLabel} id='demo-simple-select-outlined-label'>
-              //     Category
-              //   </InputLabel>
-              //   <Select
-              //     labelId='demo-simple-select-outlined-label'
-              //     id='demo-simple-select-outlined'
-              //     name='categoryId'
-              //     label='Category'
-              //     value={this.state.uploadFilm.categoryId}
-              //     onChange={this.handleChangeFilmInputGroup}
-              //     className={classes.select}
-              //     inputProps={{
-              //       classes: {
-              //         icon: classes.icon,
-              //       },
-              //     }}
-              //     MenuProps={{ classes: { paper: classes.dropdownStyle } }}
-              //   >
-              //     {loading
-              //       ? 'FETCHING...'
-              //       : categories.map((detailCategory) => {
-              //           return <MenuItem value={detailCategory.id}>{detailCategory.name}</MenuItem>;
-              //         })}
-              //   </Select>
-              // </FormControl>
-
               <TextField
                 select
                 label='Select'
@@ -211,17 +196,7 @@ class addFilm extends Component {
               </TextField>
             )}
           </Grid>
-          <Grid item xs>
-            {/* <TextareaAutosize
-              className={classes.textField2}
-              aria-label='minimum height'
-              rowsMin={10}
-              name='description'
-              value={this.state.uploadFilm.description}
-              onChange={this.handleChangeFilmInputGroup}
-              placeholder='Description'
-            /> */}
-
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
             <TextField
               multiline
               label='Description'
@@ -234,22 +209,41 @@ class addFilm extends Component {
               variant='outlined'
             />
           </Grid>
+          {/* HANYA DIVIDER */}
+          <Grid item style={{ display: 'flex', width: '100%', justifyContent: 'center' }} md>
+            <Grid
+              container
+              style={{ display: 'flex', width: '100%' }}
+              direction='row'
+              justify='space-between'
+              alignItems='center'
+            >
+              <Grid item style={{ display: 'flex', width: '80%' }} md={5} xs={1}>
+                <div style={{ width: '100%', backgroundColor: '#B7B7B7', height: 5, borderRadius: 5 }}></div>
+              </Grid>
+              <Grid item md={2} xs={1} style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant='h5' align='center' style={{ color: '#B7B7B7', textAlign: 'center' }}>
+                  Episodes
+                </Typography>
+              </Grid>
+              <Grid item style={{ display: 'flex', width: '100%' }} md={5} xs={1}>
+                <div style={{ width: '100%', backgroundColor: '#B7B7B7', height: 5, borderRadius: 5 }}></div>
+              </Grid>
+            </Grid>
+          </Grid>
+
           {/* TI SINI TEMPAT RUSABLE DI SIMPEN */}
           {this.uiAddEpisode()}
-          <Grid item xs>
+
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
             <Button variant='contained' onClick={this.addClick.bind(this)} className={classes.ButtonAddForm}>
               <Add className={classes.iconAddForm} />
             </Button>
           </Grid>
-          <Grid item xs>
-            <Grid container>
-              <Grid item xs={11}></Grid>
-              <Grid item xs={1}>
-                <Button variant='contained' onClick={this.handleSubmit} className={classes.ButtonSave}>
-                  Save
-                </Button>
-              </Grid>
-            </Grid>
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
+            <Button variant='contained' onClick={this.handleSubmit} className={classes.ButtonSave}>
+              Save
+            </Button>
           </Grid>
         </Grid>
         {/* MODAL ADD ATTACHMENT STRING */}
@@ -280,7 +274,7 @@ class addFilm extends Component {
                 className={classes.textField}
                 variant='outlined'
               />
-              <Grid item xs>
+              <Grid item md>
                 <Button variant='contained' onClick={this.handleButtonConfirmAttatch} className={classes.Kirim}>
                   <div>Attatch</div>
                 </Button>
@@ -305,7 +299,7 @@ const styles = (theme) => ({
   },
   // Styling Dropdown
   formControl: {
-    width: 1146,
+    width: '100%',
     borderRadius: 5,
     backgroundColor: '#353535',
     '& .MuiFormHelperText-root': {
@@ -339,52 +333,10 @@ const styles = (theme) => ({
       top: 10,
     },
   },
-  // Not Used
-  // dropdownStyle: {
-  //   border: '2px solid white',
-  //   borderRadius: '5%',
-  //   backgroundColor: '#353535',
-  //   fontColor: 'white',
-  //   color: 'white',
-  //   laberColor: 'white',
-  // },
-  // select: {
-  //   '&:before': {
-  //     borderColor: 'white',
-  //     labelColor: 'white',
-  //     fontColor: 'white',
-  //   },
-  //   '&:after': {
-  //     borderColor: 'white',
-  //     labelColor: 'white',
-  //     fontColor: 'white',
-  //   },
-  // },
-  // iconDropdown: {
-  //   fill: 'white',
-  // },
-  // End Styling Dropdown
-
-  // divGrid: {
-  //   width: 1150,
-  //   height: 2222,
-  // },
-  // selectEmpty: {
-  //   marginTop: theme.spacing(2),
-  //   color: 'white',
-  //   fontColor: 'white',
-  // },
-  // divider: {
-  //   height: 50,
-  // },
-  // divWarping: {
-  //   backgroundColor: 'green',
-  //   color: 'white',
-  // },
   textField: {
     background: 'rgba(210, 210, 210, 0.25)',
     borderRadius: 5,
-    width: 927,
+    width: '100%',
     '& .MuiFormHelperText-root': {
       color: '#B7B7B7',
     },
@@ -419,8 +371,7 @@ const styles = (theme) => ({
   textFieldInsertLinkThumbnailEpisode: {
     background: 'rgba(210, 210, 210, 0.25)',
     borderRadius: 5,
-    marginLeft: 8,
-    width: 211,
+    width: '100%',
     '& .MuiFormHelperText-root': {
       color: '#B7B7B7',
     },
@@ -454,7 +405,7 @@ const styles = (theme) => ({
   },
   textField3: {
     background: 'rgba(210, 210, 210, 0.25)',
-    width: 927,
+    width: '100%',
     borderRadius: 5,
     '& .MuiFormHelperText-root': {
       color: '#B7B7B7',
@@ -489,7 +440,8 @@ const styles = (theme) => ({
   },
   textField2: {
     background: 'rgba(210, 210, 210, 0.25)',
-    width: 1146,
+    width: '100%',
+    // width: 1146,
     borderRadius: 5,
     '& .MuiFormHelperText-root': {
       color: '#B7B7B7',
@@ -524,9 +476,9 @@ const styles = (theme) => ({
   },
   textFieldMultiline: {
     background: 'rgba(210, 210, 210, 0.25)',
-    width: 1146,
+    width: '100%',
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 20,
     '& .MuiFormHelperText-root': {
       color: '#B7B7B7',
     },
@@ -584,7 +536,7 @@ const styles = (theme) => ({
   ButtonAttatch: {
     textTransform: 'none',
     height: 55,
-    width: 213,
+    width: '100%',
     fontSize: '14px',
     background: 'rgba(210, 210, 210, 0.25)',
     color: '#B1B1B1',
@@ -601,7 +553,7 @@ const styles = (theme) => ({
     textTransform: 'none',
     marginTop: 13,
     height: 30,
-    width: 1146,
+    width: '100%',
     fontSize: '14px',
     background: 'rgba(210, 210, 210, 0.25)',
     color: 'red',
@@ -615,9 +567,9 @@ const styles = (theme) => ({
     },
   },
   ButtonSave: {
+    left: 0,
     textTransform: 'none',
     marginTop: 34,
-    marginLeft: 208,
     height: 40,
     width: 200,
     fontSize: '14px',
@@ -632,13 +584,11 @@ const styles = (theme) => ({
       color: 'red',
     },
   },
-  attatchText: {},
-  attatchIcon: {
-    paddingLeft: 4,
-    paddingTop: 11,
-  },
+  attatchText: { fontSize: '100%' },
   icon: {
     fontSize: 40,
+    margin: 0,
+    padding: 0,
   },
   iconAddForm: {
     fontSize: 40,
@@ -662,7 +612,7 @@ const styles = (theme) => ({
   paper: {
     backgroundColor: '#1f1f1f',
     border: '2px solid #000',
-    boxShadow: theme.shadows[5],
+    bomdhadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
   fontModalTitle: {
