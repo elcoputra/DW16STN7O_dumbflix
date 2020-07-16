@@ -14,6 +14,11 @@ import {
   ADD_MOVIE_SUCCSESS,
   ADD_MOVIE_ERROR,
   ADD_MOVIE_REQUEST,
+  UPDATE_DETAIL_MOVIE_REQUEST,
+  UPDATE_DETAIL_MOVIE_SUCCESS,
+  UPDATE_DETAIL_MOVIE_ERROR,
+  CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
+  CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
 import { getDataEpisodes, addDataEpisodes } from '../actions/episode_action';
@@ -100,5 +105,38 @@ export function addEpisode(movieId, dataEpisode) {
           payload: response.error,
         }),
       );
+  };
+}
+
+// Update movie async await
+export function updateMovieAction(id, data) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: UPDATE_DETAIL_MOVIE_REQUEST,
+      });
+      const response = await API.patch('/movie/' + id, data);
+      dispatch({
+        type: UPDATE_DETAIL_MOVIE_SUCCESS,
+        payload: response.data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_DETAIL_MOVIE_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
+}
+
+export function clearMessageUpdateMovieAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE });
+  };
+}
+
+export function clearErrorUpdateMovieAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_UPDATE_DETAIL_MOVIE_ERROR });
   };
 }

@@ -14,6 +14,11 @@ import {
   ADD_MOVIE_SUCCSESS,
   ADD_MOVIE_ERROR,
   ADD_MOVIE_REQUEST,
+  UPDATE_DETAIL_MOVIE_REQUEST,
+  UPDATE_DETAIL_MOVIE_SUCCESS,
+  UPDATE_DETAIL_MOVIE_ERROR,
+  CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
+  CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
 } from '../actionTypes';
 
 const initialStateAddMovie = {
@@ -158,6 +163,53 @@ export const addEpisode = (state = initialStateAddEpisode, action) => {
         ...state,
         loadingAddEpisode: false,
         errorAddEpisode: action.playload,
+      };
+    default:
+      return state;
+  }
+};
+
+// Delete Movie
+const initialUpdateMovie = {
+  loadingUpdateMovie: false,
+  messageUpdateMovieBool: false,
+  errorUpdateMovieBool: false,
+  messageUpdateMovie: '',
+  errorUpdateMovie: '',
+};
+
+export const updateMovieReducer = (state = initialUpdateMovie, action) => {
+  switch (action.type) {
+    case UPDATE_DETAIL_MOVIE_REQUEST:
+      return {
+        ...state,
+        loadingUpdateMovie: true,
+      };
+    case UPDATE_DETAIL_MOVIE_SUCCESS:
+      return {
+        ...state,
+        loadingUpdateMovie: false,
+        messageUpdateMovieBool: true,
+        messageUpdateMovie: action.payload,
+      };
+    case UPDATE_DETAIL_MOVIE_ERROR:
+      return {
+        ...state,
+        errorUpdateMovieBool: true,
+        loadingUpdateMovie: false,
+        errorUpdateMovie: action.payload,
+      };
+    case CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE:
+      return {
+        ...state,
+        messageUpdateMovieBool: false,
+        messageUpdateMovie: '',
+      };
+    case CLEAR_UPDATE_DETAIL_MOVIE_ERROR:
+      return {
+        ...state,
+        errorUpdateMovieBool: false,
+        errorUpdateMovie: '',
       };
     default:
       return state;

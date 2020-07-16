@@ -8,8 +8,8 @@ import {
   DELETE_EPISODE_BY_MOVIE_REQUEST,
   DELETE_EPISODE_BY_MOVIE_SUCCESS,
   DELETE_EPISODE_BY_MOVIE_ERROR,
-  CLEAR_EPISODE_BY_MOVIE_MESSAGE,
-  CLEAR_EPISODE_BY_MOVIE_ERROR,
+  CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
+  CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
 
@@ -85,12 +85,12 @@ export function deleteEpisodeAction(id) {
 
 export function clearMessageDeleteSongAction() {
   return function (dispatch) {
-    dispatch({ type: CLEAR_EPISODE_BY_MOVIE_MESSAGE });
+    dispatch({ type: CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE });
   };
 }
 
 export function clearErrorDeleteSongAction() {
   return function (dispatch) {
-    dispatch({ type: CLEAR_EPISODE_BY_MOVIE_ERROR });
+    dispatch({ type: CLEAR_UPDATE_DETAIL_MOVIE_ERROR });
   };
 }

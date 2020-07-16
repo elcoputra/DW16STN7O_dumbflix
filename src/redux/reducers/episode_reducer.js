@@ -8,8 +8,8 @@ import {
   DELETE_EPISODE_BY_MOVIE_REQUEST,
   DELETE_EPISODE_BY_MOVIE_SUCCESS,
   DELETE_EPISODE_BY_MOVIE_ERROR,
-  CLEAR_EPISODE_BY_MOVIE_MESSAGE,
-  CLEAR_EPISODE_BY_MOVIE_ERROR,
+  CLEAR_DELETE_EPISODE_BY_MOVIE_MESSAGE,
+  CLEAR_DELETE_EPISODE_BY_MOVIE_ERROR,
 } from '../actionTypes';
 
 const initialStateAddEpisode = {
@@ -72,13 +72,13 @@ export const episodeReducer = (state = initialStateEpisode, action) => {
   }
 };
 
-// Delete song
+// Delete episode
 const initialDeleteEpisode = {
-  loadingDeleteSong: false,
-  messageDeleteSongBool: false,
-  errorDeleteSongBool: false,
-  messageDeleteSong: '',
-  errorDeleteSong: '',
+  loadingDeleteEpisode: false,
+  messageDeleteEpisodeBool: false,
+  errorDeleteEpisodeBool: false,
+  messageDeleteEpisode: '',
+  errorDeleteEpisode: '',
 };
 
 export const deleteEpisodeReducer = (state = initialDeleteEpisode, action) => {
@@ -86,33 +86,33 @@ export const deleteEpisodeReducer = (state = initialDeleteEpisode, action) => {
     case DELETE_EPISODE_BY_MOVIE_REQUEST:
       return {
         ...state,
-        loadingDeleteSong: true,
+        loadingDeleteEpisode: true,
       };
     case DELETE_EPISODE_BY_MOVIE_SUCCESS:
       return {
         ...state,
-        loadingDeleteSong: false,
-        messageDeleteSongBool: true,
-        messageDeleteSong: action.payload,
+        loadingDeleteEpisode: false,
+        messageDeleteEpisodeBool: true,
+        messageDeleteEpisode: action.payload,
       };
     case DELETE_EPISODE_BY_MOVIE_ERROR:
       return {
         ...state,
-        errorDeleteSongBool: true,
-        loadingDeleteSong: false,
-        errorDeleteSong: action.payload,
+        errorDeleteEpisodeBool: true,
+        loadingDeleteEpisode: false,
+        errorDeleteEpisode: action.payload,
       };
-    case CLEAR_EPISODE_BY_MOVIE_MESSAGE:
+    case CLEAR_DELETE_EPISODE_BY_MOVIE_MESSAGE:
       return {
         ...state,
-        messageDeleteSongBool: false,
-        messageDeleteSong: '',
+        messageDeleteEpisodeBool: false,
+        messageDeleteEpisode: '',
       };
-    case CLEAR_EPISODE_BY_MOVIE_ERROR:
+    case CLEAR_DELETE_EPISODE_BY_MOVIE_ERROR:
       return {
         ...state,
-        errorDeleteSongBool: false,
-        errorDeleteSong: '',
+        errorDeleteEpisodeBool: false,
+        errorDeleteEpisode: '',
       };
     default:
       return state;

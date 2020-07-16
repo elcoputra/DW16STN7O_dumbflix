@@ -10,6 +10,7 @@ import ModalAddEpisode from '../components/modalAddEpisode';
 import { deleteEpisodeAction, getDataEpisodes } from '../redux/actions/episode_action';
 import { getCategories } from '../redux/actions/categories_action';
 import { openModalAddEpisode } from '../redux/actions/modal_actions';
+import { updateMovieAction } from '../redux/actions/movie_action';
 
 class updatePage extends Component {
   constructor(props) {
@@ -20,25 +21,40 @@ class updatePage extends Component {
       currency: 'USD',
       mouseHover: false,
       idMouseHover: 0,
+      prevMovie: {},
     };
   }
 
   componentDidMount = async () => {
     await this.props.getCategories();
-    await this.setState({
-      movie: this.props.detailMovieReducer.dataDetailMovie,
-    });
+    const { dataDetailMovie } = this.props.detailMovieReducer;
+    if (this.props.detailMovieReducer.dataDetailMovie !== this.state.prevMovie) {
+      await this.setState({
+        movie: {
+          id: dataDetailMovie.id,
+          categoryId: dataDetailMovie.categoryId,
+          title: dataDetailMovie.title,
+          thumbnail: dataDetailMovie.thumbnail,
+          year: dataDetailMovie.year,
+          description: dataDetailMovie.description,
+        },
+      });
+    }
     console.log(this.state.movie);
   };
 
   handleChange = (event) => {
-    this.setState({ currency: event.target.value });
+    const { movie } = this.state;
+    this.setState({
+      movie: { ...movie, [event.target.name]: event.target.value },
+    });
   };
 
   onMouseEnterHandler = (id) => {
     this.setState({ idMouseHover: id });
     this.setState({ mouseHover: true });
   };
+
   onMouseLeaveHandler = (id) => {
     this.setState({ mouseHover: false });
   };
@@ -47,6 +63,19 @@ class updatePage extends Component {
     await this.props.deleteEpisodeAction(id);
     await this.props.getDataEpisodes(movieId);
   };
+
+  handleUpdateMovie = async () => {
+    let data = {
+      categoryId: this.state.movie.categoryId,
+      title: this.state.movie.title,
+      thumbnail: this.state.movie.thumbnail,
+      year: this.state.movie.year,
+      description: this.state.movie.description,
+    };
+    await this.props.updateMovieAction(this.state.movie.id, data);
+    console.log(data);
+  };
+
   onHoverItem(id, movieId, thumbnailEpisode, linkEpisode) {
     const { classes } = this.props;
     return (
@@ -90,13 +119,16 @@ class updatePage extends Component {
                     <Grid item>
                       <TextField
                         label='Title'
+                        name='title'
                         value={this.state.movie.title ? this.state.movie.title : ''}
                         variant='outlined'
                         className={classes.texfieldInputMovie}
+                        onChange={this.handleChange}
                       />
                       <TextField
                         select
                         label='Select'
+                        name='categoryId'
                         className={classes.texfieldInputMovie}
                         value={!loading && this.state.movie.categoryId ? this.state.movie.categoryId : 'Loading....'}
                         onChange={this.handleChange}
@@ -111,30 +143,38 @@ class updatePage extends Component {
                       </TextField>
                       <TextField
                         label='Year'
+                        name='year'
                         variant='outlined'
                         value={this.state.movie.year ? this.state.movie.year : ''}
                         className={classes.texfieldInputMovie}
+                        onChange={this.handleChange}
                       />
                       <TextField
                         className={classes.texfieldInputMovie}
                         label='Description'
+                        name='description'
                         value={this.state.movie.description ? this.state.movie.description : ''}
                         multiline
                         rows={4}
                         variant='outlined'
+                        onChange={this.handleChange}
                       />
                       <TextField
                         className={classes.texfieldInputMovie}
                         label='Link Thumbnail'
-                        value={this.state.movie.thumbnailTrailer ? this.state.movie.thumbnailTrailer : ''}
+                        name='thumbnail'
+                        value={this.state.movie.thumbnail ? this.state.movie.thumbnail : ''}
                         multiline
                         rows={2}
                         variant='outlined'
+                        onChange={this.handleChange}
                       />
                     </Grid>
                   </Grid>
                   <div className={classes.containerBtnUpdate}>
-                    <Button className={classes.ButtonUpdateMovie}>Update Movie</Button>
+                    <Button onClick={this.handleUpdateMovie} className={classes.ButtonUpdateMovie}>
+                      Update Movie
+                    </Button>
                   </div>
                 </div>
               </Grid>
@@ -404,5 +444,5 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, { getCategories, openModalAddEpisode, deleteEpisodeAction, getDataEpisodes }),
+  connect(mapStateToProps, { getCategories, openModalAddEpisode, deleteEpisodeAction, getDataEpisodes, updateMovieAction }),
 )(updatePage);
