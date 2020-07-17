@@ -23,11 +23,15 @@ class registerModal extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      prevEmail: '',
       open: false,
       data: {},
       user: { isAdmin: false, gender: 'Male' },
     };
   }
+
+  componentDidMount() {}
+
   handleOpenRegister = () => {
     this.setState({ open: true });
   };
@@ -51,6 +55,13 @@ class registerModal extends Component {
   };
 
   render() {
+    if (this.props.email !== this.state.prevEmail) {
+      this.setState({
+        prevEmail: this.props.email,
+        user: { ...this.state.user, email: this.props.email },
+      });
+    }
+
     const { classes } = this.props;
     const { error, isLogin } = this.props.userReducer;
     const { userState, loading } = this.props.authReducer;

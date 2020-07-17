@@ -11,7 +11,6 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { openModalRegister, openModalLogin } from '../redux/actions/modal_actions';
 import { authAction, logoutUser } from '../redux/actions/auth_action';
-import SearchIcon from '@material-ui/icons/Search';
 
 class nav extends Component {
   constructor(props) {
@@ -48,25 +47,6 @@ class nav extends Component {
       });
     }
   }
-
-  // loginModalRef = ({ handleOpenLogin }) => {
-  //   this.showModalLogin = handleOpenLogin;
-  // };
-  // RegisterModalRef = ({ handleOpenRegister }) => {
-  //   this.showModalRegister = handleOpenRegister;
-  // };
-
-  // onLoginClick = () => {
-  //   this.showModalLogin();
-  // };
-  // onRegisterClick = () => {
-  //   this.showModalRegister();
-  // };
-  // getDataFromModalComponent = (isLoginFromLoginModal) => {
-  //   this.setState({
-  //     isLogin: isLoginFromLoginModal,
-  //   });
-  // };
 
   dropdownMenu = () => {
     if (this.state.isMenu === false) {

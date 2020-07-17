@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Modal, Backdrop, Fade, TextField, Grid, Button, MenuItem, TextareaAutosize, Typography } from '@material-ui/core';
+import { Modal, Backdrop, Fade, TextField, Grid, Button, MenuItem, Typography } from '@material-ui/core';
 import { AttachFile, Add } from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
