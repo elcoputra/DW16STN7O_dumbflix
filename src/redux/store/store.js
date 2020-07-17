@@ -14,6 +14,7 @@ import {
   detailMovieReducer,
   addEpisode,
   updateMovieReducer,
+  deleteMovieReducer,
 } from '../reducers/movie_reducer';
 import { episodeReducer, episodeAddReducer, deleteEpisodeReducer, updateEpisodeReducer } from '../reducers/episode_reducer';
 import { userReducer } from '../reducers/account_reducer';
@@ -42,6 +43,7 @@ const reducers = combineReducers({
   tvReducer,
   detailMovieReducer,
   addMovieReducer,
+  deleteMovieReducer,
 
   // Episode
   addEpisode,

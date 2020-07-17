@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Box, Grid, Button, Typography } from '@material-ui/core';
+import { Box, Grid, Button, Typography, IconButton } from '@material-ui/core';
 import ReactPlayer from 'react-player';
 import ModalAddEpisode from '../components/modalAddEpisode';
 import { openModalAddEpisode } from '../redux/actions/modal_actions';
-import { getDetailMovie } from '../redux/actions/movie_action';
+import { getDetailMovie, deleteMovieAction } from '../redux/actions/movie_action';
 
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class detailPlayer extends Component {
   constructor(props) {
@@ -98,6 +99,17 @@ class detailPlayer extends Component {
                 <Button variant='contained' onClick={() => this.props.openModalAddEpisode()} className={classes.ButtonAddEpisode}>
                   Add Episode
                 </Button>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  onClick={() => this.props.deleteMovieAction(dataDetailMovie.id)}
+                  className={classes.ButtonDelete}
+                  component={Link}
+                  to='/list-film'
+                  aria-label='delete'
+                >
+                  <DeleteIcon />
+                </IconButton>
               </Grid>
             </Grid>
           </div>
@@ -300,6 +312,17 @@ const styles = (theme) => ({
       color: 'white',
     },
   },
+  ButtonDelete: {
+    textTransform: 'none',
+    marginTop: 15,
+    fontSize: '14px',
+    background: 'red',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: 'rgb(137, 0, 0)',
+      color: 'white',
+    },
+  },
   DialogContentAddEpisodeStyle: {
     color: 'white',
     backgroundColor: '#1F1F1F',
@@ -437,7 +460,11 @@ const mapStateToProps = (state) => {
     detailMovieReducer: state.detailMovieReducer,
     episodeReducer: state.episodeReducer,
     authReducer: state.authReducer,
+    deleteMovieReducer: state.deleteMovieReducer,
   };
 };
 
-export default compose(withStyles(styles), connect(mapStateToProps, { getDetailMovie, openModalAddEpisode }))(detailPlayer);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { getDetailMovie, openModalAddEpisode, deleteMovieAction }),
+)(detailPlayer);

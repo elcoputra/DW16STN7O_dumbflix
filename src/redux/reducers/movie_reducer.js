@@ -19,6 +19,11 @@ import {
   UPDATE_DETAIL_MOVIE_ERROR,
   CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
   CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
+  DELETE_MOVIE_REQUEST,
+  DELETE_MOVIE_SUCCSESS,
+  DELETE_MOVIE_ERROR,
+  CLEAR_DELETE_MOVIE_MESSAGE,
+  CLEAR_DELETE_MOVIE_ERROR,
 } from '../actionTypes';
 
 const initialStateAddMovie = {
@@ -169,7 +174,7 @@ export const addEpisode = (state = initialStateAddEpisode, action) => {
   }
 };
 
-// Delete Movie
+// Update Movie
 const initialUpdateMovie = {
   loadingUpdateMovie: false,
   messageUpdateMovieBool: false,
@@ -210,6 +215,52 @@ export const updateMovieReducer = (state = initialUpdateMovie, action) => {
         ...state,
         errorUpdateMovieBool: false,
         errorUpdateMovie: '',
+      };
+    default:
+      return state;
+  }
+};
+// Delete Movie
+const initialDeleteMovie = {
+  loadingDeleteMovie: false,
+  messageDeleteMovieBool: false,
+  errorDeleteMovieBool: false,
+  messageDeleteMovie: '',
+  errorDeleteMovie: '',
+};
+
+export const deleteMovieReducer = (state = initialDeleteMovie, action) => {
+  switch (action.type) {
+    case DELETE_MOVIE_REQUEST:
+      return {
+        ...state,
+        loadingDeleteMovie: true,
+      };
+    case DELETE_MOVIE_SUCCSESS:
+      return {
+        ...state,
+        loadingDeleteMovie: false,
+        messageDeleteMovieBool: true,
+        messageDeleteMovie: action.payload,
+      };
+    case DELETE_MOVIE_ERROR:
+      return {
+        ...state,
+        errorDeleteMovieBool: true,
+        loadingDeleteMovie: false,
+        errorDeleteMovie: action.payload,
+      };
+    case CLEAR_DELETE_MOVIE_MESSAGE:
+      return {
+        ...state,
+        messageDeleteMovieBool: false,
+        messageDeleteMovie: '',
+      };
+    case CLEAR_DELETE_MOVIE_ERROR:
+      return {
+        ...state,
+        errorDeleteMovieBool: false,
+        errorDeleteMovie: '',
       };
     default:
       return state;

@@ -19,6 +19,11 @@ import {
   UPDATE_DETAIL_MOVIE_ERROR,
   CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
   CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
+  DELETE_MOVIE_REQUEST,
+  DELETE_MOVIE_SUCCSESS,
+  DELETE_MOVIE_ERROR,
+  CLEAR_DELETE_MOVIE_MESSAGE,
+  CLEAR_DELETE_MOVIE_ERROR,
 } from '../actionTypes';
 import { API } from '../../config/axiosConfig';
 import { getDataEpisodes, addDataEpisodes } from '../actions/episode_action';
@@ -138,5 +143,37 @@ export function clearMessageUpdateMovieAction() {
 export function clearErrorUpdateMovieAction() {
   return function (dispatch) {
     dispatch({ type: CLEAR_UPDATE_DETAIL_MOVIE_ERROR });
+  };
+}
+
+export function deleteMovieAction(id) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DELETE_MOVIE_REQUEST,
+      });
+      const response = await API.delete('/movie/' + id);
+      dispatch({
+        type: DELETE_MOVIE_SUCCSESS,
+        payload: response.data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_MOVIE_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
+}
+
+export function clearMessageDeleteMovieAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_DELETE_MOVIE_MESSAGE });
+  };
+}
+
+export function clearErrorDeleteMovieAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_DELETE_MOVIE_ERROR });
   };
 }
