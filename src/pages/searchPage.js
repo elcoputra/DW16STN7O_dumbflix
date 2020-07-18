@@ -3,8 +3,15 @@ import React, { Component } from 'react';
 import { API } from '../config/axiosConfig';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, IconButton, Card, CardActionArea, Link, Typography } from '@material-ui/core';
+import { Grid, IconButton, Card, CardActionArea, Typography } from '@material-ui/core';
 import { SearchOutlined } from '@material-ui/icons';
+
+import { Link } from 'react-router-dom';
+
+import { getDataTv, getDetailMovie } from '../redux/actions/movie_action';
+import { getDataEpisodes } from '../redux/actions/episode_action';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 
 class searchPage extends Component {
   constructor(props) {
@@ -177,4 +184,4 @@ const styles = (theme) => ({
     marginTop: '4px',
   },
 });
-export default withStyles(styles)(searchPage);
+export default compose(withStyles(styles), connect(null, { getDataTv, getDetailMovie, getDataEpisodes }))(searchPage);
