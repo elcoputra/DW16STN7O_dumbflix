@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Button, FormControl, InputLabel, Select } from '@material-ui/core';
+import { Grid, Button, TextField, MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ListMovie from '../components/movie';
 import ListTv from '../components/tv';
@@ -18,14 +18,42 @@ const styles = (theme) => ({
   },
   formControl: {
     marginTop: 15,
-    height: 50,
     width: 123,
-    border: '2px solid white',
     fontColor: 'white',
     color: 'white',
     backgroundColor: 'rgba(210, 210, 210, 0.25)',
     laberColor: 'white',
     borderRadius: 5,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
   dropdownStyle: {
     border: '2px solid white',
@@ -105,7 +133,7 @@ class listFilm extends Component {
               <b className={classes.title}>List Film</b>
             </Grid>
             <Grid item xs>
-              <FormControl variant='filled' className={classes.formControl}>
+              {/* <FormControl variant='filled' className={classes.formControl}>
                 <InputLabel className={classes.InputLabel} htmlFor='filled-age-native-simple'>
                   Category
                 </InputLabel>
@@ -124,7 +152,20 @@ class listFilm extends Component {
                   <option value={1}>TV Series</option>
                   <option value={2}>Movies</option>
                 </Select>
-              </FormControl>
+              </FormControl> */}
+
+              <TextField
+                select
+                label='Select'
+                className={classes.formControl}
+                value={this.state.data.filmCategory}
+                name='filmCategory'
+                onChange={this.handleChange.bind(this)}
+                variant='outlined'
+              >
+                <MenuItem value={1}>TV Series</MenuItem>
+                <MenuItem value={2}>Movies</MenuItem>
+              </TextField>
             </Grid>
             <Grid item xs>
               <Link className={classes.Link} to='/add-movie'>
@@ -135,7 +176,7 @@ class listFilm extends Component {
             </Grid>
           </Grid>
         </div>
-        {this.state.data.filmCategory == 1 ? <ListTv /> : <ListMovie />}
+        {this.state.data.filmCategory === 1 ? <ListTv /> : <ListMovie />}
       </div>
     );
   }

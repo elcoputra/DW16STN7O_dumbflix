@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+
 import Navbar from './components/nav';
 import Home from './pages/Home';
 import TVShows from './pages/TvShowsPage';
@@ -12,7 +14,11 @@ import Upgrade from './pages/upgradePage';
 import AddFilm from './pages/addFilm';
 import ListFilm from './pages/listFilm';
 import Transaction from './pages/transactionPage';
-import learn from './pages/learnREDUX';
+import Snackbar from './components/snackbar';
+import UpdatePage from './pages/updatePage';
+import HeroPage from './pages/heroPage';
+import SearchPage from './pages/searchPage';
+
 import { authAction } from './redux/actions/auth_action';
 import { connect } from 'react-redux';
 
@@ -44,19 +50,21 @@ class App extends Component {
       <Router>
         <div>
           <CssBaseline />
-          <Navbar />
+          {stateLogin ? <Navbar /> : null}
+          <Snackbar />
           <Switch>
+            <PrivateRouteAdmin path='/update' component={UpdatePage} />
             <PrivateRouteAdmin path='/transactions' component={Transaction} />
-            <Route path='/learn' component={learn} />
-            <Route path='/add-movie' component={AddFilm} />
-            <PrivateRouteUser path='/movies' component={ListFilm} />
+            <PrivateRouteAdmin path='/add-movie' component={AddFilm} />
+            <PrivateRouteAdmin path='/list-film' component={ListFilm} />
             <PrivateRouteUser path='/upgrade' component={Upgrade} />
+            <PrivateRouteUser path='/search' component={SearchPage} />
             <PrivateRouteUser path='/profile' component={Profile} />
             <PrivateRouteSubscribe path='/detail' component={DetailPlayer} />
-            <PrivateRouteUser path='/tv' component={TVShows} />
-            <PrivateRouteAdmin path='/moviess' component={Movies} />
-
-            <Route path='/' component={Home} />
+            <PrivateRouteSubscribe path='/tv' component={TVShows} />
+            <PrivateRouteSubscribe path='/movies' component={Movies} />
+            {stateLogin ? <PrivateRouteSubscribe path='/' component={Home} /> : <Route path='/' component={HeroPage} />}
+            {/* <Route path='/' component={SearchPage} /> */}
           </Switch>
         </div>
       </Router>

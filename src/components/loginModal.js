@@ -38,7 +38,38 @@ const styles = (theme) => ({
     background: 'rgba(210, 210, 210, 0.25)',
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    borderRadius: 5,
     width: 350,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
 
   cssLabel: {
@@ -131,10 +162,10 @@ class loginModal extends Component {
   //   this.handleCloseLogin();
   // };
   handleButtonLogin = () => {
-    this.props.loginAction(this.state.user);
     this.setState({
       user: {},
     });
+    this.props.loginAction(this.state.user);
   };
   // getDataLocalStorage = () => {
   //   const isLogin = localStorage.getItem('isLogin');
@@ -160,7 +191,7 @@ class loginModal extends Component {
 
   render() {
     const { classes } = this.props;
-    const { error, isLogin } = this.props.userReducer;
+    const { error } = this.props.userReducer;
     const { userState, loading } = this.props.authReducer;
 
     const errorHandling = error && error.data ? error.data.error : null;
@@ -198,24 +229,11 @@ class loginModal extends Component {
                       label='Email'
                       type='email'
                       name='email'
-                      value={this.state.user.email}
+                      value={this.state.user.email ? this.state.user.email : ''}
                       onChange={this.handleInputChange}
                       className={classes.textField}
                       margin='normal'
                       variant='outlined'
-                      InputLabelProps={{
-                        classes: {
-                          root: classes.cssLabel,
-                          focused: classes.cssFocused,
-                        },
-                      }}
-                      InputProps={{
-                        classes: {
-                          root: classes.cssOutlinedInput,
-                          focused: classes.cssFocused,
-                          notchedOutline: classes.notchedOutline,
-                        },
-                      }}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -224,7 +242,7 @@ class loginModal extends Component {
                       label='Password'
                       type='password'
                       name='password'
-                      value={this.state.user.password}
+                      value={this.state.user.password ? this.state.user.password : ''}
                       onChange={this.handleInputChange}
                       className={classes.textField}
                       margin='normal'

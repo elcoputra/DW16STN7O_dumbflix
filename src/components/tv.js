@@ -97,7 +97,7 @@ class tv extends Component {
 
   render(props) {
     const { classes } = this.props;
-    const { dataTvSeries, loadingTV, errorTV } = this.props.dataTv;
+    const { dataTvSeries, loadingTV } = this.props.dataTv;
     return (
       <div>
         {loadingTV ? (
@@ -156,7 +156,10 @@ const mapStateToProps = (state) => {
     dataTv: state.tvReducer,
   };
 };
-export default compose(withStyles(styles), connect(mapStateToProps, { getDataTv, getDetailMovie, getDataEpisodes }))(tv);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { getDataTv, getDetailMovie, getDataEpisodes }),
+)(tv);
 
 // TUT memakai map
 // {DataTv.map((detailData, index) => {

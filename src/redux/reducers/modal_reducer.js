@@ -5,6 +5,8 @@ import {
   CLOSE_MODAL_LOGIN,
   CLOSE_MODAL_ADD_EPISODE,
   OPEN_MODAL_ADD_EPISODE,
+  OPEN_MODAL_UPDATE_EPISODE,
+  CLOSE_MODAL_UPDATE_EPISODE,
 } from '../actionTypes';
 const initialStateRegisterModal = {
   registerModalOpen: false,
@@ -15,6 +17,11 @@ const initialStateLoginModal = {
 
 const initialStateAddEpisodeModal = {
   addEpisodeModalOpen: false,
+};
+
+const initialStateUpdateEpisodeModal = {
+  updateEpisodeModalOpen: false,
+  index: 0,
 };
 
 export const modalRegisterReducer = (state = initialStateRegisterModal, action) => {
@@ -45,6 +52,17 @@ export const modalAddEpisodeReducer = (state = initialStateAddEpisodeModal, acti
       return { ...state, addEpisodeModalOpen: action.payload };
     case CLOSE_MODAL_ADD_EPISODE:
       return { ...state, addEpisodeModalOpen: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const modalUpdateEpisodeReducer = (state = initialStateUpdateEpisodeModal, action) => {
+  switch (action.type) {
+    case OPEN_MODAL_UPDATE_EPISODE:
+      return { ...state, updateEpisodeModalOpen: action.payload, index: action.index };
+    case CLOSE_MODAL_UPDATE_EPISODE:
+      return { ...state, updateEpisodeModalOpen: action.payload };
     default:
       return state;
   }

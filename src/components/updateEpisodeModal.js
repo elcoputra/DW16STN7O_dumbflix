@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
+
+// Material UI
 import { withStyles } from '@material-ui/core/styles';
 import { Modal, Backdrop, Fade, Box, Grid, TextField, Button } from '@material-ui/core';
 import { AttachFile } from '@material-ui/icons';
+
+// Redux
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { closeModalAddEpisode } from '../redux/actions/modal_actions';
-import { addEpisode } from '../redux/actions/movie_action';
 
-class modalAddEpisode extends Component {
+// redux
+import { closeModalUpdateEpisode } from '../redux/actions/modal_actions';
+import { updateEpisodeAction, getDataEpisodes } from '../redux/actions/episode_action';
+
+class updateEpisodeModal extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
       open: false,
+      id: 0,
       upload: {},
+      prevIndex: {},
     };
   }
+
+  // updateEpisodeAction
+
+  componentDidMount = async () => {};
 
   handleInputChange = (event) => {
     const { upload } = this.state;
@@ -40,34 +52,47 @@ class modalAddEpisode extends Component {
     });
   };
 
-  handleButtonKirim = () => {
-    const { dataDetailMovie } = this.props.detailMovieReducer;
-    const { upload } = this.state;
-    // this.setState({
-    //   upload: { movieId: dataDetailMovie.id },
-    // });
-    console.log(this.state.upload);
-    this.props.addEpisode(dataDetailMovie.id, { ...upload, movieId: dataDetailMovie.id });
+  handleButtonKirim = async () => {
+    const { upload, id } = this.state;
+    await this.props.updateEpisodeAction(id, upload);
+    await this.props.getDataEpisodes(upload.movieId);
+    this.props.closeModalUpdateEpisode();
   };
 
   render() {
     const { classes } = this.props;
-    const { addEpisodeModalOpen } = this.props.modalAddEpisodeReducer;
+    const { updateEpisodeModalOpen } = this.props.modalUpdateEpisodeReducer;
+
+    const { dataEpisode } = this.props.episodeReducer;
+    const { index } = this.props.modalUpdateEpisodeReducer;
+    if (index !== this.state.prevIndex) {
+      this.setState({
+        prevIndex: index,
+        id: dataEpisode[index].id,
+        upload: {
+          movieId: dataEpisode[index].movieId,
+          title: dataEpisode[index].title,
+          linkEpisode: dataEpisode[index].linkEpisode,
+          thumbnailEpisode: dataEpisode[index].thumbnailEpisode,
+        },
+      });
+    }
+
     return (
       <div>
         <Modal
           className={classes.modal}
-          open={addEpisodeModalOpen}
-          onClose={this.props.closeModalAddEpisode}
+          open={updateEpisodeModalOpen}
+          onClose={this.props.closeModalUpdateEpisode}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
           }}
         >
-          <Fade in={addEpisodeModalOpen}>
+          <Fade in={updateEpisodeModalOpen}>
             <Box className={classes.Box}>
-              <b className={classes.Title}>Add Episode</b>
+              <b className={classes.Title}>Update Episode</b>
               <Grid className={classes.GridInput} container direction='column' justify='center' alignItems='center'>
                 <Grid item xs={12}>
                   <Grid container direction='row' justify='center' alignItems='center'>
@@ -130,7 +155,7 @@ class modalAddEpisode extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <Button variant='contained' onClick={this.handleButtonKirim} className={classes.ButtonAdd}>
-                    ADD
+                    Update
                   </Button>
                 </Grid>
               </Grid>
@@ -361,12 +386,15 @@ const styles = (theme) => ({
 
 const mapStateToProps = (state) => {
   return {
-    modalAddEpisodeReducer: state.modalAddEpisodeReducer,
-    detailMovieReducer: state.detailMovieReducer,
+    modalUpdateEpisodeReducer: state.modalUpdateEpisodeReducer,
+    episodeReducer: state.episodeReducer,
   };
 };
 
-export default compose(withStyles(styles), connect(mapStateToProps, { closeModalAddEpisode, addEpisode }))(modalAddEpisode);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { closeModalUpdateEpisode, updateEpisodeAction, getDataEpisodes }),
+)(updateEpisodeModal);
 
 //     "movieId": 2,
 //     "title": "test add episode1",

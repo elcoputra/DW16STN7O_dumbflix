@@ -1,111 +1,575 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  Modal,
-  Backdrop,
-  Fade,
-  TextField,
-  Grid,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextareaAutosize,
-} from '@material-ui/core';
+import { Modal, Backdrop, Fade, TextField, Grid, Button, MenuItem, Typography } from '@material-ui/core';
 import { AttachFile, Add } from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { getCategories } from '../redux/actions/categories_action';
 import { addDataMovie } from '../redux/actions/movie_action';
 
-const styles = (theme) => ({
-  // Styling Dropdown
-  root: {
-    fontColor: 'white',
-    color: 'white',
-    labelColor: 'white',
-  },
-  formControl: {
-    marginTop: 15,
-    marginBottom: 15,
-    marginLeft: 5,
-    height: 50,
-    width: 1150,
-    border: '2px solid white',
-    fontColor: 'white',
-    color: 'white',
-    backgroundColor: 'rgba(210, 210, 210, 0.25)',
-    laberColor: 'white',
-    borderRadius: 5,
-  },
-  dropdownStyle: {
-    border: '2px solid white',
-    borderRadius: '5%',
-    backgroundColor: '#353535',
-    fontColor: 'white',
-    color: 'white',
-    laberColor: 'white',
-  },
-  select: {
-    '&:before': {
-      borderColor: 'white',
-      labelColor: 'white',
-      fontColor: 'white',
-    },
-    '&:after': {
-      borderColor: 'white',
-      labelColor: 'white',
-      fontColor: 'white',
-    },
-  },
-  iconDropdown: {
-    fill: 'white',
-  },
-  // End Styling Dropdown
+class addFilm extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      prevAddMovieStat: {},
+      prevAddEpisodes: {},
+      uploadFilm: { categoryId: 1 },
+      uploadEpisodes: [
+        {
+          title: '',
+          linkEpisode: '',
+          thumbnailEpisode: '',
+          movieId: 0,
+        },
+      ],
+      open: false,
+    };
+  }
+  componentDidMount = async () => {
+    await this.props.getCategories();
+  };
 
-  divGrid: {
-    width: 1150,
-    height: 2222,
+  handleChangeFilmInputGroup = (event) => {
+    const { uploadFilm } = this.state;
+    this.setState({
+      uploadFilm: { ...uploadFilm, [event.target.name]: event.target.value },
+    });
+  };
+  handleCloseModalAttatch = () => {
+    this.setState({
+      open: false,
+    });
+  };
+  handleButtonAttatch = () => {
+    this.setState({
+      open: true,
+    });
+  };
+  handleButtonConfirmAttatch = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
+  // REUSABLE ADD EPISODE COMPONENT
+
+  uiAddEpisode() {
+    const { classes } = this.props;
+    return this.state.uploadEpisodes.map((el, i) => (
+      <>
+        <Grid
+          container
+          style={{ display: 'flex', width: '100%' }}
+          direction='row'
+          spacing={1}
+          justify='space-between'
+          alignItems='center'
+        >
+          <Grid item style={{ display: 'flex', width: '100%' }} md={10}>
+            <TextField
+              id='standard-name'
+              label='Title Episode'
+              name='title'
+              value={el.title ? el.title : ''}
+              onChange={this.handleChange.bind(this, i)}
+              className={classes.textField}
+              variant='outlined'
+            />
+          </Grid>
+          <Grid item style={{ display: 'flex', width: '100%' }} md={2}>
+            <TextField
+              id='standard-name'
+              label='Link Thumbnail'
+              name='thumbnailEpisode'
+              value={el.thumbnailEpisode ? el.thumbnailEpisode : ''}
+              onChange={this.handleChange.bind(this, i)}
+              className={classes.textFieldInsertLinkThumbnailEpisode}
+              variant='outlined'
+            />
+          </Grid>
+        </Grid>
+        <Grid style={{ display: 'flex', width: '100%' }} item>
+          <TextField
+            id='standard-name'
+            label='Link Episode'
+            name='linkEpisode'
+            value={el.linkEpisode ? el.linkEpisode : ''}
+            onChange={this.handleChange.bind(this, i)}
+            className={classes.textField2}
+            variant='outlined'
+          />
+        </Grid>
+      </>
+    ));
+  }
+
+  handleChange(i, e) {
+    const { name, value } = e.target;
+    let uploadEpisodes = [...this.state.uploadEpisodes];
+    uploadEpisodes[i] = { ...uploadEpisodes[i], [name]: value };
+    this.setState({ uploadEpisodes });
+  }
+  addClick() {
+    this.setState((prevState) => ({
+      uploadEpisodes: [...prevState.uploadEpisodes, { title: '', linkEpisode: '', thumbnailEpisode: '', movieId: 0 }],
+    }));
+  }
+  handleSubmit = async () => {
+    const { uploadFilm, uploadEpisodes } = this.state;
+    await this.props.addDataMovie(uploadFilm, uploadEpisodes);
+  };
+
+  // REUSABLE ADD EPISODE COMPONENT END
+
+  render(props) {
+    const { classes } = this.props;
+    const { categories, loading } = this.props.categoriesReducer;
+    const { messageBoolAddMovie } = this.props.addMovieReducer;
+    const { messageBoolEpisodes } = this.props.episodeAddReducer;
+
+    // clear texfield
+    if (messageBoolAddMovie !== this.state.prevAddMovieStat || messageBoolEpisodes !== this.state.prevAddEpisodes) {
+      if (messageBoolAddMovie) {
+        this.setState({
+          uploadFilm: { categoryId: 1 },
+          prevAddMovieStat: messageBoolAddMovie,
+        });
+      }
+      if (messageBoolEpisodes) {
+        this.setState({
+          uploadEpisodes: [
+            {
+              title: '',
+              linkEpisode: '',
+              thumbnailEpisode: '',
+              movieId: 0,
+            },
+          ],
+        });
+        console.log('test logic');
+      }
+      this.setState({
+        prevAddMovieStat: messageBoolAddMovie,
+        prevAddEpisodes: messageBoolEpisodes,
+      });
+    }
+
+    return (
+      <div className={classes.divRoot}>
+        <Grid
+          container
+          style={{ display: 'flex', width: '80%' }}
+          spacing={1}
+          direction='column'
+          justify='center'
+          alignItems='center'
+        >
+          <Grid item md style={{ display: 'flex', width: '100%' }}>
+            <Grid
+              container
+              style={{ display: 'flex', width: '100%' }}
+              direction='row'
+              justify='center'
+              alignItems='center'
+            >
+              <Grid style={{ display: 'flex', width: '100%' }} md={10} xs={12}>
+                <TextField
+                  id='standard-name'
+                  label='Title'
+                  name='title'
+                  value={this.state.uploadFilm.title ? this.state.uploadFilm.title : ''}
+                  onChange={this.handleChangeFilmInputGroup}
+                  className={classes.textField}
+                  variant='outlined'
+                />
+              </Grid>
+              <Grid item style={{ display: 'flex', width: '100%' }} md={2} xs={12}>
+                <Button variant='contained' onClick={this.handleButtonAttatch} className={classes.ButtonAttatch}>
+                  <Grid container direction='row' justify='center' alignItems='center'>
+                    <Grid item lg={9}>
+                      <Typography noWrap className={classes.attatchText}>
+                        Attatch Thumbnail
+                      </Typography>
+                    </Grid>
+                    <Grid item lg={3}>
+                      <AttachFile className={classes.icon} />
+                    </Grid>
+                  </Grid>
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
+            <TextField
+              id='standard-name'
+              label='Year'
+              name='year'
+              value={this.state.uploadFilm.year ? this.state.uploadFilm.year : ''}
+              onChange={this.handleChangeFilmInputGroup}
+              type='number'
+              className={classes.textField2}
+              variant='outlined'
+            />
+          </Grid>
+          <Grid item style={{ width: '100%' }} md>
+            {loading ? (
+              'Loading....'
+            ) : (
+              <TextField
+                select
+                label='Select'
+                name='categoryId'
+                className={classes.formControl}
+                value={this.state.uploadFilm.categoryId ? this.state.uploadFilm.categoryId : 1}
+                onChange={this.handleChangeFilmInputGroup}
+                helperText='Please select movie category'
+                variant='outlined'
+              >
+                {categories.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          </Grid>
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
+            <TextField
+              multiline
+              label='Description'
+              name='description'
+              value={this.state.uploadFilm.description ? this.state.uploadFilm.description : ''}
+              onChange={this.handleChangeFilmInputGroup}
+              type='number'
+              rows={4}
+              className={classes.textFieldMultiline}
+              variant='outlined'
+            />
+          </Grid>
+          {/* HANYA DIVIDER */}
+          <Grid item style={{ display: 'flex', width: '100%', justifyContent: 'center' }} md>
+            <Grid
+              container
+              style={{ display: 'flex', width: '100%' }}
+              direction='row'
+              justify='space-between'
+              alignItems='center'
+            >
+              <Grid item style={{ display: 'flex', width: '80%' }} md={5} xs={1}>
+                <div
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#B7B7B7',
+                    height: 5,
+                    borderRadius: 5,
+                  }}
+                ></div>
+              </Grid>
+              <Grid
+                item
+                md={2}
+                xs={1}
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography variant='h5' align='center' style={{ color: '#B7B7B7', textAlign: 'center' }}>
+                  Episodes
+                </Typography>
+              </Grid>
+              <Grid item style={{ display: 'flex', width: '100%' }} md={5} xs={1}>
+                <div
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#B7B7B7',
+                    height: 5,
+                    borderRadius: 5,
+                  }}
+                ></div>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          {/* TI SINI TEMPAT RUSABLE DI SIMPEN */}
+          {this.uiAddEpisode()}
+
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
+            <Button variant='contained' onClick={this.addClick.bind(this)} className={classes.ButtonAddForm}>
+              <Add className={classes.iconAddForm} />
+            </Button>
+          </Grid>
+          <Grid item style={{ display: 'flex', width: '100%' }} md>
+            <Button variant='contained' onClick={this.handleSubmit} className={classes.ButtonSave}>
+              Save
+            </Button>
+          </Grid>
+        </Grid>
+        {/* MODAL ADD ATTACHMENT STRING */}
+        <Modal
+          aria-labelledby='transition-modal-title'
+          aria-describedby='transition-modal-description'
+          className={classes.modal}
+          open={this.state.open}
+          onClose={this.handleCloseModalAttatch}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.open}>
+            <div className={classes.paper}>
+              {/* INPUT */}
+              <b className={classes.fontModalTitle}>Input thumbnail</b>
+              <br />
+              <br />
+              <TextField
+                id='standard-name'
+                label='Thumbnail Film'
+                name='thumbnail'
+                value={this.state.uploadFilm.thumbnail ? this.state.uploadFilm.thumbnail : ''}
+                onChange={this.handleChangeFilmInputGroup}
+                className={classes.textField}
+                variant='outlined'
+              />
+              <Grid item md>
+                <Button variant='contained' onClick={this.handleButtonConfirmAttatch} className={classes.Kirim}>
+                  <div>Attatch</div>
+                </Button>
+              </Grid>
+            </div>
+          </Fade>
+        </Modal>
+        {/* MODAL ADD ATTACHMENT STRING END*/}
+      </div>
+    );
+  }
+}
+
+const styles = (theme) => ({
+  divRoot: {
+    display: 'flex',
+    maxWidth: '100vw',
+    minHeight: '100vh',
+    paddingTop: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-    color: 'white',
-    fontColor: 'white',
-  },
-  divider: {
-    height: 50,
-  },
-  divWarping: {
-    backgroundColor: 'green',
-    color: 'white',
+  // Styling Dropdown
+  formControl: {
+    width: '100%',
+    borderRadius: 5,
+    backgroundColor: '#353535',
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
   textField: {
     background: 'rgba(210, 210, 210, 0.25)',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 927,
-    height: 50,
+    borderRadius: 5,
+    width: '100%',
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
   textFieldInsertLinkThumbnailEpisode: {
     background: 'rgba(210, 210, 210, 0.25)',
-    width: 211,
-    height: 50,
+    borderRadius: 5,
+    width: '100%',
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
   textField3: {
     background: 'rgba(210, 210, 210, 0.25)',
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 927,
-    height: 50,
+    width: '100%',
+    borderRadius: 5,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
   textField2: {
     background: 'rgba(210, 210, 210, 0.25)',
-    width: 1150,
-    height: 50,
-    marginLeft: 4,
+    width: '100%',
+    // width: 1146,
+    borderRadius: 5,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
+  },
+  textFieldMultiline: {
+    background: 'rgba(210, 210, 210, 0.25)',
+    width: '100%',
+    borderRadius: 5,
+    marginBottom: 20,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
   cssLabel: {
     color: '#B1B1B1',
@@ -132,9 +596,8 @@ const styles = (theme) => ({
   },
   ButtonAttatch: {
     textTransform: 'none',
-    marginTop: 13,
     height: 55,
-    width: 213,
+    width: '100%',
     fontSize: '14px',
     background: 'rgba(210, 210, 210, 0.25)',
     color: '#B1B1B1',
@@ -150,9 +613,8 @@ const styles = (theme) => ({
   ButtonAddForm: {
     textTransform: 'none',
     marginTop: 13,
-    marginLeft: 9,
     height: 30,
-    width: 1150,
+    width: '100%',
     fontSize: '14px',
     background: 'rgba(210, 210, 210, 0.25)',
     color: 'red',
@@ -166,9 +628,9 @@ const styles = (theme) => ({
     },
   },
   ButtonSave: {
+    left: 0,
     textTransform: 'none',
     marginTop: 34,
-    marginLeft: 208,
     height: 40,
     width: 200,
     fontSize: '14px',
@@ -183,20 +645,17 @@ const styles = (theme) => ({
       color: 'red',
     },
   },
-  attatchText: {},
-  attatchIcon: {
-    paddingLeft: 4,
-    paddingTop: 11,
-  },
+  attatchText: { fontSize: '100%' },
   icon: {
     fontSize: 40,
+    margin: 0,
+    padding: 0,
   },
   iconAddForm: {
     fontSize: 40,
   },
   TextareaAutosize: {
     marginTop: 5,
-    marginLeft: 1,
     marginBottom: 30,
     width: 1145,
     color: 'white',
@@ -214,7 +673,7 @@ const styles = (theme) => ({
   paper: {
     backgroundColor: '#1f1f1f',
     border: '2px solid #000',
-    boxShadow: theme.shadows[5],
+    bomdhadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
   fontModalTitle: {
@@ -239,372 +698,6 @@ const styles = (theme) => ({
     width: 218,
   },
 });
-
-class addFilm extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      uploadFilm: {},
-      uploadEpisodes: [{ title: '', linkEpisode: '', thumbnailEpisode: '', movieId: 0 }],
-      open: false,
-    };
-  }
-  componentDidMount() {
-    this.props.getCategories();
-  }
-
-  handleChangeFilmInputGroup = (event) => {
-    const { uploadFilm } = this.state;
-    this.setState({
-      uploadFilm: { ...uploadFilm, [event.target.name]: event.target.value },
-    });
-  };
-  handleCloseModalAttatch = () => {
-    this.setState({
-      open: false,
-    });
-  };
-  handleButtonAttatch = () => {
-    this.setState({
-      open: true,
-    });
-  };
-  handleButtonConfirmAttatch = () => {
-    console.log(this.state.upload);
-    this.setState({
-      open: false,
-    });
-  };
-
-  // REUSABLE ADD EPISODE COMPONENT
-
-  uiAddEpisode() {
-    const { classes } = this.props;
-    return this.state.uploadEpisodes.map((el, i) => (
-      <div key={i}>
-        <Grid item xs>
-          <Grid container direction='row' justify='flex-start' alignItems='center'>
-            <Grid item xs>
-              <TextField
-                id='standard-name'
-                label='Title Episode'
-                name='title'
-                value={el.title || ''}
-                onChange={this.handleChange.bind(this, i)}
-                className={classes.textField}
-                margin='normal'
-                variant='outlined'
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    root: classes.cssOutlinedInput,
-                    focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item xs>
-              <div className={classes.cheatMargin}>
-                <TextField
-                  id='standard-name'
-                  label='Thumbnail Episode'
-                  name='thumbnailEpisode'
-                  value={el.thumbnailEpisode || ''}
-                  onChange={this.handleChange.bind(this, i)}
-                  className={classes.textFieldInsertLinkThumbnailEpisode}
-                  margin='normal'
-                  variant='outlined'
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.cssLabel,
-                      focused: classes.cssFocused,
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      root: classes.cssOutlinedInput,
-                      focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                    },
-                  }}
-                />
-              </div>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs>
-          <TextField
-            id='standard-name'
-            label='Link Episode'
-            name='linkEpisode'
-            value={el.linkEpisode || ''}
-            onChange={this.handleChange.bind(this, i)}
-            className={classes.textField2}
-            margin='normal'
-            variant='outlined'
-            InputLabelProps={{
-              classes: {
-                root: classes.cssLabel,
-                focused: classes.cssFocused,
-              },
-            }}
-            InputProps={{
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              },
-              inputMode: 'numeric',
-            }}
-          />
-        </Grid>
-      </div>
-    ));
-  }
-
-  handleChange(i, e) {
-    const { name, value } = e.target;
-    let uploadEpisodes = [...this.state.uploadEpisodes];
-    uploadEpisodes[i] = { ...uploadEpisodes[i], [name]: value };
-    this.setState({ uploadEpisodes });
-  }
-  addClick() {
-    this.setState((prevState) => ({
-      uploadEpisodes: [...prevState.uploadEpisodes, { title: '', linkEpisode: '', thumbnailEpisode: '', movieId: 0 }],
-    }));
-  }
-  handleSubmit = () => {
-    const { uploadFilm, uploadEpisodes } = this.state;
-    this.props.addDataMovie(uploadFilm, uploadEpisodes);
-  };
-
-  // REUSABLE ADD EPISODE COMPONENT END
-
-  render(props) {
-    const { classes } = this.props;
-    const { categories, loading } = this.props.categoriesReducer;
-    return (
-      <div>
-        <div className={classes.divider} />
-        <Grid container direction='column' justify='center' alignItems='center'>
-          <Grid item xs>
-            <div>Add Film</div>
-          </Grid>
-          <Grid item xs>
-            <Grid container direction='row' justify='flex-start' alignItems='center'>
-              <Grid item xs>
-                <TextField
-                  id='standard-name'
-                  label='Title'
-                  name='title'
-                  value={this.state.uploadFilm.title}
-                  onChange={this.handleChangeFilmInputGroup}
-                  className={classes.textField}
-                  margin='normal'
-                  variant='outlined'
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.cssLabel,
-                      focused: classes.cssFocused,
-                      FormHelperTextProps: classes.floatingLabelFocusStyle,
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      root: classes.cssOutlinedInput,
-                      focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                      FormHelperTextProps: classes.floatingLabelFocusStyle,
-                    },
-                  }}
-                />
-              </Grid>
-              <Grid item xs>
-                <Button variant='contained' onClick={this.handleButtonAttatch} className={classes.ButtonAttatch}>
-                  <Grid container direction='row' justify='space-between' alignItems='center'>
-                    <Grid item xs={9}>
-                      <b className={classes.attatchText}>Attatch Thumbnail</b>
-                    </Grid>
-                    <Grid className={classes.attatchIcon} item xs>
-                      <AttachFile className={classes.icon} />
-                    </Grid>
-                  </Grid>
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs>
-            <TextField
-              id='standard-name'
-              label='Year'
-              name='year'
-              value={this.state.uploadFilm.year}
-              onChange={this.handleChangeFilmInputGroup}
-              type='number'
-              className={classes.textField2}
-              margin='normal'
-              variant='outlined'
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-            />
-          </Grid>
-          <Grid item xs>
-            {loading ? (
-              'Loading....'
-            ) : (
-              <FormControl variant='outlined' className={classes.formControl}>
-                <InputLabel className={classes.InputLabel} id='demo-simple-select-outlined-label'>
-                  Category
-                </InputLabel>
-                <Select
-                  labelId='demo-simple-select-outlined-label'
-                  id='demo-simple-select-outlined'
-                  name='categoryId'
-                  label='Category'
-                  value={this.state.uploadFilm.categoryId}
-                  onChange={this.handleChangeFilmInputGroup}
-                  className={classes.select}
-                  inputProps={{
-                    classes: {
-                      icon: classes.icon,
-                    },
-                  }}
-                  MenuProps={{ classes: { paper: classes.dropdownStyle } }}
-                >
-                  {loading
-                    ? 'FETCHING...'
-                    : categories.map((detailCategory) => {
-                        return <MenuItem value={detailCategory.id}>{detailCategory.name}</MenuItem>;
-                      })}
-                </Select>
-              </FormControl>
-            )}
-          </Grid>
-          <Grid item xs>
-            <TextareaAutosize
-              className={classes.TextareaAutosize}
-              aria-label='minimum height'
-              rowsMin={10}
-              name='description'
-              value={this.state.uploadFilm.description}
-              onChange={this.handleChangeFilmInputGroup}
-              placeholder='Description'
-            />
-          </Grid>
-          {/* TI SINI TEMPAT RUSABLE DI SIMPEN */}
-          {this.uiAddEpisode()}
-          <Grid item xs>
-            <Button variant='contained' onClick={this.addClick.bind(this)} className={classes.ButtonAddForm}>
-              <Add className={classes.iconAddForm} />
-            </Button>
-          </Grid>
-          <Grid item xs>
-            <Grid container>
-              <Grid item xs={11}></Grid>
-              <Grid item xs={1}>
-                <Button variant='contained' onClick={this.handleSubmit} className={classes.ButtonSave}>
-                  Save
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        {/* MODAL ADD ATTACHMENT STRING */}
-        <Modal
-          aria-labelledby='transition-modal-title'
-          aria-describedby='transition-modal-description'
-          className={classes.modal}
-          open={this.state.open}
-          onClose={this.handleCloseModalAttatch}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={this.state.open}>
-            <div className={classes.paper}>
-              {/* INPUT */}
-              <b className={classes.fontModalTitle}>Input thumbnail</b>
-              <br />
-              <br />
-              <TextField
-                id='standard-name'
-                label='Thumbnail Film'
-                name='thumbnail'
-                value={this.state.uploadFilm.thumbnail}
-                onChange={this.handleChangeFilmInputGroup}
-                className={classes.textField}
-                margin='normal'
-                variant='outlined'
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    root: classes.cssOutlinedInput,
-                    focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
-              />
-              <br />
-              <TextField
-                id='standard-name'
-                label='Thumbnail Trailer'
-                name='thumbnailTrailer'
-                value={this.state.uploadFilm.thumbnailTrailer}
-                onChange={this.handleChangeFilmInputGroup}
-                className={classes.textField}
-                margin='normal'
-                variant='outlined'
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    root: classes.cssOutlinedInput,
-                    focused: classes.cssFocused,
-                    notchedOutline: classes.notchedOutline,
-                  },
-                }}
-              />
-              <Grid item xs>
-                <Button variant='contained' onClick={this.handleButtonConfirmAttatch} className={classes.Kirim}>
-                  <div>Attatch</div>
-                </Button>
-              </Grid>
-            </div>
-          </Fade>
-        </Modal>
-        {/* MODAL ADD ATTACHMENT STRING END*/}
-      </div>
-    );
-  }
-}
 
 const mapStateToProps = (state) => {
   return {
