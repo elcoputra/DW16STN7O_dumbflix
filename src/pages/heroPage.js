@@ -76,7 +76,12 @@ class heroPage extends Component {
                 </Grid>
                 <Grid
                   item
-                  style={{ display: 'flex', height: '100%', backgroundColor: '#E50914', borderRadius: '0px 10px 10px 0px' }}
+                  style={{
+                    display: 'flex',
+                    height: '100%',
+                    backgroundColor: '#E50914',
+                    borderRadius: '0px 10px 10px 0px',
+                  }}
                   xs={3}
                 >
                   <Button onClick={() => this.props.openModalRegister()} className={classes.btnSubscribe}>
@@ -93,7 +98,13 @@ class heroPage extends Component {
           </div>
         </div>
         <div className={classes.wave}>
-          <svg xmlns='http://www.w3.org/2000/svg' xmlnsBx='https://boxy-svg.com' viewBox='0 0 700 50' width='100%' height='100%'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            xmlnsBx='https://boxy-svg.com'
+            viewBox='0 0 700 50'
+            width='100%'
+            height='100%'
+          >
             <path
               style={{ fill: '#171717', fillOpacity: '1' }}
               d='M 0 32.997 L 23.335 34.836 C 46.668 36.607 93.335 40.387 140.001 43.996 C 186.668 47.605 233.334 51.387 280.001 49.496 C 326.667 47.605 373.334 40.387 420.001 39.408 C 466.667 38.497 513.334 43.996 560 44.907 C 606.667 45.887 653.333 42.106 676.667 40.336 L 700 38.497 L 700 0 L 676.667 0 C 653.333 0 606.667 0 560 0 C 513.334 0 466.667 0 420.001 0 C 373.334 0 326.667 0 280.001 0 C 233.334 0 186.668 0 140.001 0 C 93.335 0 46.668 0 23.335 0 L 0 0 Z'
@@ -130,8 +141,8 @@ class heroPage extends Component {
                   </Grid>
                   <Grid item>
                     <Typography className={classes.typoExplain}>
-                      Don't you have a desktop? a laptop? Macbook? take it easy ! You must have an Android or iPhone? download the
-                      Dumbflix app in your favorite store!
+                      Don't you have a desktop? a laptop? Macbook? take it easy ! You must have an Android or iPhone?
+                      download the Dumbflix app in your favorite store!
                     </Typography>
                   </Grid>
                 </Grid>
@@ -148,8 +159,8 @@ class heroPage extends Component {
                   </Grid>
                   <Grid item>
                     <Typography className={classes.typoExplain}>
-                      Are you not happy with our service? You can't find the movie you or the crush you like? You may ask for a
-                      refund.
+                      Are you not happy with our service? You can't find the movie you or the crush you like? You may
+                      ask for a refund.
                     </Typography>
                   </Grid>
                 </Grid>
@@ -219,10 +230,6 @@ const styles = (theme) => ({
     display: 'flex',
     minHeight: '100vh',
     width: '100%',
-    // backgroundImage: `url(${BackgroundImageHeader})`,
-    // backgroundSize: 'cover',
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center',
     alignItems: 'center',
   },
   header: {

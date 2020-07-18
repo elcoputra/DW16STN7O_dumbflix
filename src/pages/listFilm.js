@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Button, FormControl, InputLabel, Select, TextField, MenuItem } from '@material-ui/core';
+import { Grid, Button, TextField, MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ListMovie from '../components/movie';
 import ListTv from '../components/tv';

@@ -17,6 +17,7 @@ import Transaction from './pages/transactionPage';
 import Snackbar from './components/snackbar';
 import UpdatePage from './pages/updatePage';
 import HeroPage from './pages/heroPage';
+import SearchPage from './pages/searchPage';
 
 import { authAction } from './redux/actions/auth_action';
 import { connect } from 'react-redux';
@@ -61,7 +62,8 @@ class App extends Component {
             <PrivateRouteSubscribe path='/detail' component={DetailPlayer} />
             <PrivateRouteSubscribe path='/tv' component={TVShows} />
             <PrivateRouteSubscribe path='/movies' component={Movies} />
-            {stateLogin ? <PrivateRouteSubscribe path='/' component={Home} /> : <Route path='/' component={HeroPage} />}
+            {/* {stateLogin ? <PrivateRouteSubscribe path='/' component={Home} /> : <Route path='/' component={HeroPage} />} */}
+            <Route path='/' component={SearchPage} />
           </Switch>
         </div>
       </Router>

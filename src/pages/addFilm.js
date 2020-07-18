@@ -11,21 +11,23 @@ class addFilm extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      uploadFilm: {},
-      uploadEpisodes: [{ title: '', linkEpisode: '', thumbnailEpisode: '', movieId: 0 }],
+      prevAddMovieStat: {},
+      prevAddEpisodes: {},
+      uploadFilm: { categoryId: 1 },
+      uploadEpisodes: [
+        {
+          title: '',
+          linkEpisode: '',
+          thumbnailEpisode: '',
+          movieId: 0,
+        },
+      ],
       open: false,
     };
   }
-  componentDidMount() {
-    this.props.getCategories();
-    // const { categories } = this.props.categoriesReducer;
-    // this.setState({
-    //   uploadFilm: {
-    //     categoryId: categories[0].id,
-    //   },
-    // });
-    // console.log(this.state.uploadFilm.categoryId);
-  }
+  componentDidMount = async () => {
+    await this.props.getCategories();
+  };
 
   handleChangeFilmInputGroup = (event) => {
     const { uploadFilm } = this.state;
@@ -44,7 +46,6 @@ class addFilm extends Component {
     });
   };
   handleButtonConfirmAttatch = () => {
-    console.log(this.state.upload);
     this.setState({
       open: false,
     });
@@ -69,7 +70,7 @@ class addFilm extends Component {
               id='standard-name'
               label='Title Episode'
               name='title'
-              value={el.title || ''}
+              value={el.title ? el.title : ''}
               onChange={this.handleChange.bind(this, i)}
               className={classes.textField}
               variant='outlined'
@@ -80,7 +81,7 @@ class addFilm extends Component {
               id='standard-name'
               label='Link Thumbnail'
               name='thumbnailEpisode'
-              value={el.thumbnailEpisode || ''}
+              value={el.thumbnailEpisode ? el.thumbnailEpisode : ''}
               onChange={this.handleChange.bind(this, i)}
               className={classes.textFieldInsertLinkThumbnailEpisode}
               variant='outlined'
@@ -92,7 +93,7 @@ class addFilm extends Component {
             id='standard-name'
             label='Link Episode'
             name='linkEpisode'
-            value={el.linkEpisode || ''}
+            value={el.linkEpisode ? el.linkEpisode : ''}
             onChange={this.handleChange.bind(this, i)}
             className={classes.textField2}
             variant='outlined'
@@ -113,9 +114,9 @@ class addFilm extends Component {
       uploadEpisodes: [...prevState.uploadEpisodes, { title: '', linkEpisode: '', thumbnailEpisode: '', movieId: 0 }],
     }));
   }
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { uploadFilm, uploadEpisodes } = this.state;
-    this.props.addDataMovie(uploadFilm, uploadEpisodes);
+    await this.props.addDataMovie(uploadFilm, uploadEpisodes);
   };
 
   // REUSABLE ADD EPISODE COMPONENT END
@@ -123,6 +124,36 @@ class addFilm extends Component {
   render(props) {
     const { classes } = this.props;
     const { categories, loading } = this.props.categoriesReducer;
+    const { messageBoolAddMovie } = this.props.addMovieReducer;
+    const { messageBoolEpisodes } = this.props.episodeAddReducer;
+
+    // clear texfield
+    if (messageBoolAddMovie !== this.state.prevAddMovieStat || messageBoolEpisodes !== this.state.prevAddEpisodes) {
+      if (messageBoolAddMovie) {
+        this.setState({
+          uploadFilm: { categoryId: 1 },
+          prevAddMovieStat: messageBoolAddMovie,
+        });
+      }
+      if (messageBoolEpisodes) {
+        this.setState({
+          uploadEpisodes: [
+            {
+              title: '',
+              linkEpisode: '',
+              thumbnailEpisode: '',
+              movieId: 0,
+            },
+          ],
+        });
+        console.log('test logic');
+      }
+      this.setState({
+        prevAddMovieStat: messageBoolAddMovie,
+        prevAddEpisodes: messageBoolEpisodes,
+      });
+    }
+
     return (
       <div className={classes.divRoot}>
         <Grid
@@ -134,13 +165,19 @@ class addFilm extends Component {
           alignItems='center'
         >
           <Grid item md style={{ display: 'flex', width: '100%' }}>
-            <Grid container style={{ display: 'flex', width: '100%' }} direction='row' justify='center' alignItems='center'>
+            <Grid
+              container
+              style={{ display: 'flex', width: '100%' }}
+              direction='row'
+              justify='center'
+              alignItems='center'
+            >
               <Grid style={{ display: 'flex', width: '100%' }} md={10} xs={12}>
                 <TextField
                   id='standard-name'
                   label='Title'
                   name='title'
-                  value={this.state.uploadFilm.title}
+                  value={this.state.uploadFilm.title ? this.state.uploadFilm.title : ''}
                   onChange={this.handleChangeFilmInputGroup}
                   className={classes.textField}
                   variant='outlined'
@@ -167,7 +204,7 @@ class addFilm extends Component {
               id='standard-name'
               label='Year'
               name='year'
-              value={this.state.uploadFilm.year}
+              value={this.state.uploadFilm.year ? this.state.uploadFilm.year : ''}
               onChange={this.handleChangeFilmInputGroup}
               type='number'
               className={classes.textField2}
@@ -183,7 +220,7 @@ class addFilm extends Component {
                 label='Select'
                 name='categoryId'
                 className={classes.formControl}
-                value={loading ? 'Loading...' : this.state.uploadFilm.categoryId}
+                value={this.state.uploadFilm.categoryId ? this.state.uploadFilm.categoryId : 1}
                 onChange={this.handleChangeFilmInputGroup}
                 helperText='Please select movie category'
                 variant='outlined'
@@ -201,7 +238,7 @@ class addFilm extends Component {
               multiline
               label='Description'
               name='description'
-              value={this.state.uploadFilm.description}
+              value={this.state.uploadFilm.description ? this.state.uploadFilm.description : ''}
               onChange={this.handleChangeFilmInputGroup}
               type='number'
               rows={4}
@@ -219,15 +256,39 @@ class addFilm extends Component {
               alignItems='center'
             >
               <Grid item style={{ display: 'flex', width: '80%' }} md={5} xs={1}>
-                <div style={{ width: '100%', backgroundColor: '#B7B7B7', height: 5, borderRadius: 5 }}></div>
+                <div
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#B7B7B7',
+                    height: 5,
+                    borderRadius: 5,
+                  }}
+                ></div>
               </Grid>
-              <Grid item md={2} xs={1} style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <Grid
+                item
+                md={2}
+                xs={1}
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
                 <Typography variant='h5' align='center' style={{ color: '#B7B7B7', textAlign: 'center' }}>
                   Episodes
                 </Typography>
               </Grid>
               <Grid item style={{ display: 'flex', width: '100%' }} md={5} xs={1}>
-                <div style={{ width: '100%', backgroundColor: '#B7B7B7', height: 5, borderRadius: 5 }}></div>
+                <div
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#B7B7B7',
+                    height: 5,
+                    borderRadius: 5,
+                  }}
+                ></div>
               </Grid>
             </Grid>
           </Grid>
@@ -269,7 +330,7 @@ class addFilm extends Component {
                 id='standard-name'
                 label='Thumbnail Film'
                 name='thumbnail'
-                value={this.state.uploadFilm.thumbnail}
+                value={this.state.uploadFilm.thumbnail ? this.state.uploadFilm.thumbnail : ''}
                 onChange={this.handleChangeFilmInputGroup}
                 className={classes.textField}
                 variant='outlined'

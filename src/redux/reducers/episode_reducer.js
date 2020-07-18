@@ -1,15 +1,24 @@
 import {
+  // get episode
   GET_EPISODE_BY_MOVIE_ERROR,
   GET_EPISODE_BY_MOVIE_SUCCSESS,
   GET_EPISODE_BY_MOVIE_REQUEST,
+
+  // add episode
   ADD_EPISODES_ERROR,
   ADD_EPISODES_REQUEST,
   ADD_EPISODES_SUCCSESS,
+  CLEAR_ADD_EPISODES_MESSAGE,
+  CLEAR_ADD_EPISODES_ERROR,
+
+  // delete episode
   DELETE_EPISODE_BY_MOVIE_REQUEST,
   DELETE_EPISODE_BY_MOVIE_SUCCESS,
   DELETE_EPISODE_BY_MOVIE_ERROR,
   CLEAR_DELETE_EPISODE_BY_MOVIE_MESSAGE,
   CLEAR_DELETE_EPISODE_BY_MOVIE_ERROR,
+
+  // update episode
   UPDATE_EPISODE_REQUEST,
   UPDATE_EPISODE_SUCCESS,
   UPDATE_EPISODE_ERROR,
@@ -17,10 +26,16 @@ import {
   CLEAR_UPDATE_EPISODE_ERROR,
 } from '../actionTypes';
 
+// add episode
 const initialStateAddEpisode = {
   dataEpisode: [],
   loadingEpisode: false,
-  errorEpisode: '',
+
+  messageBoolEpisodes: false,
+  messageEpisodes: '',
+
+  errorBoolEpisodes: false,
+  errorEpisodes: '',
 };
 
 export const episodeAddReducer = (state = initialStateAddEpisode, action) => {
@@ -28,25 +43,43 @@ export const episodeAddReducer = (state = initialStateAddEpisode, action) => {
     case ADD_EPISODES_REQUEST:
       return {
         ...state,
+        messageBoolEpisodes: false,
+        errorBoolEpisodes: false,
         loadingEpisode: true,
       };
     case ADD_EPISODES_SUCCSESS:
       return {
         ...state,
+        messageBoolEpisodes: true,
+        errorBoolEpisodes: false,
+        messageEpisodes: action.message,
         loadingEpisode: false,
         dataEpisode: action.payload,
       };
     case ADD_EPISODES_ERROR:
       return {
         ...state,
+        messageBoolEpisodes: false,
+        errorBoolEpisodes: true,
         loadingEpisode: false,
-        errorEpisode: action.payload,
+        errorEpisodes: action.payload,
+      };
+    case CLEAR_ADD_EPISODES_MESSAGE:
+      return {
+        ...state,
+        messageBoolEpisodes: false,
+      };
+    case CLEAR_ADD_EPISODES_ERROR:
+      return {
+        ...state,
+        errorBoolEpisodes: false,
       };
     default:
       return state;
   }
 };
 
+// get episode
 const initialStateEpisode = {
   dataEpisode: [],
   loadingEpisode: false,

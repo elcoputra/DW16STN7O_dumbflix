@@ -1,4 +1,8 @@
-import { GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCSESS, GET_CATEGORIES_ERROR } from '../actionTypes';
+import {
+  GET_CATEGORIES_REQUEST,
+  GET_CATEGORIES_SUCCSESS,
+  GET_CATEGORIES_ERROR,
+} from '../actionTypes';
 
 const initialState = {
   categories: [],

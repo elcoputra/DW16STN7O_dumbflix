@@ -35,7 +35,36 @@ const styles = (theme) => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 350,
-    height: 50,
+    '& .MuiFormHelperText-root': {
+      color: '#B7B7B7',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': {
+        borderColor: '#d2d2d2',
+        borderWidth: 2,
+      },
+      '&:hover fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+      },
+      '&.Mui-focused fieldset': {
+        color: 'red',
+        borderColor: 'red',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#d2d2d2',
+      '&.Mui-focused': {
+        color: 'red',
+      },
+    },
+    '& .MuiSelect-icon': {
+      color: '#B7B7B7',
+      fontSize: 40,
+      top: 10,
+    },
   },
   cssLabel: {
     color: '#B1B1B1',
@@ -158,21 +187,11 @@ class upgradePage extends Component {
 
   render() {
     const { classes } = this.props;
-    const { error, loading } = this.props.upgradeReducer;
-    const errorHandling = error && error.data ? error.data.error : null;
-    const errorMessageHandling = error && error.data ? error.data.message : null;
     return (
       <div className={classes.divBase}>
         <Grid container direction='column' justify='center' alignItems='center'>
           <Grid item xs>
             <div className={classes.premiumText}>Premium</div>
-          </Grid>
-          <Grid item xs>
-            <div className={classes.errorResponse}>
-              {loading == null ? null : loading ? null : 'Succsess add your transaction'}
-              {errorHandling}
-              {errorMessageHandling}
-            </div>
           </Grid>
           <Grid item xs>
             <div className={classes.deskripsi}>

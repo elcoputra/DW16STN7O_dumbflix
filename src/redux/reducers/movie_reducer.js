@@ -1,24 +1,39 @@
 import {
+  // GET Movie
   GET_MOVIES_REQUEST,
   GET_MOVIES_SUCCSESS,
   GET_MOVIES_ERROR,
+
+  // Get Tv
   GET_TV_REQUEST,
   GET_TV_SUCCSESS,
   GET_TV_ERROR,
+
+  // Detail Movie
   GET_DETAIL_MOVIE_REQUEST,
   GET_DETAIL_MOVIE_SUCCSESS,
   GET_DETAIL_MOVIE_ERROR,
+
+  // Add Episode
   ADD_EPISODE_REQUEST,
   ADD_EPISODE_ERROR,
   ADD_EPISODE_SUCCSESS,
+
+  // Add Movie
   ADD_MOVIE_SUCCSESS,
   ADD_MOVIE_ERROR,
   ADD_MOVIE_REQUEST,
+  CLEAR_ADD_MOVIE_MESSAGE,
+  CLEAR_ADD_MOVIE_ERROR,
+
+  // Update Movie
   UPDATE_DETAIL_MOVIE_REQUEST,
   UPDATE_DETAIL_MOVIE_SUCCESS,
   UPDATE_DETAIL_MOVIE_ERROR,
   CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
   CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
+
+  // Delete Movie
   DELETE_MOVIE_REQUEST,
   DELETE_MOVIE_SUCCSESS,
   DELETE_MOVIE_ERROR,
@@ -28,8 +43,15 @@ import {
 
 const initialStateAddMovie = {
   dataMovie: {},
-  loading: false,
-  error: '',
+  loadingAddMovie: false,
+
+  // snackbar
+  // string
+  errorAddMovie: '',
+  messageAddMovie: '',
+  // bool
+  errorBoolAddMovie: false,
+  messageBoolAddMovie: false,
 };
 
 export const addMovieReducer = (state = initialStateAddMovie, action) => {
@@ -37,19 +59,61 @@ export const addMovieReducer = (state = initialStateAddMovie, action) => {
     case ADD_MOVIE_REQUEST:
       return {
         ...state,
-        loading: true,
+        loadingAddMovie: true,
       };
     case ADD_MOVIE_SUCCSESS:
       return {
         ...state,
-        loading: false,
-        dataMovie: action.payload,
+        loadingAddMovie: false,
+        messageBoolAddMovie: true,
+        messageAddMovie: action.payload,
       };
     case ADD_MOVIE_ERROR:
       return {
         ...state,
-        loading: false,
-        error: action.payload,
+        loadingAddMovie: false,
+        errorBoolAddMovie: true,
+        errorAddMovie: action.payload,
+      };
+    case CLEAR_ADD_MOVIE_MESSAGE:
+      return {
+        ...state,
+        messageBoolAddMovie: false,
+        messageAddMovie: '',
+      };
+    case CLEAR_ADD_MOVIE_ERROR:
+      return {
+        ...state,
+        errorBoolAddMovie: false,
+        errorAddMovie: '',
+      };
+    default:
+      return state;
+  }
+};
+
+const initialStateAddEpisode = {
+  loadingAddEpisode: false,
+  errorAddEpisode: '',
+};
+
+export const addEpisode = (state = initialStateAddEpisode, action) => {
+  switch (action.type) {
+    case ADD_EPISODE_REQUEST:
+      return {
+        ...state,
+        loadingAddEpisode: true,
+      };
+    case ADD_EPISODE_SUCCSESS:
+      return {
+        ...state,
+        loadingAddEpisode: action.playload,
+      };
+    case ADD_EPISODE_ERROR:
+      return {
+        ...state,
+        loadingAddEpisode: false,
+        errorAddEpisode: action.playload,
       };
     default:
       return state;
@@ -61,7 +125,6 @@ const initialStateMovie = {
   loading: false,
   error: '',
 };
-
 export const movieReducer = (state = initialStateMovie, action) => {
   switch (action.type) {
     case GET_MOVIES_REQUEST:
@@ -140,34 +203,6 @@ export const detailMovieReducer = (state = initialStateDetailMovie, action) => {
         ...state,
         loadingTV: false,
         errorDetailMovie: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-const initialStateAddEpisode = {
-  loadingAddEpisode: false,
-  errorAddEpisode: '',
-};
-
-export const addEpisode = (state = initialStateAddEpisode, action) => {
-  switch (action.type) {
-    case ADD_EPISODE_REQUEST:
-      return {
-        ...state,
-        loadingAddEpisode: true,
-      };
-    case ADD_EPISODE_SUCCSESS:
-      return {
-        ...state,
-        loadingAddEpisode: action.playload,
-      };
-    case ADD_EPISODE_ERROR:
-      return {
-        ...state,
-        loadingAddEpisode: false,
-        errorAddEpisode: action.playload,
       };
     default:
       return state;

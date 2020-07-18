@@ -1,15 +1,24 @@
 import {
-  ADD_EPISODES_ERROR,
-  ADD_EPISODES_REQUEST,
-  ADD_EPISODES_SUCCSESS,
+  // get episode
   GET_EPISODE_BY_MOVIE_ERROR,
   GET_EPISODE_BY_MOVIE_SUCCSESS,
   GET_EPISODE_BY_MOVIE_REQUEST,
+
+  // add episode
+  ADD_EPISODES_ERROR,
+  ADD_EPISODES_REQUEST,
+  ADD_EPISODES_SUCCSESS,
+  CLEAR_ADD_EPISODES_MESSAGE,
+  CLEAR_ADD_EPISODES_ERROR,
+
+  // delete episode
   DELETE_EPISODE_BY_MOVIE_REQUEST,
   DELETE_EPISODE_BY_MOVIE_SUCCESS,
   DELETE_EPISODE_BY_MOVIE_ERROR,
   CLEAR_UPDATE_DETAIL_MOVIE_MESSAGE,
   CLEAR_UPDATE_DETAIL_MOVIE_ERROR,
+
+  // update episode
   UPDATE_EPISODE_REQUEST,
   UPDATE_EPISODE_SUCCESS,
   UPDATE_EPISODE_ERROR,
@@ -24,8 +33,6 @@ export function addDataEpisodes(movieId, bulkEpisodes) {
       o.movieId = movieId;
       return o;
     });
-
-    console.log({ result: result });
     dispatch({
       type: ADD_EPISODES_REQUEST,
       payload: true,
@@ -35,16 +42,29 @@ export function addDataEpisodes(movieId, bulkEpisodes) {
         dispatch({
           type: ADD_EPISODES_SUCCSESS,
           payload: response.data,
+          message: response.data.message,
         }),
       )
       .catch((response) =>
         dispatch({
           type: ADD_EPISODES_ERROR,
-          payload: response.error,
+          payload: response.response.data.error,
         }),
       );
   };
 }
+export function clearMessageAddEpisodeAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_ADD_EPISODES_MESSAGE });
+  };
+}
+
+export function clearErrorAddEpisodeAction() {
+  return function (dispatch) {
+    dispatch({ type: CLEAR_ADD_EPISODES_ERROR });
+  };
+}
+
 export function getDataEpisodes(movieId) {
   return function (dispatch) {
     dispatch({

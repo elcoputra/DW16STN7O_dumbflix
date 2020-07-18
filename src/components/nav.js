@@ -295,7 +295,7 @@ const styles = (theme) => ({
     position: 'absolute',
     top: '36px',
     left: '-145%',
-    width: '178',
+    width: 178,
     height: '180px',
     borderRadius: '10px',
   },

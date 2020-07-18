@@ -77,10 +77,18 @@ class detailPlayer extends Component {
               <ReactPlayer
                 height={'536px'}
                 width={'1070.44px'}
-                url={dataEpisode[this.state.episodePlay].linkEpisode}
+                url={
+                  dataEpisode && dataEpisode[this.state.episodePlay] && dataEpisode[this.state.episodePlay].linkEpisode
+                    ? dataEpisode[this.state.episodePlay].linkEpisode
+                    : null
+                }
                 playing={this.state.isPlay}
                 controls={true}
-                light={dataEpisode[this.state.episodePlay].thumbnailEpisode}
+                light={
+                  dataEpisode && dataEpisode[this.state.episodePlay]
+                    ? dataEpisode[this.state.episodePlay].thumbnailEpisode
+                    : null
+                }
               />
             )}
           </Grid>
@@ -96,7 +104,11 @@ class detailPlayer extends Component {
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant='contained' onClick={() => this.props.openModalAddEpisode()} className={classes.ButtonAddEpisode}>
+                <Button
+                  variant='contained'
+                  onClick={() => this.props.openModalAddEpisode()}
+                  className={classes.ButtonAddEpisode}
+                >
                   Add Episode
                 </Button>
               </Grid>
@@ -207,7 +219,11 @@ class detailPlayer extends Component {
                   ) : null}
                 </Grid>
                 <Grid item xs>
-                  <p className={classes.TextInfo}>{dataEpisode[this.state.numberEpisode].title}</p>
+                  <p className={classes.TextInfo}>
+                    {dataEpisode && dataEpisode[this.state.numberEpisode]
+                      ? dataEpisode[this.state.numberEpisode].title
+                      : null}
+                  </p>
                 </Grid>
               </Grid>
             )}
