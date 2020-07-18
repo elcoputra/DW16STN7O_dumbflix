@@ -3,7 +3,7 @@ import axios from 'axios';
 // Set config defaults when creating the instance
 export const API = axios.create({
   // baseURL: 'http://localhost:5000/api/v1',
-  baseURL: process.env.REACT_APP_BASE_URL_ONLINE,
+  baseURL: process.env.REACT_APP_URL_BACKEND,
 });
 
 // Alter defaults after instance has been created
