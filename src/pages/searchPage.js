@@ -79,32 +79,34 @@ class searchPage extends Component {
               'No Data'
             ) : (
               <Grid spacing={6} container direction='row' justify='flex-start' alignItems='flex-start'>
-                {data.map((detailData) => {
-                  return (
-                    <Grid item xl={2} lg={2} sm={2} xs={12}>
-                      <Card className={classes.CardActionArea}>
-                        <CardActionArea className={classes.CardActionArea}>
-                          {/* <Link className={classes.Link} to={'/Detail'}> */}
-                          <Link
-                            className={classes.Link}
-                            onClick={() => {
-                              this.props.getDetailMovie(detailData.id);
-                              this.props.getDataEpisodes(detailData.id);
-                            }}
-                            to={{
-                              // pathname: `/Detail/${detailData.id}/${detailData.title}`,
-                              pathname: `/detail`,
-                            }}
-                          >
-                            <img src={detailData.thumbnail} alt={detailData.title} className={classes.Img} />
-                            <Typography className={classes.TypographyTitle}>{detailData.title}</Typography>
-                            <Typography className={classes.TypographyYear}>{detailData.year}</Typography>
-                          </Link>
-                        </CardActionArea>
-                      </Card>
-                    </Grid>
-                  );
-                })}
+                {data
+                  ? data.map((detailData) => {
+                      return (
+                        <Grid item xl={2} lg={2} sm={2} xs={12}>
+                          <Card className={classes.CardActionArea}>
+                            <CardActionArea className={classes.CardActionArea}>
+                              {/* <Link className={classes.Link} to={'/Detail'}> */}
+                              <Link
+                                className={classes.Link}
+                                onClick={() => {
+                                  this.props.getDetailMovie(detailData.id);
+                                  this.props.getDataEpisodes(detailData.id);
+                                }}
+                                to={{
+                                  // pathname: `/Detail/${detailData.id}/${detailData.title}`,
+                                  pathname: `/detail`,
+                                }}
+                              >
+                                <img src={detailData.thumbnail} alt={detailData.title} className={classes.Img} />
+                                <Typography className={classes.TypographyTitle}>{detailData.title}</Typography>
+                                <Typography className={classes.TypographyYear}>{detailData.year}</Typography>
+                              </Link>
+                            </CardActionArea>
+                          </Card>
+                        </Grid>
+                      );
+                    })
+                  : null}
               </Grid>
             )}
           </Grid>
