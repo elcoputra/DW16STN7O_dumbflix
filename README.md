@@ -1,5 +1,7 @@
 # Welcome to Dumbflix Web App!
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cd9cbc2c-13df-4a9e-81fb-f07a21d1d403/deploy-status)](https://app.netlify.com/sites/dumbflix-deploy/deploys)
+
 Dumbflix is a web application that provides a variety of movies or TV series, users must
 log in and subscribe to watch all available films.
 [Go to backend](https://github.com/elcoputra/DW16STN7O_dumbflix_api)
