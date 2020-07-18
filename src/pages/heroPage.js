@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Typography, Grid, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-import BackgroundImageHeader from '../img/hero-image.png';
+// import BackgroundImageHeader from '../img/hero-image.png';
 import Logo from '../img/LOGO.png';
 import videoHeader from '../img/dance.webm';
 

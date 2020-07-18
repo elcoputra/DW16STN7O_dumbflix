@@ -176,7 +176,7 @@ class listFilm extends Component {
             </Grid>
           </Grid>
         </div>
-        {this.state.data.filmCategory == 1 ? <ListTv /> : <ListMovie />}
+        {this.state.data.filmCategory === 1 ? <ListTv /> : <ListMovie />}
       </div>
     );
   }

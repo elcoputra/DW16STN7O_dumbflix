@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
-import { AccountCircle, Email, ConfirmationNumber as Status, Wc as Gender, Phone, Room as Map } from '@material-ui/icons';
+import {
+  AccountCircle,
+  Email,
+  ConfirmationNumber as Status,
+  Wc as Gender,
+  Phone,
+  Room as Map,
+} from '@material-ui/icons';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -81,7 +88,7 @@ const styles = (theme) => ({
 class profilePage extends Component {
   render() {
     const { classes } = this.props;
-    const { loading, userState } = this.props.authReducer;
+    const { userState } = this.props.authReducer;
     return (
       <div className={classes.div}>
         <div className={classes.divTopSpacer}></div>

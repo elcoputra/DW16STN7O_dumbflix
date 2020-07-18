@@ -75,7 +75,7 @@ class movie extends Component {
   }
   render() {
     const { classes } = this.props;
-    const { dataMovies, loading, error } = this.props.dataMovies;
+    const { dataMovies, loading } = this.props.dataMovies;
     return (
       <div>
         {loading ? (
@@ -135,4 +135,7 @@ const mapStateToProps = (state) => {
     dataMovies: state.movieReducer,
   };
 };
-export default compose(withStyles(styles), connect(mapStateToProps, { getDataMovie, getDetailMovie, getDataEpisodes }))(movie);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { getDataMovie, getDetailMovie, getDataEpisodes }),
+)(movie);

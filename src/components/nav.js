@@ -117,7 +117,6 @@ class nav extends Component {
 
   render(props) {
     const { classes } = this.props;
-    const { isLogin } = this.props.userReducer;
     const { userState, loading } = this.props.authReducer;
     const isLoginUserState = userState ? userState.isLogin : false;
     const isAdminState = userState ? userState.isAdmin : false;
@@ -203,7 +202,11 @@ class nav extends Component {
                     'AUTHENTICATING ....'
                   ) : (
                     <>
-                      <Button onClick={this.props.openModalRegister} variant='contained' className={classes.ButtonRegister}>
+                      <Button
+                        onClick={this.props.openModalRegister}
+                        variant='contained'
+                        className={classes.ButtonRegister}
+                      >
                         Register
                       </Button>
 

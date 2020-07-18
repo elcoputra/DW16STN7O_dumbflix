@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  Modal,
-  Backdrop,
-  Fade,
-  Box,
-  Grid,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@material-ui/core';
+import { Modal, Backdrop, Fade, Box, Grid, TextField, Button, MenuItem } from '@material-ui/core';
 import { closeModalRegister } from '../redux/actions/modal_actions';
 import { registerAction } from '../redux/actions/account_action';
 import { compose } from 'recompose';
@@ -63,7 +51,7 @@ class registerModal extends Component {
     }
 
     const { classes } = this.props;
-    const { error, isLogin } = this.props.userReducer;
+    const { error } = this.props.userReducer;
     const { userState, loading } = this.props.authReducer;
 
     const errorHandling = error && error.data ? error.data.error : null;
@@ -399,4 +387,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(withStyles(styles), connect(mapStateToProps, { closeModalRegister, registerAction }))(registerModal);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { closeModalRegister, registerAction }),
+)(registerModal);

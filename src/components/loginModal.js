@@ -191,7 +191,7 @@ class loginModal extends Component {
 
   render() {
     const { classes } = this.props;
-    const { error, isLogin } = this.props.userReducer;
+    const { error } = this.props.userReducer;
     const { userState, loading } = this.props.authReducer;
 
     const errorHandling = error && error.data ? error.data.error : null;

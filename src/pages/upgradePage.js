@@ -6,8 +6,6 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { upgradeAction } from '../redux/actions/upgrade_action';
 
-import { Redirect } from 'react-router-dom';
-
 const styles = (theme) => ({
   divBase: {
     marginTop: 150,
@@ -195,7 +193,8 @@ class upgradePage extends Component {
           </Grid>
           <Grid item xs>
             <div className={classes.deskripsi}>
-              Bayar sekarang dan nikmati streaming film-film yang kekinian dari <b className={classes.dumbflix}>DUMBFLIX</b>
+              Bayar sekarang dan nikmati streaming film-film yang kekinian dari{' '}
+              <b className={classes.dumbflix}>DUMBFLIX</b>
             </div>
           </Grid>
           <Grid item xs>
