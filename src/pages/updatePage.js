@@ -82,9 +82,16 @@ class updatePage extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.hoverItem} id={id} onMouseLeave={() => this.onMouseLeaveHandler(id)}>
-        <Grid container style={{ display: 'flex', width: '100%', height: '100%' }} {...this.gridConf.GridColumnItemOnHover}>
+        <Grid
+          container
+          style={{ display: 'flex', width: '100%', height: '100%' }}
+          {...this.gridConf.GridColumnItemOnHover}
+        >
           <Grid item>
-            <Button className={classes.buttonOnHoverEdit} onClick={() => this.props.openModalUpdateEpisode(this.state.index)}>
+            <Button
+              className={classes.buttonOnHoverEdit}
+              onClick={() => this.props.openModalUpdateEpisode(this.state.index)}
+            >
               Edit
             </Button>
           </Grid>
